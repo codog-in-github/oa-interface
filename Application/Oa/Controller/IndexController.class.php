@@ -11,8 +11,8 @@ class IndexController extends \Think\Controller
     }
     
     public function login(){
-        $map['username'] = $_GET['username'];
-        $map['password'] = $_GET['password'];
+        $map['username'] = $_POST['username'];
+        $map['password'] = $_POST['password'];
         $res = M('user')
             ->where($map)
             ->find();
