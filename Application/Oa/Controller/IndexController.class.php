@@ -1,7 +1,9 @@
 <?php
 namespace Oa\Controller ;
 
-class IndexController extends \Think\Controller
+use Oa\Controller\AuthController;
+
+class IndexController extends AuthController
 {
     function index(){
         // phpinfo();
@@ -17,7 +19,7 @@ class IndexController extends \Think\Controller
             ->where($map)
             ->find();
         $returnData = [
-            'state' => $res?'200':'500',
+            'state' => $res?$SUCCESS:$PASSWORD_ERROR,
             'message' => $res?'success':'failt',
             'data' => $res,
         ];
