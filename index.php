@@ -11,11 +11,11 @@
 
 // 应用入口文件
 
-//解决跨域请求
-// header('Access-Control-Allow-Origin: http://127.0.0.1:8080');
-// header('Access-Control-Request-Method: GET,POST');
-// header("Access-Control-Allow-Headers:content-type");
-// header('Access-Control-Allow-Credentials: true');
+// 解决跨域请求
+header('Access-Control-Allow-Origin: http://127.0.0.1:8080');
+header('Access-Control-Request-Method: GET,POST');
+header("Access-Control-Allow-Headers:content-type");
+header('Access-Control-Allow-Credentials: true');
 
 // 检测PHP环境
 if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');

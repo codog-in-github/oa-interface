@@ -6,10 +6,22 @@ use Oa\Controller\AuthController;
 class IndexController extends AuthController
 {
     function index(){
-        // phpinfo();
-        $data = M('user')->select();
+        if($_SESSION['userInfo']){
+            
+            $this->ajaxReturn([
+                'error' => parent::SUCCESS,
+                'message' =>'hello',
+                'data'  => $_SESSION['userInfo'],
+            ]);
+        }else{
+            $this->ajaxReturn([
+                'error' => parent::WITHOUT_LOGIN,
+                'message' =>'hello',
+                'data'  => $_SESSION['userInfo'],
+            ]);
+        }
         // print_r($data);
-        $this->ajaxReturn($_SESSION['userInfo']);
+        
     }
     
     public function login(){
@@ -19,11 +31,21 @@ class IndexController extends AuthController
             ->where($map)
             ->find();
         $returnData = [
-            'state' => $res?$SUCCESS:$PASSWORD_ERROR,
-            'message' => $res?'success':'failt',
+            'error' => $res? parent::SUCCESS : parent::PASSWORD_ERROR,
+            'message' => $res ? 'success':'failt',
             'data' => $res,
         ];
         if($res) $_SESSION['userInfo'] = $res;
         $this->ajaxReturn($returnData);
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['userInfo']);
+        $this->ajaxReturn([
+            'error' => parent::WITHOUT_LOGIN,
+            'message' => 'WITHOUT_LOGIN',
+            'data' => [],
+        ]);
     }
 }
