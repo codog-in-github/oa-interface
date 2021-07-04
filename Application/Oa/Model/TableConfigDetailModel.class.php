@@ -1,29 +1,26 @@
 <?php
 namespace Oa\Model;
 
-use Oa\Model\PublicModel;
+use Think\Model;
 
-class TableConfigDetailModel  extends PublicModel{
+class TableConfigDetailModel extends Model {
+    private $_fields = [
+        'id',
+        'pid',
+        'label'
+    ];
 
-    public function getDetail($id){
-        if(gettype($id) == 'array')
-            return $this->getDetailMulti($id);
-        
-    }
-
-    protected function getDetailMulti($ids){
+    public function getOptionsByConfigId($configId){
         return $this
-        ->where([
-            'config_id'=>[
-                'in',
-                $ids
-            ],
-        ])
-        ->field([
-            'id',
-            'opt',
-            'config_id',
-        ])
-        ->getResult();
+            ->field($this->_fields)
+            ->where([
+                'config_id' => $configId,
+                'enable' => 1
+            ])
+            ->select();
     }
+
+    // public function getOptionsByConfigIds($configIds){
+        
+    // }
 }

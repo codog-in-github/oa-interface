@@ -3,43 +3,56 @@ namespace Oa\Controller ;
 
 class AuthController extends \Think\Controller
 {
-
+    //不需要验证登录的接口
     const NO_LOGIN_METHOD =[
         'login',
     ];
-    const SUCCESS = 0;
-    const WITHOUT_LOGIN = 1;
-    const PASSWORD_ERROR = 2;
+    //错误码
+    const SUCCESS = 0;          #成功
+    const WITHOUT_LOGIN = 1;    #未登录
+    const PASSWORD_ERROR = 2;   #账号密码错误
 
-    
-    const WITHOUT_TABLEID = 3;
-    const CANNOT_FIND_RESULT = 4;
 
     public function __construct(){
         parent::__construct();
         //验证登录信息
-        if( !(in_array(ACTION_NAME,self::NO_LOGIN_METHOD) || $_SESSION['userInfo']) ){
-            $this->ajaxReturn([
-                'error'   =>  self::WITHOUT_LOGIN,
-                'message' => 'WITHOUT_LOGIN',
-                'data'    => []
-            ]);
+        if( !(in_array(ACTION_NAME,self::NO_LOGIN_METHOD) 
+            || $_SESSION['userInfo']) ){
+            $this->ajaxError(
+                self::WITHOUT_LOGIN,
+                'WITHOUT_LOGIN'
+            );
         }
     }
 
-    protected function  sqlResultAjaxReturn($model){
-        if($model->dataRow > 0){
-            $this->ajaxReturn([
-                'error'=>self::SUCCESS,
-                'message'=>'success',
-                'data'=>$model->data,
-            ]);
-        } else {
-            $this->ajaxReturn([
-                'error'=>self::CANNOT_FIND_RESULT,
-                'message'=>'CANNOT_FIND_RESULT',
-                'data'=>[],
-            ]);
-        }
+    // protected function  sqlResultAjaxReturn($model){
+    //     if($model->dataRow > 0){
+    //         $this->ajaxReturn([
+    //             'error'=>self::SUCCESS,
+    //             'message'=>'success',
+    //             'data'=>$model->data,
+    //         ]);
+    //     } else {
+    //         $this->ajaxReturn([
+    //             'error'=>self::CANNOT_FIND_RESULT,
+    //             'message'=>'CANNOT_FIND_RESULT',
+    //             'data'=>[],
+    //         ]);
+    //     }
+    // }
+
+    protected function  ajaxSuccess($data){
+        $this->ajaxReturn([
+            'error'    =>  self::SUCCESS,
+            'message'  =>  'success',
+            'data'     =>  $data,
+        ]);
+    }
+    protected function ajaxError($errorNo, $message){
+        $this->ajaxReturn([
+            'error'    =>  $errorNo,
+            'message'  =>  $message,
+            'data'     =>  '',
+        ]);
     }
 }
