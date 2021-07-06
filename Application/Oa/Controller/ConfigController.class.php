@@ -12,6 +12,12 @@ class ConfigController extends AuthController
         
         $this->ajaxSuccess($tableConf->getAll('bkg'));
     }
+    
+    public function traderConfig(){
+        $tableConf = new TableConfigModel();
+        
+        $this->ajaxSuccess($tableConf->getAll('trader'));
+    }
 
     
 }
