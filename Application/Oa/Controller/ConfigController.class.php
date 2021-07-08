@@ -4,6 +4,7 @@ namespace Oa\Controller;
 use Oa\Controller\AuthController;
 use Oa\Model\TableConfigModel;
 use Oa\Model\TableConfigDetailModel;
+use Oa\Model\CountryModel;
 
 class ConfigController extends AuthController
 {
@@ -18,6 +19,21 @@ class ConfigController extends AuthController
         
         $this->ajaxSuccess($tableConf->getAll('trader'));
     }
+    
+    public function shipperConfig(){
+        $tableConf = new TableConfigModel();
+        $configs = [
+            'shipper' => $tableConf->getAll('shipper'),
+            'port_of_loading' => $tableConf->getAll('port_of_loading'),
+            'port_of_delovery' => $tableConf->getAll('port_of_delovery'),
+        ];
+        $this->ajaxSuccess($configs);
+    }
 
+    public function getPortAsync(){
+        $countryId = $_GET['pid'];
+        $country = new CountryModel();
+        $this->ajaxSuccess($country->getPort($countryId));
+    }
     
 }

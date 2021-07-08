@@ -34,7 +34,7 @@ class TableConfigModel extends Model {
             if($singleConf['pid']){
                 $configDataKeyById[$singleConf['pid']]['child'] = $singleConf;
                 if($childDetail = $this->_getDetailByType($singleConf['type'], $singleConf['id'])){
-                    $configDataKeyById[$singleConf['pid']]['detail'] = array_merge($configDataKeyById[$singleConf['pid']]['detail'],$childDetail);
+                    $configDataKeyById[$singleConf['pid']]['child']['detail'] = $childDetail;
                 }
             }else{
                 $configDataKeyById[$singleConf['id']] = $singleConf;
