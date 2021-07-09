@@ -32,8 +32,18 @@ class ConfigController extends AuthController
 
     public function getPortAsync(){
         $countryId = $_GET['pid'];
+        if(!$countryId){
+            $this->ajaxSuccess([]);
+            exit;
+        }
         $country = new CountryModel();
         $this->ajaxSuccess($country->getPort($countryId));
+    }
+
+    public function containerConfig(){
+        $tableConf = new TableConfigModel();
+        
+        $this->ajaxSuccess($tableConf->getAll('container'));
     }
     
 }
