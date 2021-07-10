@@ -42,8 +42,17 @@ class ConfigController extends AuthController
 
     public function containerConfig(){
         $tableConf = new TableConfigModel();
+        $configs = [
+            'container'=>$tableConf->getAll('container'),
+            'containerType'=>$tableConf->getAll('container_type'),
+        ];
+        $this->ajaxSuccess($configs);
+    }
+
+    public function containerDetailConfig(){
+        $tableConf = new TableConfigModel();
         
-        $this->ajaxSuccess($tableConf->getAll('container'));
+        $this->ajaxSuccess($tableConf->getAll('container_detail'));
     }
     
 }
