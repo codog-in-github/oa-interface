@@ -8,6 +8,11 @@ use Oa\Model\CountryModel;
 
 class ConfigController extends AuthController
 {
+    public function configVersion(){
+        
+        $this->ajaxSuccess(C('CONFIG_VERSION'));
+    }
+
     public function initConfig(){
         $tableConf = new TableConfigModel();
         

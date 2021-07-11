@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2021-07-08 22:51:49
+Date: 2021-07-11 14:51:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -53,6 +53,32 @@ CREATE TABLE `container` (
 
 -- ----------------------------
 -- Records of container
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for container_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `container_detail`;
+CREATE TABLE `container_detail` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `bkg_id` int(11) NOT NULL,
+  `container_id` int(11) NOT NULL,
+  `container_type` varchar(255) DEFAULT NULL,
+  `common` varchar(255) DEFAULT NULL,
+  `option` varchar(255) DEFAULT NULL,
+  `expenses` varchar(255) DEFAULT NULL,
+  `transprotation` varchar(255) DEFAULT NULL,
+  `charge` varchar(255) DEFAULT NULL,
+  `field` varchar(255) DEFAULT NULL,
+  `chassis` varchar(255) DEFAULT NULL,
+  `booker_place` varchar(255) DEFAULT NULL,
+  `vanning_date` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `vanning_during` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of container_detail
 -- ----------------------------
 
 -- ----------------------------
@@ -13837,12 +13863,11 @@ CREATE TABLE `department` (
   `name` varchar(255) NOT NULL,
   `extra` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of department
 -- ----------------------------
-INSERT INTO `department` VALUES ('0', null, 'system', null);
 INSERT INTO `department` VALUES ('1', null, '行政', null);
 INSERT INTO `department` VALUES ('2', null, '财务', null);
 INSERT INTO `department` VALUES ('3', '2', '财务1', null);
@@ -13851,6 +13876,7 @@ INSERT INTO `department` VALUES ('5', null, '业务', null);
 INSERT INTO `department` VALUES ('6', '5', '业务1', null);
 INSERT INTO `department` VALUES ('7', '5', '业务2', null);
 INSERT INTO `department` VALUES ('8', null, '其他', null);
+INSERT INTO `department` VALUES ('9', null, 'system', null);
 
 -- ----------------------------
 -- Table structure for port_of_loading
@@ -13927,7 +13953,7 @@ CREATE TABLE `table_config` (
   `order` int(10) unsigned DEFAULT '0',
   `enable` int(11) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of table_config
@@ -13964,6 +13990,23 @@ INSERT INTO `table_config` VALUES ('29', '28', 'port_of_delovery', 'PORT', 'port
 INSERT INTO `table_config` VALUES ('30', null, 'port_of_delovery', 'ETA', 'eta', 'eta', 'date', null, '0', '1');
 INSERT INTO `table_config` VALUES ('31', null, 'port_of_delovery', 'FREE TIME DEM', 'freeTimeDem', 'free_time_dem', 'number', null, '0', '1');
 INSERT INTO `table_config` VALUES ('32', null, 'port_of_delovery', 'FREE TIME DET', 'freeTimeDet', 'free_time_det', 'number', null, '0', '1');
+INSERT INTO `table_config` VALUES ('33', null, 'container', 'COMMON', 'common', 'common', 'text', null, '0', '1');
+INSERT INTO `table_config` VALUES ('34', null, 'container', 'VAN PLACE', 'vanPlace', 'van_place', 'suggest', null, '0', '1');
+INSERT INTO `table_config` VALUES ('35', null, 'container', '備考', 'remarks', 'remarks', 'textarea', null, '0', '1');
+INSERT INTO `table_config` VALUES ('36', null, 'container_type', null, 'containerType', 'container_type', 'select', null, '0', '1');
+INSERT INTO `table_config` VALUES ('37', null, 'container_type', null, 'quanity', 'quanity', 'number', null, '0', '1');
+INSERT INTO `table_config` VALUES ('38', null, 'container_detail', 'containerType', 'containerType', 'container_type', 'select', null, '0', '1');
+INSERT INTO `table_config` VALUES ('39', null, 'container_detail', 'common', 'common', 'common', 'text', null, '1', '1');
+INSERT INTO `table_config` VALUES ('40', null, 'container_detail', 'option', 'option', 'option', 'text', null, '2', '1');
+INSERT INTO `table_config` VALUES ('41', null, 'container_detail', 'expenses', 'expenses', 'expenses', 'text', null, '3', '1');
+INSERT INTO `table_config` VALUES ('42', null, 'container_detail', 'transprotation', 'transprotation', 'transprotation', 'linkselect', null, '4', '1');
+INSERT INTO `table_config` VALUES ('43', '42', 'container_detail', 'transprotation', 'charge', 'charge', 'linkselect', null, '5', '1');
+INSERT INTO `table_config` VALUES ('44', null, 'container_detail', 'field', 'field', 'field', 'select', null, '6', '1');
+INSERT INTO `table_config` VALUES ('45', null, 'container_detail', 'chassis', 'chassis', 'chassis', 'select', null, '8', '1');
+INSERT INTO `table_config` VALUES ('46', null, 'container_detail', 'booker_place', 'booker_place', 'booker_place', 'text', null, '9', '1');
+INSERT INTO `table_config` VALUES ('47', null, 'container_detail', 'vanning_date', 'vanning_date', 'vanning_date', 'date', null, '10', '1');
+INSERT INTO `table_config` VALUES ('48', null, 'container_detail', 'vanning_during', 'vanning_during', 'vanning_during', 'timeRange', null, '11', '1');
+INSERT INTO `table_config` VALUES ('49', null, 'container_detail', 'contact', 'contact', 'contact', 'select', null, '7', '1');
 
 -- ----------------------------
 -- Table structure for table_config_detail
@@ -14027,7 +14070,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'root', 'root', 'root', null, '0', '1', null);
-INSERT INTO `user` VALUES ('2', 'lilei', 'lilei', '李磊', '18', '1', '1', null);
-INSERT INTO `user` VALUES ('3', 'zhanghong', 'zh', '张红', '23', '1', '1', null);
-INSERT INTO `user` VALUES ('4', 'liuqiang', 'lq', '刘强', '21', '1', '1', null);
+INSERT INTO `user` VALUES ('1', 'root', '123456', '123456', null, '0', '1', null);
+INSERT INTO `user` VALUES ('2', 'lilei', 'lilei', 'user1', '18', '1', '1', null);
+INSERT INTO `user` VALUES ('3', 'zhanghong', 'zh', 'user2', '23', '1', '1', null);
+INSERT INTO `user` VALUES ('4', 'liuqiang', 'lq', 'user3', '21', '1', '1', null);
