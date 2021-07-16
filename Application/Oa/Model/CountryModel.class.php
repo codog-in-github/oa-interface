@@ -17,6 +17,18 @@ class CountryModel extends Model {
             -> where('`pid` = 0')
             -> select();
     }
+    public function getCountry(){
+        $fields = [
+            'id',
+            'pid',
+            'label',
+            'code',
+        ];
+        return  $this 
+            -> field($fields)
+            -> where('`pid` = 0')
+            -> select();
+    }
     public function getPort($countryId){
         
         $fields = [

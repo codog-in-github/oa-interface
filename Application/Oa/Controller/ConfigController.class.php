@@ -4,6 +4,7 @@ namespace Oa\Controller;
 use Oa\Controller\AuthController;
 use Oa\Model\TableConfigModel;
 use Oa\Model\TableConfigDetailModel;
+use Oa\Model\SelectModel;
 use Oa\Model\CountryModel;
 
 class ConfigController extends AuthController
@@ -17,6 +18,17 @@ class ConfigController extends AuthController
         $tableConf = new TableConfigModel();
         
         $this->ajaxSuccess($tableConf->getAll('bkg'));
+    }
+    public function getOptions(){
+        $id = $_GET['sid'];
+        $pid = $_GET['pid'] || null;
+        if(!$id){
+            $this->ajaxError(4,'no id');
+            exit;
+        }
+        $select = new SelectModel();
+        
+        $this->ajaxSuccess($select->getOption($id,$pid));
     }
     
     public function traderConfig(){

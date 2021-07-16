@@ -13,6 +13,6 @@ class UserModel extends Model {
         ];
         return  $this -> field($fields)
             -> where('`enable` = 1')
-            -> select();;
+            -> select();
     }
 }
