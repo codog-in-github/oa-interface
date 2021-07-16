@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50617
+Source Server         : localhost
+Source Server Version : 50731
 Source Host           : localhost:3306
 Source Database       : oa
 
 Target Server Type    : MYSQL
-Target Server Version : 50617
+Target Server Version : 50731
 File Encoding         : 65001
 
-Date: 2021-07-11 14:51:12
+Date: 2021-07-16 17:20:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -13879,6 +13879,21 @@ INSERT INTO `department` VALUES ('8', null, '其他', null);
 INSERT INTO `department` VALUES ('9', null, 'system', null);
 
 -- ----------------------------
+-- Table structure for option
+-- ----------------------------
+DROP TABLE IF EXISTS `option`;
+CREATE TABLE `option` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `select_id` int(11) NOT NULL,
+  `label` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of option
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for port_of_loading
 -- ----------------------------
 DROP TABLE IF EXISTS `port_of_loading`;
@@ -13917,6 +13932,22 @@ CREATE TABLE `prot_of_delovery` (
 -- ----------------------------
 -- Records of prot_of_delovery
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for select
+-- ----------------------------
+DROP TABLE IF EXISTS `select`;
+CREATE TABLE `select` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `type` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of select
+-- ----------------------------
+INSERT INTO `select` VALUES ('1', 'user', 'user');
 
 -- ----------------------------
 -- Table structure for shipper
@@ -14025,6 +14056,23 @@ CREATE TABLE `table_config_detail` (
 -- ----------------------------
 -- Records of table_config_detail
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for table_select
+-- ----------------------------
+DROP TABLE IF EXISTS `table_select`;
+CREATE TABLE `table_select` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `table` varchar(255) NOT NULL,
+  `col` varchar(255) NOT NULL,
+  `option_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of table_select
+-- ----------------------------
+INSERT INTO `table_select` VALUES ('1', 'bkg', 'bkg_staff', '1');
 
 -- ----------------------------
 -- Table structure for trader
