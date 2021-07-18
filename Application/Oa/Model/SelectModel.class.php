@@ -14,9 +14,9 @@ class SelectModel extends Model {
             case 'country':{
                 $country = new CountryModel();
                 if($pid){
-                     $country->getPort($pid);
+                    return $country->getPort($pid);
                 }else{
-                    $country->getCountry();
+                    return $country->getCountry();
                 }
             }
             default:{

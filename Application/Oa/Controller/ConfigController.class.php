@@ -21,13 +21,12 @@ class ConfigController extends AuthController
     }
     public function getOptions(){
         $id = $_GET['sid'];
-        $pid = $_GET['pid'] || null;
+        $pid = $_GET['pid'];
         if(!$id){
             $this->ajaxError(4,'no id');
             exit;
         }
         $select = new SelectModel();
-        
         $this->ajaxSuccess($select->getOption($id,$pid));
     }
     

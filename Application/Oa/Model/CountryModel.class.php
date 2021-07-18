@@ -21,8 +21,8 @@ class CountryModel extends Model {
         $fields = [
             'id',
             'pid',
-            'label',
             'code',
+            'label',
         ];
         return  $this 
             -> field($fields)
