@@ -8,6 +8,7 @@ class OptionModel extends Model {
         $fields = [
             'id',
             'label',
+            'extra',
         ];
         $map = [
             'select_id' => $selectId,
