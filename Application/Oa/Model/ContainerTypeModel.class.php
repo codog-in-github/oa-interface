@@ -4,15 +4,16 @@ namespace Oa\Model;
 use Think\Model;
 
 class ContainerTypeModel extends Model {
-    public function saveData($delovery,$bkgid){
-        $before = $this->where([
-            'id'=>$bkgid,
+    public function saveData($containerType,$bkgid){
+        $this->where([
+            'bkg_id'=>$bkgid,
+            'id'=>$containerType['id']
         ]);
-        $delovery['id'] = $bkgid;
-        if($before->count() == 0){
-            $before->add($delovery);
+        $containerType['bkg_id'] = $bkgid;
+        if($this->count() == 0){
+            $this->add($containerType);
         }else{
-            $before->save($delovery);
+            $this->save($containerType);
         }
     }
 }

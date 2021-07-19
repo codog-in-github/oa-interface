@@ -5,14 +5,14 @@ use Think\Model;
 
 class PortOfDeloveryModel extends Model {
     public function saveData($delovery,$bkgid){
-        $before = $this->where([
+        $this->where([
             'id'=>$bkgid,
         ]);
         $delovery['id'] = $bkgid;
-        if($before->count() == 0){
-            $before->add($delovery);
+        if($this->count() == 0){
+            $this->add($delovery);
         }else{
-            $before->save($delovery);
+            $this->save($delovery);
         }
     }
 }

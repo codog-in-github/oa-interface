@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50617
+Source Server         : localhost
+Source Server Version : 50731
 Source Host           : localhost:3306
 Source Database       : oa
 
 Target Server Type    : MYSQL
-Target Server Version : 50617
+Target Server Version : 50731
 File Encoding         : 65001
 
-Date: 2021-07-18 22:19:05
+Date: 2021-07-19 12:28:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,6 +37,8 @@ CREATE TABLE `bkg` (
 -- ----------------------------
 -- Records of bkg
 -- ----------------------------
+INSERT INTO `bkg` VALUES ('16266599169334553', '0000-00-00 00:00:00', '', '', '', 'Cost and Freight', 'user1', '', '', '2021-07-19 10:08:14', null);
+INSERT INTO `bkg` VALUES ('16266649767842942', '0000-00-00 00:00:00', '', '', '', '', '4', '', '', null, null);
 
 -- ----------------------------
 -- Table structure for container
@@ -54,6 +56,7 @@ CREATE TABLE `container` (
 -- ----------------------------
 -- Records of container
 -- ----------------------------
+INSERT INTO `container` VALUES ('16266649767842942', '0', '', null, '');
 
 -- ----------------------------
 -- Table structure for container_detail
@@ -80,15 +83,18 @@ CREATE TABLE `container_detail` (
 -- ----------------------------
 -- Records of container_detail
 -- ----------------------------
+INSERT INTO `container_detail` VALUES ('16266649768382616', '16266649767842942', '16266649768258434', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
+INSERT INTO `container_detail` VALUES ('16266650680673881', '16266649767842942', '16266650644673550', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
+INSERT INTO `container_detail` VALUES ('16266650721078917', '16266649767842942', '16266650644673550', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
 
 -- ----------------------------
 -- Table structure for container_type
 -- ----------------------------
 DROP TABLE IF EXISTS `container_type`;
 CREATE TABLE `container_type` (
-  `id` int(11) NOT NULL,
-  `container_id` int(11) NOT NULL,
-  `type` varchar(255) DEFAULT NULL,
+  `id` varchar(255) NOT NULL,
+  `bkg_id` varchar(255) NOT NULL,
+  `container_type` varchar(255) DEFAULT NULL,
   `quantity` varchar(255) DEFAULT NULL,
   `create_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -97,6 +103,8 @@ CREATE TABLE `container_type` (
 -- ----------------------------
 -- Records of container_type
 -- ----------------------------
+INSERT INTO `container_type` VALUES ('16266649768258434', '16266649767842942', '', '1', '0000-00-00 00:00:00');
+INSERT INTO `container_type` VALUES ('16266650644673550', '16266649767842942', '', '2', '0000-00-00 00:00:00');
 
 -- ----------------------------
 -- Table structure for country
@@ -13885,6 +13893,7 @@ DROP TABLE IF EXISTS `option`;
 CREATE TABLE `option` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `select_id` int(11) NOT NULL,
+  `value` varchar(255) DEFAULT NULL,
   `label` varchar(255) DEFAULT NULL,
   `extra` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -13893,33 +13902,53 @@ CREATE TABLE `option` (
 -- ----------------------------
 -- Records of option
 -- ----------------------------
-INSERT INTO `option` VALUES ('1', '3', '20RF', null);
-INSERT INTO `option` VALUES ('2', '3', '40RF', null);
-INSERT INTO `option` VALUES ('3', '3', '20OP', null);
-INSERT INTO `option` VALUES ('4', '3', '40OP', null);
-INSERT INTO `option` VALUES ('5', '3', '20FR', null);
-INSERT INTO `option` VALUES ('6', '3', '40FR', null);
-INSERT INTO `option` VALUES ('7', '3', 'LCL', null);
-INSERT INTO `option` VALUES ('8', '4', 'Free On Board', 'FOB');
-INSERT INTO `option` VALUES ('9', '4', 'Cost and Freight', 'CFR');
-INSERT INTO `option` VALUES ('10', '4', 'Cost, Insurance and Freight', 'CIF');
-INSERT INTO `option` VALUES ('11', '4', 'Free Alongside Ship', 'FAS');
-INSERT INTO `option` VALUES ('12', '5', 'BEN LINE AGENCIES (JAPAN) Ltd.', 'BEN　LINE');
-INSERT INTO `option` VALUES ('13', '5', 'COSCO　SHIOOING LINES', 'COSCO　');
-INSERT INTO `option` VALUES ('14', '5', 'DONGJIN AGENCY CO., LTD.', 'DONGJIN AGENCY');
-INSERT INTO `option` VALUES ('15', '5', 'EASTERN CAR LINER, LTD', 'ECL');
-INSERT INTO `option` VALUES ('16', '5', 'EVERGREEN LINE', 'EVERGREEN');
-INSERT INTO `option` VALUES ('17', '5', 'INTERSIA LINES LTD.', 'INTERSIA');
-INSERT INTO `option` VALUES ('18', '5', 'KMTC(JAPAN) CO.LTD.', 'KMTC');
-INSERT INTO `option` VALUES ('19', '5', 'MAERSK JAPAN', 'MAERSK');
-INSERT INTO `option` VALUES ('20', '5', 'NAMSUNG SHIPPING JAPAN, LTD.', 'NAMSUNG');
-INSERT INTO `option` VALUES ('21', '5', 'SINOKOR SEIHON', 'SINOKOR');
-INSERT INTO `option` VALUES ('22', '5', 'SINOTRANS JAPAN CO.,LTD.', 'SINOTRANS');
-INSERT INTO `option` VALUES ('23', '5', 'STAR OCEAN MARINE', 'STAR OCEAN');
-INSERT INTO `option` VALUES ('24', '5', 'SITC JAPAN', 'STIC');
-INSERT INTO `option` VALUES ('25', '5', 'TS LINES JAPAN', 'TS LINE');
-INSERT INTO `option` VALUES ('26', '5', 'WAN HAI LINES LTD.', 'WAN HAI');
-INSERT INTO `option` VALUES ('27', '5', 'YANG MING MARINE TRANSPORT CORP.', 'YANG MING');
+INSERT INTO `option` VALUES ('1', '3', '20RF', '20RF', null);
+INSERT INTO `option` VALUES ('2', '3', '40RF', '40RF', null);
+INSERT INTO `option` VALUES ('3', '3', '20OP', '20OP', null);
+INSERT INTO `option` VALUES ('4', '3', '40OP', '40OP', null);
+INSERT INTO `option` VALUES ('5', '3', '20FR', '20FR', null);
+INSERT INTO `option` VALUES ('6', '3', '40FR', '40FR', null);
+INSERT INTO `option` VALUES ('7', '3', 'LCL', 'LCL', null);
+INSERT INTO `option` VALUES ('8', '4', 'Free On Board', 'Free On Board', 'FOB');
+INSERT INTO `option` VALUES ('9', '4', 'Cost and Freight', 'Cost and Freight', 'CFR');
+INSERT INTO `option` VALUES ('10', '4', 'Cost, Insurance and Freight', 'Cost, Insurance and Freight', 'CIF');
+INSERT INTO `option` VALUES ('11', '4', 'Free Alongside Ship', 'Free Alongside Ship', 'FAS');
+INSERT INTO `option` VALUES ('12', '5', 'BEN LINE AGENCIES (JAPAN) Ltd.', 'BEN LINE AGENCIES (JAPAN) Ltd.', 'BEN　LINE');
+INSERT INTO `option` VALUES ('13', '5', 'COSCO　SHIOOING LINES', 'COSCO　SHIOOING LINES', 'COSCO　');
+INSERT INTO `option` VALUES ('14', '5', 'DONGJIN AGENCY CO., LTD.', 'DONGJIN AGENCY CO., LTD.', 'DONGJIN AGENCY');
+INSERT INTO `option` VALUES ('15', '5', 'EASTERN CAR LINER, LTD', 'EASTERN CAR LINER, LTD', 'ECL');
+INSERT INTO `option` VALUES ('16', '5', 'EVERGREEN LINE', 'EVERGREEN LINE', 'EVERGREEN');
+INSERT INTO `option` VALUES ('17', '5', 'INTERSIA LINES LTD.', 'INTERSIA LINES LTD.', 'INTERSIA');
+INSERT INTO `option` VALUES ('18', '5', 'KMTC(JAPAN) CO.LTD.', 'KMTC(JAPAN) CO.LTD.', 'KMTC');
+INSERT INTO `option` VALUES ('19', '5', 'MAERSK JAPAN', 'MAERSK JAPAN', 'MAERSK');
+INSERT INTO `option` VALUES ('20', '5', 'NAMSUNG SHIPPING JAPAN, LTD.', 'NAMSUNG SHIPPING JAPAN, LTD.', 'NAMSUNG');
+INSERT INTO `option` VALUES ('21', '5', 'SINOKOR SEIHON', 'SINOKOR SEIHON', 'SINOKOR');
+INSERT INTO `option` VALUES ('22', '5', 'SINOTRANS JAPAN CO.,LTD.', 'SINOTRANS JAPAN CO.,LTD.', 'SINOTRANS');
+INSERT INTO `option` VALUES ('23', '5', 'STAR OCEAN MARINE', 'STAR OCEAN MARINE', 'STAR OCEAN');
+INSERT INTO `option` VALUES ('24', '5', 'SITC JAPAN', 'SITC JAPAN', 'STIC');
+INSERT INTO `option` VALUES ('25', '5', 'TS LINES JAPAN', 'TS LINES JAPAN', 'TS LINE');
+INSERT INTO `option` VALUES ('26', '5', 'WAN HAI LINES LTD.', 'WAN HAI LINES LTD.', 'WAN HAI');
+INSERT INTO `option` VALUES ('27', '5', 'YANG MING MARINE TRANSPORT CORP.', 'YANG MING MARINE TRANSPORT CORP.', 'YANG MING');
+
+-- ----------------------------
+-- Table structure for port_of_delovery
+-- ----------------------------
+DROP TABLE IF EXISTS `port_of_delovery`;
+CREATE TABLE `port_of_delovery` (
+  `id` varchar(255) NOT NULL,
+  `country` int(11) DEFAULT NULL,
+  `port` int(11) DEFAULT NULL,
+  `eta` varchar(255) DEFAULT NULL,
+  `free_time_dem` varchar(255) DEFAULT NULL,
+  `free_time_det` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of port_of_delovery
+-- ----------------------------
+INSERT INTO `port_of_delovery` VALUES ('16266599169334553', '0', '0', '', '', '');
+INSERT INTO `port_of_delovery` VALUES ('16266649767842942', '0', '0', '', '', '');
 
 -- ----------------------------
 -- Table structure for port_of_loading
@@ -13940,24 +13969,8 @@ CREATE TABLE `port_of_loading` (
 -- ----------------------------
 -- Records of port_of_loading
 -- ----------------------------
-
--- ----------------------------
--- Table structure for prot_of_delovery
--- ----------------------------
-DROP TABLE IF EXISTS `prot_of_delovery`;
-CREATE TABLE `prot_of_delovery` (
-  `id` varchar(255) NOT NULL,
-  `country` int(11) DEFAULT NULL,
-  `port` int(11) DEFAULT NULL,
-  `eta` varchar(255) DEFAULT NULL,
-  `free_time_dem` varchar(255) DEFAULT NULL,
-  `free_time_det` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of prot_of_delovery
--- ----------------------------
+INSERT INTO `port_of_loading` VALUES ('16266599169334553', '0', '0', '', '', '', '', '');
+INSERT INTO `port_of_loading` VALUES ('16266649767842942', '0', '0', '', '', '', '', '');
 
 -- ----------------------------
 -- Table structure for select
@@ -13995,6 +14008,97 @@ CREATE TABLE `shipper` (
 
 -- ----------------------------
 -- Records of shipper
+-- ----------------------------
+INSERT INTO `shipper` VALUES ('16266599169334553', '', '', '', '', '');
+INSERT INTO `shipper` VALUES ('16266649767842942', '', '', '', '', '');
+
+-- ----------------------------
+-- Table structure for table_config
+-- ----------------------------
+DROP TABLE IF EXISTS `table_config`;
+CREATE TABLE `table_config` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` int(11) DEFAULT NULL,
+  `table_name` varchar(255) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `col_name` varchar(255) NOT NULL,
+  `params_name` varchar(255) NOT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `default` varchar(255) DEFAULT NULL,
+  `order` int(10) unsigned DEFAULT '0',
+  `enable` int(11) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of table_config
+-- ----------------------------
+INSERT INTO `table_config` VALUES ('1', null, 'bkg', 'BKG DATE', 'bkg_date', 'bkgDate', 'date', 'today', '1', '1');
+INSERT INTO `table_config` VALUES ('2', null, 'bkg', 'BKG  NO.', 'bkg_no', 'nkgNo', 'linkDefault', null, '2', '1');
+INSERT INTO `table_config` VALUES ('3', '2', 'bkg', 'B/L NO, ', 'bl_no', 'blNo', 'linkDefault', null, '3', '1');
+INSERT INTO `table_config` VALUES ('4', null, 'bkg', 'BKG STAFF', 'bkg_staff', 'bkgStaff', 'userSelect', 'loginUser', '5', '1');
+INSERT INTO `table_config` VALUES ('5', null, 'bkg', 'IN SALES', 'in_sales', 'inSales', 'userSelect', null, '6', '1');
+INSERT INTO `table_config` VALUES ('6', null, 'bkg', 'DG', 'dg', 'dg', 'text', null, '7', '1');
+INSERT INTO `table_config` VALUES ('7', null, 'bkg', 'BKG type', 'bkg_type', 'bkgType', 'select', null, '4', '1');
+INSERT INTO `table_config` VALUES ('8', null, 'trader', 'BOOKER', 'booker', 'booker', 'linkSelect', null, '0', '1');
+INSERT INTO `table_config` VALUES ('9', '8', 'trader', 'B/STAFF', 'bStaff', 'b_staff', 'linkSuggest', null, '0', '1');
+INSERT INTO `table_config` VALUES ('10', null, 'trader', 'SHIPPER', 'shipper', 'shipper', 'text', null, '0', '1');
+INSERT INTO `table_config` VALUES ('11', null, 'trader', 'FORWARDER', 'forwarder', 'forwarder', 'linkSelect', null, '0', '1');
+INSERT INTO `table_config` VALUES ('12', '11', 'trader', 'F/STAFF', 'fStaff', 'f_staff', 'linkSuggest', null, '0', '1');
+INSERT INTO `table_config` VALUES ('13', null, 'trader', 'CONSIGNEE', 'consignee', 'consignee', 'text', null, '0', '1');
+INSERT INTO `table_config` VALUES ('14', null, 'trader', 'DRAYAGE', 'daryage', 'daryage', 'linkSelect', null, '0', '1');
+INSERT INTO `table_config` VALUES ('15', '14', 'trader', 'D/STAFF', 'dStaff', 'd_staff', 'linkSuggest', null, '0', '1');
+INSERT INTO `table_config` VALUES ('16', null, 'shipper', 'CARRIER', 'carrier', 'carrier', 'linkSelect', null, '0', '1');
+INSERT INTO `table_config` VALUES ('17', '16', 'shipper', 'C/STAFF', 'cStaff', 'c_staff', 'linkSuggest', null, '0', '1');
+INSERT INTO `table_config` VALUES ('18', null, 'shipper', 'SERVICE', 'service', 'service', 'text', null, '0', '1');
+INSERT INTO `table_config` VALUES ('19', null, 'shipper', 'VESSEL NAME', 'vesselName', 'vessel_name', 'linkSelect', null, '0', '1');
+INSERT INTO `table_config` VALUES ('20', '19', 'shipper', 'VOYAGE', 'voyage', 'voyage', 'linkSuggest', null, '0', '1');
+INSERT INTO `table_config` VALUES ('21', null, 'port_of_loading', 'COUNTRY', 'country', 'country', 'countrySelect', null, '0', '1');
+INSERT INTO `table_config` VALUES ('22', '21', 'port_of_loading', 'PORT', 'port', 'port', 'countrySelect', null, '0', '1');
+INSERT INTO `table_config` VALUES ('23', null, 'port_of_loading', 'ETA', 'eta', 'eta', 'date', null, '0', '1');
+INSERT INTO `table_config` VALUES ('24', null, 'port_of_loading', 'ETD', 'etd', 'etd', 'date', null, '0', '1');
+INSERT INTO `table_config` VALUES ('25', null, 'port_of_loading', 'CY OPEN', 'cyOpen', 'cy_open', 'date', null, '0', '1');
+INSERT INTO `table_config` VALUES ('26', null, 'port_of_loading', 'CY CUT', 'cyCut', 'cy_cut', 'date', null, '0', '1');
+INSERT INTO `table_config` VALUES ('27', null, 'port_of_loading', 'DOC_CUT', 'docCut', 'doc_cut', 'date', null, '0', '1');
+INSERT INTO `table_config` VALUES ('28', null, 'port_of_delovery', 'COUNTRY', 'country', 'country', 'countrySelect', null, '0', '1');
+INSERT INTO `table_config` VALUES ('29', '28', 'port_of_delovery', 'PORT', 'port', 'port', 'countrySelect', null, '0', '1');
+INSERT INTO `table_config` VALUES ('30', null, 'port_of_delovery', 'ETA', 'eta', 'eta', 'date', null, '0', '1');
+INSERT INTO `table_config` VALUES ('31', null, 'port_of_delovery', 'FREE TIME DEM', 'freeTimeDem', 'free_time_dem', 'number', null, '0', '1');
+INSERT INTO `table_config` VALUES ('32', null, 'port_of_delovery', 'FREE TIME DET', 'freeTimeDet', 'free_time_det', 'number', null, '0', '1');
+INSERT INTO `table_config` VALUES ('33', null, 'container', 'COMMON', 'common', 'common', 'text', null, '0', '1');
+INSERT INTO `table_config` VALUES ('34', null, 'container', 'VAN PLACE', 'vanPlace', 'van_place', 'suggest', null, '0', '1');
+INSERT INTO `table_config` VALUES ('35', null, 'container', '備考', 'remarks', 'remarks', 'textarea', null, '0', '1');
+INSERT INTO `table_config` VALUES ('36', null, 'container_type', null, 'containerType', 'container_type', 'select', null, '0', '1');
+INSERT INTO `table_config` VALUES ('37', null, 'container_type', null, 'quanity', 'quanity', 'number', null, '0', '1');
+INSERT INTO `table_config` VALUES ('38', null, 'container_detail', 'containerType', 'containerType', 'container_type', 'select', null, '0', '1');
+INSERT INTO `table_config` VALUES ('39', null, 'container_detail', 'common', 'common', 'common', 'text', null, '1', '1');
+INSERT INTO `table_config` VALUES ('40', null, 'container_detail', 'option', 'option', 'option', 'text', null, '2', '1');
+INSERT INTO `table_config` VALUES ('41', null, 'container_detail', 'expenses', 'expenses', 'expenses', 'text', null, '3', '1');
+INSERT INTO `table_config` VALUES ('42', null, 'container_detail', 'transprotation', 'transprotation', 'transprotation', 'linkselect', null, '4', '1');
+INSERT INTO `table_config` VALUES ('43', '42', 'container_detail', 'transprotation', 'charge', 'charge', 'linkselect', null, '5', '1');
+INSERT INTO `table_config` VALUES ('44', null, 'container_detail', 'field', 'field', 'field', 'select', null, '6', '1');
+INSERT INTO `table_config` VALUES ('45', null, 'container_detail', 'chassis', 'chassis', 'chassis', 'select', null, '8', '1');
+INSERT INTO `table_config` VALUES ('46', null, 'container_detail', 'booker_place', 'booker_place', 'booker_place', 'text', null, '9', '1');
+INSERT INTO `table_config` VALUES ('47', null, 'container_detail', 'vanning_date', 'vanning_date', 'vanning_date', 'date', null, '10', '1');
+INSERT INTO `table_config` VALUES ('48', null, 'container_detail', 'vanning_during', 'vanning_during', 'vanning_during', 'timeRange', null, '11', '1');
+INSERT INTO `table_config` VALUES ('49', null, 'container_detail', 'contact', 'contact', 'contact', 'select', null, '7', '1');
+
+-- ----------------------------
+-- Table structure for table_config_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `table_config_detail`;
+CREATE TABLE `table_config_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` int(11) DEFAULT NULL,
+  `config_id` int(11) NOT NULL,
+  `col` varchar(255) NOT NULL,
+  `label` varchar(255) DEFAULT NULL,
+  `enable` tinyint(3) unsigned DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of table_config_detail
 -- ----------------------------
 
 -- ----------------------------
@@ -14037,6 +14141,8 @@ CREATE TABLE `trader` (
 -- ----------------------------
 -- Records of trader
 -- ----------------------------
+INSERT INTO `trader` VALUES ('16266599169334553', '', '', '', '', '', '', '', '', null, null, null);
+INSERT INTO `trader` VALUES ('16266649767842942', '', '', '', '', '', '', '', '', null, null, null);
 
 -- ----------------------------
 -- Table structure for user

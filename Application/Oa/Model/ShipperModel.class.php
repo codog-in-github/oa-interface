@@ -5,14 +5,14 @@ use Think\Model;
 
 class ShipperModel extends Model {
     public function saveData($shipper,$bkgid){
-        $before = $this->where([
+        $this->where([
             'id'=>$bkgid,
         ]);
         $shipper['id'] = $bkgid;
-        if($before->count() == 0){
-            $before->add($shipper);
+        if($this->count() == 0){
+            $this->add($shipper);
         }else{
-            $before->save($shipper);
+            $this->save($shipper);
         }
     }
 }

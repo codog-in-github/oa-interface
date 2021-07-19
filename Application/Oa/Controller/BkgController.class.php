@@ -6,6 +6,8 @@ use Oa\Model\TraderModel;
 use Oa\Model\ShipperModel;
 use Oa\Model\PortOfLoadingModel;
 use Oa\Model\PortOfDeloveryModel;
+use Oa\Model\ContainerModel;
+use Oa\Model\ContainerDetailModel;
 
 class BkgController extends AuthController{
     public function saveData(){
@@ -23,5 +25,13 @@ class BkgController extends AuthController{
         unset($_POST['lower']['port_of_loading']);
         unset($_POST['lower']['port_of_delivery']);
         $shipper->saveData($_POST['lower'],$bkgid);
+        $container = new ContainerModel();
+        $container->saveData($_POST['center'],$bkgid);
+        $containerDetail = new ContainerDetailModel();
+        if($_POST['detail']){
+            foreach($_POST['detail'] as $singleDetail){
+                $containerDetail->saveData($singleDetail,$bkgid);
+            }
+        }
     }
 }
