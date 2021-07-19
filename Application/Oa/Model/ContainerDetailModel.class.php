@@ -3,7 +3,7 @@ namespace Oa\Model;
 
 use Think\Model;
 
-class ContainerDetailModel extends Model {
+class ContainerDetailModel extends BkgCommonModel {
     public function saveData($detail,$bkgid){
         $this->where([
             'id'=>$detail['id'],
@@ -14,5 +14,8 @@ class ContainerDetailModel extends Model {
         }else{
             $this->save($detail);
         }
+    }
+    public function getData($bkg_id){
+        return [];
     }
 }

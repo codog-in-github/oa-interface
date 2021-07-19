@@ -34,4 +34,24 @@ class BkgController extends AuthController{
             }
         }
     }
+    public function getBkgOrder(){
+        $bkg_id = $_GET['bkg_id'];
+        if(!$bkg_id){
+            exit;
+        }
+        $models = [
+            'bkg' => new BkgModel(),
+            'trader' => new TraderModel(),
+            'shipper' => new ShipperModel(),
+            'loading' => new PortOfLoadingModel(),
+            'delovery' => new PortOfDeloveryModel(),
+            'container' => new ContainerModel(),
+            'detail' => new ContainerDetailModel(),
+        ];
+        $data = [];
+        foreach($models as $k => $model){
+            $data[$k] = $model->getData($bkgid);
+        }
+        $this->ajaxSuccess($data);
+    }
 }

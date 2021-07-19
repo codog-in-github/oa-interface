@@ -22,4 +22,7 @@ class ContainerModel extends Model {
             $this->save($container);
         }
     }
+    public function getData($bkg_id){
+        return [];
+    }
 }
