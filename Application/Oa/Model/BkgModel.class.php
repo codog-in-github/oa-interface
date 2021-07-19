@@ -4,9 +4,9 @@ namespace Oa\Model;
 use Think\Model;
 
 class BkgModel extends Model {
-    public function saveData($bkg){
+    public function saveData($bkg,$bkgid){
         $before = $this->where([
-            'id'=>$bkg['id'],
+            'id'=>$bkgid,
         ]);
         if($before->count() == 0){
             $before->add($bkg);
