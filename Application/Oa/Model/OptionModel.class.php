@@ -7,6 +7,7 @@ class OptionModel extends Model {
     public function getOption($selectId, $pid = false){
         $fields = [
             'id',
+            'value',
             'label',
             'extra',
         ];

@@ -22,6 +22,7 @@ class CountryModel extends Model {
             'id',
             'pid',
             'code',
+            '`code` as `value`',
             'label',
         ];
         return  $this 
@@ -36,6 +37,7 @@ class CountryModel extends Model {
             'pid',
             'label',
             'code',
+            '`code` as `value`',
         ];
         return  $this 
             -> field($fields)

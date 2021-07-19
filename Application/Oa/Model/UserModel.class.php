@@ -9,7 +9,8 @@ class UserModel extends Model {
     public function getSelectUser(){
         $fields = [
             'id',
-            'name' => 'label',
+            '`name` as `label`',
+            '`name` as `value`',
         ];
         return  $this -> field($fields)
             -> where('`enable` = 1')
