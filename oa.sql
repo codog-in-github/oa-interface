@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50731
 File Encoding         : 65001
 
-Date: 2021-07-19 12:28:50
+Date: 2021-07-20 17:49:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,8 +37,12 @@ CREATE TABLE `bkg` (
 -- ----------------------------
 -- Records of bkg
 -- ----------------------------
-INSERT INTO `bkg` VALUES ('16266599169334553', '0000-00-00 00:00:00', '', '', '', 'Cost and Freight', 'user1', '', '', '2021-07-19 10:08:14', null);
+INSERT INTO `bkg` VALUES ('16266599169334553', '0000-00-00 00:00:00', '', '', '', 'Cost, Insurance and Freight', 'user1', '123456', '', '2021-07-19 12:39:17', null);
 INSERT INTO `bkg` VALUES ('16266649767842942', '0000-00-00 00:00:00', '', '', '', '', '4', '', '', null, null);
+INSERT INTO `bkg` VALUES ('16267506815131277', '0000-00-00 00:00:00', '嘎嘎嘎', '嘎嘎嘎1', '', 'Free On Board', 'user3', '123456', '', null, null);
+INSERT INTO `bkg` VALUES ('16267513267359986', '0000-00-00 00:00:00', '12', '1222', '', 'Cost, Insurance and Freight', '4', '', '', '2021-07-20 11:22:14', null);
+INSERT INTO `bkg` VALUES ('16267513398907122', '0000-00-00 00:00:00', '2', '23', '', '', '4', '', '', null, null);
+INSERT INTO `bkg` VALUES ('16267514389102820', '2021-07-20 03:23:59', '', '', '', '', '4', '', '', null, null);
 
 -- ----------------------------
 -- Table structure for container
@@ -46,7 +50,6 @@ INSERT INTO `bkg` VALUES ('16266649767842942', '0000-00-00 00:00:00', '', '', ''
 DROP TABLE IF EXISTS `container`;
 CREATE TABLE `container` (
   `id` varchar(255) NOT NULL,
-  `bkg_id` int(11) NOT NULL,
   `common` varchar(255) DEFAULT NULL,
   `van_plance` varchar(255) DEFAULT NULL,
   `remarks` varchar(255) DEFAULT NULL,
@@ -56,7 +59,9 @@ CREATE TABLE `container` (
 -- ----------------------------
 -- Records of container
 -- ----------------------------
-INSERT INTO `container` VALUES ('16266649767842942', '0', '', null, '');
+INSERT INTO `container` VALUES ('16266599169334553', '', null, '');
+INSERT INTO `container` VALUES ('16266649767842942', '', null, '');
+INSERT INTO `container` VALUES ('16267506815131277', '', null, '');
 
 -- ----------------------------
 -- Table structure for container_detail
@@ -86,6 +91,9 @@ CREATE TABLE `container_detail` (
 INSERT INTO `container_detail` VALUES ('16266649768382616', '16266649767842942', '16266649768258434', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
 INSERT INTO `container_detail` VALUES ('16266650680673881', '16266649767842942', '16266650644673550', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
 INSERT INTO `container_detail` VALUES ('16266650721078917', '16266649767842942', '16266650644673550', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
+INSERT INTO `container_detail` VALUES ('16266695910301606', '16266599169334553', '16266687551765404', '20RF', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
+INSERT INTO `container_detail` VALUES ('16266695926305171', '16266599169334553', '16266695853502107', '20FR', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
+INSERT INTO `container_detail` VALUES ('16267506815927238', '16267506815131277', '16267506815744078', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
 
 -- ----------------------------
 -- Table structure for container_type
@@ -105,6 +113,9 @@ CREATE TABLE `container_type` (
 -- ----------------------------
 INSERT INTO `container_type` VALUES ('16266649768258434', '16266649767842942', '', '1', '0000-00-00 00:00:00');
 INSERT INTO `container_type` VALUES ('16266650644673550', '16266649767842942', '', '2', '0000-00-00 00:00:00');
+INSERT INTO `container_type` VALUES ('16266687551765404', '16266599169334553', '20RF', '11', '2021-07-19 12:39:58');
+INSERT INTO `container_type` VALUES ('16266695853502107', '16266599169334553', '20FR', '11', '0000-00-00 00:00:00');
+INSERT INTO `container_type` VALUES ('16267506815744078', '16267506815131277', '', '', '0000-00-00 00:00:00');
 
 -- ----------------------------
 -- Table structure for country
@@ -13947,6 +13958,7 @@ CREATE TABLE `port_of_delovery` (
 -- ----------------------------
 -- Records of port_of_delovery
 -- ----------------------------
+INSERT INTO `port_of_delovery` VALUES ('', '0', '0', '', '', '');
 INSERT INTO `port_of_delovery` VALUES ('16266599169334553', '0', '0', '', '', '');
 INSERT INTO `port_of_delovery` VALUES ('16266649767842942', '0', '0', '', '', '');
 
@@ -13969,6 +13981,7 @@ CREATE TABLE `port_of_loading` (
 -- ----------------------------
 -- Records of port_of_loading
 -- ----------------------------
+INSERT INTO `port_of_loading` VALUES ('', '0', '0', '', '', '', '', '');
 INSERT INTO `port_of_loading` VALUES ('16266599169334553', '0', '0', '', '', '', '', '');
 INSERT INTO `port_of_loading` VALUES ('16266649767842942', '0', '0', '', '', '', '', '');
 
@@ -14009,7 +14022,8 @@ CREATE TABLE `shipper` (
 -- ----------------------------
 -- Records of shipper
 -- ----------------------------
-INSERT INTO `shipper` VALUES ('16266599169334553', '', '', '', '', '');
+INSERT INTO `shipper` VALUES ('', '', '', '', '', '');
+INSERT INTO `shipper` VALUES ('16266599169334553', 'COSCO　SHIOOING LINES', '2', '1', '', '1');
 INSERT INTO `shipper` VALUES ('16266649767842942', '', '', '', '', '');
 
 -- ----------------------------
@@ -14141,7 +14155,8 @@ CREATE TABLE `trader` (
 -- ----------------------------
 -- Records of trader
 -- ----------------------------
-INSERT INTO `trader` VALUES ('16266599169334553', '', '', '', '', '', '', '', '', null, null, null);
+INSERT INTO `trader` VALUES ('', '', '', '', '', '', '', '', '', null, null, null);
+INSERT INTO `trader` VALUES ('16266599169334553', '', '234', '', '', '11', '', '', '11', null, null, '2021-07-19 12:39:58');
 INSERT INTO `trader` VALUES ('16266649767842942', '', '', '', '', '', '', '', '', null, null, null);
 
 -- ----------------------------
