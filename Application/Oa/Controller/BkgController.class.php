@@ -57,6 +57,7 @@ class BkgController extends AuthController{
     public function getlist (){
         $condition = $_REQUEST['condition'];
         $query = [];
+        //模糊查询字段
         $likeCondition = [
             'bkg_no',
             'bl_no',
@@ -73,6 +74,13 @@ class BkgController extends AuthController{
                     '%'.$condition[$conditionName].'%',
                 ];
             }
+        }
+        //日期
+        if($condition['bkg_date']){
+            $query['bkg_date'] = [
+                'BETWEEN',
+                $condition['bkg_date'],
+            ];
         }
         $current = $_REQUEST['page']?:0;
         $size = $_REQUEST['page_size']?:100;
