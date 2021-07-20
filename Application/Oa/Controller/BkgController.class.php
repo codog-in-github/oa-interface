@@ -55,8 +55,29 @@ class BkgController extends AuthController{
         $this->ajaxSuccess($data);
     }
     public function getlist (){
+        $condition = $_REQUEST['condition'];
         $query = [];
-        $bkg = new BkgModel() ;
-        $this->ajaxSuccess($bkg->getList($query));
+        $likeCondition = [
+            'bkg_no',
+            'bl_no',
+            'bkg_type',
+            'incoterms',
+            'incoterms',
+            'bkg_staff',
+            'in_sales',
+        ];
+        foreach($likeCondition as $conditionName){
+            if($condition[$conditionName]){
+                $query[$conditionName] = [
+                    'LIKE',
+                    '%'.$condition[$conditionName].'%',
+                ];
+            }
+        }
+        $current = $_REQUEST['page']?:0;
+        $size = $_REQUEST['page_size']?:100;
+        $bkg = new BkgModel();
+        // $bkg->getList($query, $current, $size);die($bkg->getlastSql());
+        $this->ajaxSuccess($bkg->getList($query, $size, $current));
     }
 }
