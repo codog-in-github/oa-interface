@@ -54,4 +54,9 @@ class BkgController extends AuthController{
         }
         $this->ajaxSuccess($data);
     }
+    public function getlist (){
+        $query = [];
+        $bkg = new BkgModel() ;
+        $this->ajaxSuccess($bkg->getList($query));
+    }
 }
