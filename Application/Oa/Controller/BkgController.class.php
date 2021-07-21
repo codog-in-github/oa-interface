@@ -82,10 +82,36 @@ class BkgController extends AuthController{
                 $condition['bkg_date'],
             ];
         }
+        //是否被删除
+        if($_REQUEST['state'] == 'delete'){
+            $query['delete_at'] = [
+                'exp',
+                'IS NOT NULL'
+            ];
+        }else{
+            $query['delete_at'] = [
+                'exp',
+                'IS NULL'
+            ];
+        }
         $current = $_REQUEST['page']?:0;
         $size = $_REQUEST['page_size']?:100;
         $bkg = new BkgModel();
         // $bkg->getList($query, $current, $size);die($bkg->getlastSql());
         $this->ajaxSuccess($bkg->getList($query, $size, $current));
+    }
+    public function deleteBkgOrder(){
+        $id = $_REQUEST['id'];
+        if(!$id){
+            die;
+        }
+        $deleteInfo = $_SESSION['userInfo']['id']
+            . '|' 
+            . $_SESSION['userInfo']['name'] 
+            . '@'
+            . date('Y-m-d H:i:s');
+        $bkg = new BkgModel();
+        $bkg->deleteOrder($id, $deleteInfo);
+        die($deleteInfo);
     }
 }

@@ -24,6 +24,14 @@ class BkgModel extends BkgCommonModel {
             ->select();
         return $info;
     }
+    public function deleteOrder($bkgid,$deleteValue){
+        $this->where([
+            'id'=>$bkgid,
+        ])->save([
+            'delete_at'=> $deleteValue,
+        ]);
+    }
+
     protected function _beforeQuery($query){
         return $this->field($this->_fields)->where($query);
     }

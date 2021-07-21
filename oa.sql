@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50731
 File Encoding         : 65001
 
-Date: 2021-07-20 17:49:49
+Date: 2021-07-21 17:31:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,18 +31,19 @@ CREATE TABLE `bkg` (
   `dg` varchar(255) DEFAULT NULL,
   `createtime` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `createuser` varchar(255) DEFAULT NULL,
+  `delete_at` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bkg
 -- ----------------------------
-INSERT INTO `bkg` VALUES ('16266599169334553', '0000-00-00 00:00:00', '', '', '', 'Cost, Insurance and Freight', 'user1', '123456', '', '2021-07-19 12:39:17', null);
-INSERT INTO `bkg` VALUES ('16266649767842942', '0000-00-00 00:00:00', '', '', '', '', '4', '', '', null, null);
-INSERT INTO `bkg` VALUES ('16267506815131277', '0000-00-00 00:00:00', '嘎嘎嘎', '嘎嘎嘎1', '', 'Free On Board', 'user3', '123456', '', null, null);
-INSERT INTO `bkg` VALUES ('16267513267359986', '0000-00-00 00:00:00', '12', '1222', '', 'Cost, Insurance and Freight', '4', '', '', '2021-07-20 11:22:14', null);
-INSERT INTO `bkg` VALUES ('16267513398907122', '0000-00-00 00:00:00', '2', '23', '', '', '4', '', '', null, null);
-INSERT INTO `bkg` VALUES ('16267514389102820', '2021-07-20 03:23:59', '', '', '', '', '4', '', '', null, null);
+INSERT INTO `bkg` VALUES ('16266599169334553', '0000-00-00 00:00:00', '', '', '', 'Cost, Insurance and Freight', 'user1', '123456', '', '2021-07-21 09:39:17', null, '5|4@2021-07-21 09:39:17');
+INSERT INTO `bkg` VALUES ('16266649767842942', '0000-00-00 00:00:00', '', '', '', '', '4', '', '', null, null, null);
+INSERT INTO `bkg` VALUES ('16267506815131277', '0000-00-00 00:00:00', '嘎嘎嘎', '嘎嘎嘎1', '', 'Free On Board', 'user3', '123456', '', '2021-07-21 09:48:29', null, '5|4@2021-07-21 09:48:29');
+INSERT INTO `bkg` VALUES ('16267513267359986', '0000-00-00 00:00:00', '12', '1222', '', 'Cost, Insurance and Freight', '4', '', '', '2021-07-20 11:22:14', null, null);
+INSERT INTO `bkg` VALUES ('16267513398907122', '0000-00-00 00:00:00', '2', '23', '', '', '4', '', '', null, null, null);
+INSERT INTO `bkg` VALUES ('16267514389102820', '2021-07-20 03:23:59', '', '', '', '', '4', '', '', null, null, null);
 
 -- ----------------------------
 -- Table structure for container
