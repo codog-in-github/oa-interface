@@ -50,7 +50,7 @@ class BkgController extends AuthController{
         ];
         $data = [];
         foreach($models as $k => $model){
-            $data[$k] = $model->getData($bkgid);
+            $data[$k] = $model->getData($bkg_id);
         }
         $this->ajaxSuccess($data);
     }

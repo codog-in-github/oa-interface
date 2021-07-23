@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50731
 File Encoding         : 65001
 
-Date: 2021-07-21 17:31:19
+Date: 2021-07-23 20:22:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -41,9 +41,69 @@ CREATE TABLE `bkg` (
 INSERT INTO `bkg` VALUES ('16266599169334553', '0000-00-00 00:00:00', '', '', '', 'Cost, Insurance and Freight', 'user1', '123456', '', '2021-07-21 09:39:17', null, '5|4@2021-07-21 09:39:17');
 INSERT INTO `bkg` VALUES ('16266649767842942', '0000-00-00 00:00:00', '', '', '', '', '4', '', '', null, null, null);
 INSERT INTO `bkg` VALUES ('16267506815131277', '0000-00-00 00:00:00', '嘎嘎嘎', '嘎嘎嘎1', '', 'Free On Board', 'user3', '123456', '', '2021-07-21 09:48:29', null, '5|4@2021-07-21 09:48:29');
-INSERT INTO `bkg` VALUES ('16267513267359986', '0000-00-00 00:00:00', '12', '1222', '', 'Cost, Insurance and Freight', '4', '', '', '2021-07-20 11:22:14', null, null);
+INSERT INTO `bkg` VALUES ('16267513267359986', '0000-00-00 00:00:00', '', '', '', 'C&F', 'user1', '123456', '', '2021-07-23 14:46:35', null, null);
 INSERT INTO `bkg` VALUES ('16267513398907122', '0000-00-00 00:00:00', '2', '23', '', '', '4', '', '', null, null, null);
 INSERT INTO `bkg` VALUES ('16267514389102820', '2021-07-20 03:23:59', '', '', '', '', '4', '', '', null, null, null);
+INSERT INTO `bkg` VALUES ('16270131253593078', '2021-07-23 04:13:25', '', '', '', '', '4', '', '', null, null, null);
+INSERT INTO `bkg` VALUES ('16270136209772558', '2021-07-23 04:14:04', '', '', '', '', '4', '', '', null, null, null);
+INSERT INTO `bkg` VALUES ('16270138748907216', '2021-07-23 04:17:55', '', '', 'ドレージのみ', '', '4', '', '', '2021-07-23 12:19:31', null, null);
+INSERT INTO `bkg` VALUES ('16270141222352616', '2021-07-23 04:22:02', '', '', '', '', '4', '', '', null, null, null);
+INSERT INTO `bkg` VALUES ('16270141750182028', '2021-07-23 04:22:55', '', '', '', '', '4', '', '', null, null, null);
+INSERT INTO `bkg` VALUES ('16270376832708096', '0000-00-00 00:00:00', '打算', '打算达', '', 'Cost, Insurance and Freight', 'user1', '123456', '阿迪', '2021-07-23 19:53:17', null, null);
+
+-- ----------------------------
+-- Table structure for booker
+-- ----------------------------
+DROP TABLE IF EXISTS `booker`;
+CREATE TABLE `booker` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `booker` varchar(255) DEFAULT NULL,
+  `tel` varchar(255) DEFAULT NULL,
+  `place` varchar(255) DEFAULT NULL,
+  `staff` varchar(255) DEFAULT NULL,
+  `staff_tel` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of booker
+-- ----------------------------
+INSERT INTO `booker` VALUES ('1', '株式会社 東盛', '811-3124', '福岡県古賀市薬王寺910-1', '深堀様', '092-609-9708');
+INSERT INTO `booker` VALUES ('2', '有限会社 中信実業通商', '839-0851', '福岡県久留米市御井町448-2', '李様', '080-5241-1454');
+INSERT INTO `booker` VALUES ('3', '無錫興産 株式会社', '610-0326', '京都府京田辺市天王奥別所69番地6', '王様', '090-3359-9998');
+INSERT INTO `booker` VALUES ('4', 'ジャンボフェリー 株式会社', '650-0041', '兵庫県神戸市中央区新港町3番7号', '翁様', '080-2970-9325');
+INSERT INTO `booker` VALUES ('5', '株式会社 POLYTRANS', '651-0086', '兵庫県神戸市中央区磯上通8丁目1-8 アジアビルディング202', '呉様', '080-8526-3352');
+INSERT INTO `booker` VALUES ('6', '新南 株式会社', '141-0021', '東京都品川区上大崎4-5-33', '佐野様', '03-5740-5331');
+INSERT INTO `booker` VALUES ('7', '萬和貿易 株式会社', '537-0023', '大阪市東成区玉津1丁目5番20号', '熊様', '080-4618-2456');
+INSERT INTO `booker` VALUES ('8', '有限会社 浦上化成', '671-2244', '兵庫県姫路市実法寺625番', '浦上様', '090-5969-6939');
+INSERT INTO `booker` VALUES ('9', '株式会社 幸伸商事', '675-2221', '兵庫県加西市倉谷町３２４−３', '柏木様', '090-2356-3779');
+INSERT INTO `booker` VALUES ('10', '明融産業 株式会社', '671-0256', '兵庫県姫路市花田町高木319', '林様', '080-3375-2430');
+INSERT INTO `booker` VALUES ('11', '有限会社 橋本商会', '460-0007', '名古屋市中区新栄２丁目１番９号　雲竜ビル７階', '伊藤様', '052-242-1318');
+INSERT INTO `booker` VALUES ('12', '株式会社 華盛', '490-1444', '愛知県海部郡飛島村木場２丁目8番地', '蒋様', '090-9195-9880');
+INSERT INTO `booker` VALUES ('13', '林商事 株式会社', '650-0045', '神戸市中央区港島3丁目４番地', '林様', '078-381-6901');
+INSERT INTO `booker` VALUES ('14', 'ギルド 株式会社', '650-0045', '神戸市中央区港島3丁目４番地', '林様', '078-381-6901');
+INSERT INTO `booker` VALUES ('15', '南北 株式会社', '669-1335', '兵庫県三田市沢谷632-7', '林様', '080-3866-9888');
+INSERT INTO `booker` VALUES ('16', '金峰貿易 株式会社', '800-0115', '北九州市門司区新門司3丁目67番59号', '大川様', '090-3605-0121');
+INSERT INTO `booker` VALUES ('17', 'サンゴールド 株式会社', '536-0007', '大阪府大阪市城東区成育1-4-15', '知念様', '090-4293-4499');
+INSERT INTO `booker` VALUES ('18', '有限会社 龍海', '657-0854', '神戸市灘区摩耶埠頭1番地Ｃ上屋２Ｆ', '百本様', '078-805-6678');
+INSERT INTO `booker` VALUES ('19', '株式会社 巳翠', '596-0054', '大阪府岸和田市宮本町3-8', '西阪様', '0724-33-1400');
+INSERT INTO `booker` VALUES ('20', '山田産業', '640-8392', '和歌山市中之島493-15', '山田様', '080-5356-6749');
+INSERT INTO `booker` VALUES ('21', '極東海運 株式会社 門司営業所', '801-0873', '北九州市門司区東門司1丁目11番12号', '杉原様', '093-321-3933');
+INSERT INTO `booker` VALUES ('22', '有限会社 不二桂商事', '290-0011', '千葉県市原市能満1878-1', '河原様', '0436-76-7072');
+INSERT INTO `booker` VALUES ('23', '株式会社 イーシーオー', '814-0165', '福岡県福岡市早良区次郎丸5-5-7', '久門様', '080-5202-1744');
+INSERT INTO `booker` VALUES ('24', '日本ロジステック 株式会社', '103-0027', '東京都中央区日本橋3-15-8　アミノ酸会館ビル1Ｆ', '鈴木様', '03-5202-2101');
+INSERT INTO `booker` VALUES ('25', '有限会社 タカハラ', '520-0105', '滋賀県大津市下阪本3丁目20-28', '高原様', '080-3857-4049');
+INSERT INTO `booker` VALUES ('26', 'サンゴールド 株式会社', '536-0007', '大阪府大阪市城東区成育1-4-15', '知念様', '');
+INSERT INTO `booker` VALUES ('27', '明文産業 株式会社 ', '441-3112', '愛知県豊橋市東細谷町牛田３１−３５５', '翁様', '080-3612-9688');
+INSERT INTO `booker` VALUES ('28', '永盛貿易 株式会社', '675-1358', '兵庫県小野市粟生町1506-54', '林様', '080-5632-5098');
+INSERT INTO `booker` VALUES ('29', '和烽工業 株式会社', '518-0002', '三重県伊賀市千歳１６７４－1', '陳様', '');
+INSERT INTO `booker` VALUES ('30', '株式会社 再資源', '598-0035', '大阪府泉佐野市南中樫井369-1', '金様', '090-8524-8632');
+INSERT INTO `booker` VALUES ('31', '株式会社 日豊化学', '130-0013', '東京都墨田区錦糸2-12-1　日豊ビル', '張様', '');
+INSERT INTO `booker` VALUES ('32', 'Cross Industry 株式会社', '556-0012', '大阪府大阪市浪速区敷津東3丁目１１－６　松尾ビル　303号', '張様', '080-6695-7419');
+INSERT INTO `booker` VALUES ('33', '明耀興産 合同会社', '652-0036', '神戸市兵庫区福原町14-2 常本ビル302', '翁様', '');
+INSERT INTO `booker` VALUES ('34', 'AE通商 株式会社', '560-0085', '大阪府豊中市上新田四丁目16-5-401', '馮様', '');
+INSERT INTO `booker` VALUES ('35', '高享化学 株式会社', '936-0841', '富山県滑川市柴170-1', '陳様', '090-1326-6768');
+INSERT INTO `booker` VALUES ('36', '株式会社 大都商会', '170-0004', '東京都豊島区北大塚3-34-1　第一大都ビル', '劉様', '090-2456-3681');
 
 -- ----------------------------
 -- Table structure for container
@@ -63,6 +123,11 @@ CREATE TABLE `container` (
 INSERT INTO `container` VALUES ('16266599169334553', '', null, '');
 INSERT INTO `container` VALUES ('16266649767842942', '', null, '');
 INSERT INTO `container` VALUES ('16267506815131277', '', null, '');
+INSERT INTO `container` VALUES ('16267513267359986', 'PLASTIC', null, '');
+INSERT INTO `container` VALUES ('16270138748907216', '', null, '');
+INSERT INTO `container` VALUES ('16270141222352616', '', null, '');
+INSERT INTO `container` VALUES ('16270141750182028', '', null, '');
+INSERT INTO `container` VALUES ('16270376832708096', 'PLASTIC', null, '1123');
 
 -- ----------------------------
 -- Table structure for container_detail
@@ -95,6 +160,13 @@ INSERT INTO `container_detail` VALUES ('16266650721078917', '16266649767842942',
 INSERT INTO `container_detail` VALUES ('16266695910301606', '16266599169334553', '16266687551765404', '20RF', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
 INSERT INTO `container_detail` VALUES ('16266695926305171', '16266599169334553', '16266695853502107', '20FR', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
 INSERT INTO `container_detail` VALUES ('16267506815927238', '16267506815131277', '16267506815744078', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
+INSERT INTO `container_detail` VALUES ('16270138749534921', '16270138748907216', '16270138749352584', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
+INSERT INTO `container_detail` VALUES ('16270141223019043', '16270141222352616', '16270141222794360', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
+INSERT INTO `container_detail` VALUES ('16270141750717178', '16270141750182028', '16270141750561545', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
+INSERT INTO `container_detail` VALUES ('16270376833506289', '16270376832708096', '16270376833219330', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
+INSERT INTO `container_detail` VALUES ('16270387183543798', '16270376832708096', '16270376833219330', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
+INSERT INTO `container_detail` VALUES ('16270411875462053', '16270376832708096', '16270376833219330', '40RF', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
+INSERT INTO `container_detail` VALUES ('16270411908275941', '16270376832708096', '16270387239452188', '40RF', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
 
 -- ----------------------------
 -- Table structure for container_type
@@ -117,6 +189,11 @@ INSERT INTO `container_type` VALUES ('16266650644673550', '16266649767842942', '
 INSERT INTO `container_type` VALUES ('16266687551765404', '16266599169334553', '20RF', '11', '2021-07-19 12:39:58');
 INSERT INTO `container_type` VALUES ('16266695853502107', '16266599169334553', '20FR', '11', '0000-00-00 00:00:00');
 INSERT INTO `container_type` VALUES ('16267506815744078', '16267506815131277', '', '', '0000-00-00 00:00:00');
+INSERT INTO `container_type` VALUES ('16270138749352584', '16270138748907216', '', '', '0000-00-00 00:00:00');
+INSERT INTO `container_type` VALUES ('16270141222794360', '16270141222352616', '', '', '0000-00-00 00:00:00');
+INSERT INTO `container_type` VALUES ('16270141750561545', '16270141750182028', '', '', '0000-00-00 00:00:00');
+INSERT INTO `container_type` VALUES ('16270376833219330', '16270376832708096', '40RF', '234', '0000-00-00 00:00:00');
+INSERT INTO `container_type` VALUES ('16270387239452188', '16270376832708096', '40RF', '2', '2021-07-23 19:53:17');
 
 -- ----------------------------
 -- Table structure for country
@@ -13909,7 +13986,7 @@ CREATE TABLE `option` (
   `label` varchar(255) DEFAULT NULL,
   `extra` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of option
@@ -13921,10 +13998,9 @@ INSERT INTO `option` VALUES ('4', '3', '40OP', '40OP', null);
 INSERT INTO `option` VALUES ('5', '3', '20FR', '20FR', null);
 INSERT INTO `option` VALUES ('6', '3', '40FR', '40FR', null);
 INSERT INTO `option` VALUES ('7', '3', 'LCL', 'LCL', null);
-INSERT INTO `option` VALUES ('8', '4', 'Free On Board', 'Free On Board', 'FOB');
-INSERT INTO `option` VALUES ('9', '4', 'Cost and Freight', 'Cost and Freight', 'CFR');
-INSERT INTO `option` VALUES ('10', '4', 'Cost, Insurance and Freight', 'Cost, Insurance and Freight', 'CIF');
-INSERT INTO `option` VALUES ('11', '4', 'Free Alongside Ship', 'Free Alongside Ship', 'FAS');
+INSERT INTO `option` VALUES ('8', '4', 'C&F', 'C&F', 'FOB');
+INSERT INTO `option` VALUES ('9', '4', 'CIF', 'CIF', 'CFR');
+INSERT INTO `option` VALUES ('10', '4', 'FOB', 'FOB', 'CIF');
 INSERT INTO `option` VALUES ('12', '5', 'BEN LINE AGENCIES (JAPAN) Ltd.', 'BEN LINE AGENCIES (JAPAN) Ltd.', 'BEN　LINE');
 INSERT INTO `option` VALUES ('13', '5', 'COSCO　SHIOOING LINES', 'COSCO　SHIOOING LINES', 'COSCO　');
 INSERT INTO `option` VALUES ('14', '5', 'DONGJIN AGENCY CO., LTD.', 'DONGJIN AGENCY CO., LTD.', 'DONGJIN AGENCY');
@@ -13941,6 +14017,35 @@ INSERT INTO `option` VALUES ('24', '5', 'SITC JAPAN', 'SITC JAPAN', 'STIC');
 INSERT INTO `option` VALUES ('25', '5', 'TS LINES JAPAN', 'TS LINES JAPAN', 'TS LINE');
 INSERT INTO `option` VALUES ('26', '5', 'WAN HAI LINES LTD.', 'WAN HAI LINES LTD.', 'WAN HAI');
 INSERT INTO `option` VALUES ('27', '5', 'YANG MING MARINE TRANSPORT CORP.', 'YANG MING MARINE TRANSPORT CORP.', 'YANG MING');
+INSERT INTO `option` VALUES ('33', '6', 'BOOKINGのみ　', 'BOOKINGのみ　', null);
+INSERT INTO `option` VALUES ('34', '6', '通関のみ', '通関のみ', null);
+INSERT INTO `option` VALUES ('35', '6', 'ドレージのみ', 'ドレージのみ', null);
+INSERT INTO `option` VALUES ('36', '6', '通・BK', '通・BK', null);
+INSERT INTO `option` VALUES ('37', '6', '通・ド', '通・ド', null);
+INSERT INTO `option` VALUES ('38', '6', '通・ド・BK', '通・ド・BK', null);
+INSERT INTO `option` VALUES ('39', '6', 'BK・ド    ', 'BK・ド    ', null);
+INSERT INTO `option` VALUES ('55', '7', '極東', '極東', '杉原');
+INSERT INTO `option` VALUES ('56', '7', '国際エキス神戸', '国際エキス神戸', '正木');
+INSERT INTO `option` VALUES ('57', '7', '新和ロジ', '新和ロジ', '友重');
+INSERT INTO `option` VALUES ('58', '7', 'ジェネック', 'ジェネック', '三良');
+INSERT INTO `option` VALUES ('59', '7', 'グリーン', 'グリーン', '熊原');
+INSERT INTO `option` VALUES ('60', '7', '日本ロジ', '日本ロジ', '鈴木');
+INSERT INTO `option` VALUES ('61', '7', 'アリス', 'アリス', '佐藤');
+INSERT INTO `option` VALUES ('62', '7', 'ミック', 'ミック', '高木');
+INSERT INTO `option` VALUES ('63', '7', '大藤', '大藤', '西村');
+INSERT INTO `option` VALUES ('64', '7', '山九', '山九', '星野');
+INSERT INTO `option` VALUES ('65', '7', '日通', '日通', '田端');
+INSERT INTO `option` VALUES ('66', '7', 'ナラサキ', 'ナラサキ', '加藤');
+INSERT INTO `option` VALUES ('67', '7', '秋田海陸', '秋田海陸', '星島　');
+INSERT INTO `option` VALUES ('68', '7', '国際エキス大阪', '国際エキス大阪', '陳');
+INSERT INTO `option` VALUES ('69', '9', '株式会社 中部シーカーゴ ', '株式会社 中部シーカーゴ ', '南川 英樹');
+INSERT INTO `option` VALUES ('70', '9', '大藤運輸株式会社', '大藤運輸株式会社', '西村');
+INSERT INTO `option` VALUES ('71', '9', '株式会社 巳翠', '株式会社 巳翠', '');
+INSERT INTO `option` VALUES ('72', '9', '日本通運　石狩', '日本通運　石狩', '田端');
+INSERT INTO `option` VALUES ('73', '9', 'ナラサキスタックス株式会社', 'ナラサキスタックス株式会社', '宮腰　悠太');
+INSERT INTO `option` VALUES ('74', '9', '極東海運', '極東海運', '杉原');
+INSERT INTO `option` VALUES ('75', '9', '東海運', '東海運', '');
+INSERT INTO `option` VALUES ('76', '9', '富山港湾運送株式会社', '富山港湾運送株式会社', '二口');
 
 -- ----------------------------
 -- Table structure for port_of_delovery
@@ -13962,6 +14067,11 @@ CREATE TABLE `port_of_delovery` (
 INSERT INTO `port_of_delovery` VALUES ('', '0', '0', '', '', '');
 INSERT INTO `port_of_delovery` VALUES ('16266599169334553', '0', '0', '', '', '');
 INSERT INTO `port_of_delovery` VALUES ('16266649767842942', '0', '0', '', '', '');
+INSERT INTO `port_of_delovery` VALUES ('16267513267359986', '0', '0', '', '', '');
+INSERT INTO `port_of_delovery` VALUES ('16270138748907216', '0', '0', '', '', '');
+INSERT INTO `port_of_delovery` VALUES ('16270141222352616', '0', '0', '', '', '');
+INSERT INTO `port_of_delovery` VALUES ('16270141750182028', '0', '0', '', '', '');
+INSERT INTO `port_of_delovery` VALUES ('16270376832708096', '0', '0', '2021-07-20T16:00:00.000Z', '1', '2');
 
 -- ----------------------------
 -- Table structure for port_of_loading
@@ -13985,6 +14095,11 @@ CREATE TABLE `port_of_loading` (
 INSERT INTO `port_of_loading` VALUES ('', '0', '0', '', '', '', '', '');
 INSERT INTO `port_of_loading` VALUES ('16266599169334553', '0', '0', '', '', '', '', '');
 INSERT INTO `port_of_loading` VALUES ('16266649767842942', '0', '0', '', '', '', '', '');
+INSERT INTO `port_of_loading` VALUES ('16267513267359986', '0', '0', '', '', '', '', '');
+INSERT INTO `port_of_loading` VALUES ('16270138748907216', '0', '0', '', '', '', '', '');
+INSERT INTO `port_of_loading` VALUES ('16270141222352616', '0', '0', '', '', '', '', '');
+INSERT INTO `port_of_loading` VALUES ('16270141750182028', '0', '0', '', '', '', '', '');
+INSERT INTO `port_of_loading` VALUES ('16270376832708096', '0', '0', '2021-07-27T16:00:00.000Z', '2021-07-19T16:00:00.000Z', '2021-07-26T16:00:00.000Z', '2021-07-20T16:00:00.000Z', '2021-07-06T16:00:00.000Z');
 
 -- ----------------------------
 -- Table structure for select
@@ -13995,7 +14110,7 @@ CREATE TABLE `select` (
   `name` varchar(255) DEFAULT NULL,
   `type` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of select
@@ -14005,6 +14120,10 @@ INSERT INTO `select` VALUES ('2', 'country', 'country');
 INSERT INTO `select` VALUES ('3', 'container', '');
 INSERT INTO `select` VALUES ('4', 'incoterms', '');
 INSERT INTO `select` VALUES ('5', 'carrier', '');
+INSERT INTO `select` VALUES ('6', 'bkg_type', '');
+INSERT INTO `select` VALUES ('7', 'forwarder', '');
+INSERT INTO `select` VALUES ('8', 'booker', 'booker');
+INSERT INTO `select` VALUES ('9', '运送', '');
 
 -- ----------------------------
 -- Table structure for shipper
@@ -14026,6 +14145,11 @@ CREATE TABLE `shipper` (
 INSERT INTO `shipper` VALUES ('', '', '', '', '', '');
 INSERT INTO `shipper` VALUES ('16266599169334553', 'COSCO　SHIOOING LINES', '2', '1', '', '1');
 INSERT INTO `shipper` VALUES ('16266649767842942', '', '', '', '', '');
+INSERT INTO `shipper` VALUES ('16267513267359986', '', '', '', '', '');
+INSERT INTO `shipper` VALUES ('16270138748907216', '', '', '', '', '');
+INSERT INTO `shipper` VALUES ('16270141222352616', '', '', '', '', '');
+INSERT INTO `shipper` VALUES ('16270141750182028', '', '', '', '', '');
+INSERT INTO `shipper` VALUES ('16270376832708096', 'EASTERN CAR LINER, LTD', '达', '阿迪', '', '');
 
 -- ----------------------------
 -- Table structure for table_config
@@ -14159,6 +14283,11 @@ CREATE TABLE `trader` (
 INSERT INTO `trader` VALUES ('', '', '', '', '', '', '', '', '', null, null, null);
 INSERT INTO `trader` VALUES ('16266599169334553', '', '234', '', '', '11', '', '', '11', null, null, '2021-07-19 12:39:58');
 INSERT INTO `trader` VALUES ('16266649767842942', '', '', '', '', '', '', '', '', null, null, null);
+INSERT INTO `trader` VALUES ('16267513267359986', '萬和貿易 株式会社', '熊様', '', '', '', '', '', '', null, null, null);
+INSERT INTO `trader` VALUES ('16270138748907216', '', '', '', '', '', '', '', '', null, null, null);
+INSERT INTO `trader` VALUES ('16270141222352616', '', '', '', '', '', '', '', '', null, null, null);
+INSERT INTO `trader` VALUES ('16270141750182028', '', '', '', '', '', '', '', '', null, null, null);
+INSERT INTO `trader` VALUES ('16270376832708096', '有限会社 中信実業通商', '李様', '是的', '国際エキス神戸', '正木', '爱迪生', '阿迪', '', null, null, '2021-07-23 19:53:17');
 
 -- ----------------------------
 -- Table structure for user
