@@ -8,6 +8,7 @@ class BkgCommonModel extends Model {
         $this->where([
             'id'=>$bkgid,
         ]);
+        $bkg['id'] = $bkgid;
         if($this->count() == 0){
             $this->add($bkg);
         }else{

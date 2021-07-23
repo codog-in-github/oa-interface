@@ -19,6 +19,9 @@ class SelectModel extends Model {
                     return $country->getCountry();
                 }
             }
+            case 'booker':{
+                return (new BookerModel())->getOption();
+            }
             default:{
                 $option = new OptionModel();
                 return $option -> getOption($select['id'],$pid);
