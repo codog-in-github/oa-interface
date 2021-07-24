@@ -7,6 +7,8 @@ use Oa\Model\ShipperModel;
 use Oa\Model\PortOfLoadingModel;
 use Oa\Model\PortOfDeloveryModel;
 use Oa\Model\ContainerModel;
+use Oa\Model\BookerModel;
+use Oa\Model\ContainerTypeModel;
 use Oa\Model\ContainerDetailModel;
 
 class BkgController extends AuthController{
@@ -44,13 +46,17 @@ class BkgController extends AuthController{
             'trader' => new TraderModel(),
             'shipper' => new ShipperModel(),
             'loading' => new PortOfLoadingModel(),
-            'delovery' => new PortOfDeloveryModel(),
+            'delivery' => new PortOfDeloveryModel(),
             'container' => new ContainerModel(),
+            'type' => new ContainerTypeModel(),
             'detail' => new ContainerDetailModel(),
         ];
         $data = [];
         foreach($models as $k => $model){
             $data[$k] = $model->getData($bkg_id);
+        }
+        if($data['trader']['booker']){
+            $data['booker'] = (new BookerModel())->getBooker($data['trader']['booker']);
         }
         $this->ajaxSuccess($data);
     }

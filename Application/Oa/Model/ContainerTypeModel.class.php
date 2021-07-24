@@ -16,4 +16,9 @@ class ContainerTypeModel extends Model {
             $this->save($containerType);
         }
     }
+    public function getData($bkg_id){
+        return $this->where([
+            'bkg_id' => $bkg_id,
+        ])->select();
+    }
 }

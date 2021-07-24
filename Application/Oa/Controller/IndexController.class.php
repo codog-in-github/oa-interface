@@ -2,6 +2,7 @@
 namespace Oa\Controller ;
 
 use Oa\Controller\AuthController;
+use Oa\Model\UserModel;
 
 class IndexController extends AuthController
 {
@@ -23,13 +24,14 @@ class IndexController extends AuthController
         // print_r($data);
         
     }
+    function needClear(){
+        $this->ajaxSuccess('2021-07-25');
+    }
     
     public function login(){
         $map['username'] = $_POST['username'];
         $map['password'] = $_POST['password'];
-        $res = M('user')
-            ->where($map)
-            ->find();
+        $res = (new UserModel())->getLoginUser($_POST['username'],$_POST['password']);
         $returnData = [
             'error' => $res? parent::SUCCESS : parent::PASSWORD_ERROR,
             'message' => $res ? 'success':'failt',

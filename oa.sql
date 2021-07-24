@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50731
+Source Server         : localhost_3306
+Source Server Version : 50617
 Source Host           : localhost:3306
 Source Database       : oa
 
 Target Server Type    : MYSQL
-Target Server Version : 50731
+Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2021-07-23 20:22:10
+Date: 2021-07-24 15:24:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -39,17 +39,19 @@ CREATE TABLE `bkg` (
 -- Records of bkg
 -- ----------------------------
 INSERT INTO `bkg` VALUES ('16266599169334553', '0000-00-00 00:00:00', '', '', '', 'Cost, Insurance and Freight', 'user1', '123456', '', '2021-07-21 09:39:17', null, '5|4@2021-07-21 09:39:17');
-INSERT INTO `bkg` VALUES ('16266649767842942', '0000-00-00 00:00:00', '', '', '', '', '4', '', '', null, null, null);
+INSERT INTO `bkg` VALUES ('16266649767842942', '0000-00-00 00:00:00', '', '', '', '', '4', '', '', '2021-07-24 15:20:43', null, '5|4@2021-07-24 15:20:43');
 INSERT INTO `bkg` VALUES ('16267506815131277', '0000-00-00 00:00:00', '嘎嘎嘎', '嘎嘎嘎1', '', 'Free On Board', 'user3', '123456', '', '2021-07-21 09:48:29', null, '5|4@2021-07-21 09:48:29');
 INSERT INTO `bkg` VALUES ('16267513267359986', '0000-00-00 00:00:00', '', '', '', 'C&F', 'user1', '123456', '', '2021-07-23 14:46:35', null, null);
 INSERT INTO `bkg` VALUES ('16267513398907122', '0000-00-00 00:00:00', '2', '23', '', '', '4', '', '', null, null, null);
 INSERT INTO `bkg` VALUES ('16267514389102820', '2021-07-20 03:23:59', '', '', '', '', '4', '', '', null, null, null);
 INSERT INTO `bkg` VALUES ('16270131253593078', '2021-07-23 04:13:25', '', '', '', '', '4', '', '', null, null, null);
 INSERT INTO `bkg` VALUES ('16270136209772558', '2021-07-23 04:14:04', '', '', '', '', '4', '', '', null, null, null);
-INSERT INTO `bkg` VALUES ('16270138748907216', '2021-07-23 04:17:55', '', '', 'ドレージのみ', '', '4', '', '', '2021-07-23 12:19:31', null, null);
+INSERT INTO `bkg` VALUES ('16270138748907216', '0000-00-00 00:00:00', '12', '122', 'ドレージのみ', '', '4', '', '', '2021-07-24 13:59:54', null, null);
 INSERT INTO `bkg` VALUES ('16270141222352616', '2021-07-23 04:22:02', '', '', '', '', '4', '', '', null, null, null);
 INSERT INTO `bkg` VALUES ('16270141750182028', '2021-07-23 04:22:55', '', '', '', '', '4', '', '', null, null, null);
-INSERT INTO `bkg` VALUES ('16270376832708096', '0000-00-00 00:00:00', '打算', '打算达', '', 'Cost, Insurance and Freight', 'user1', '123456', '阿迪', '2021-07-23 19:53:17', null, null);
+INSERT INTO `bkg` VALUES ('16270376832708096', '2021-07-29 00:00:00', '', '', '', '', '', '', '', '2021-07-24 13:51:10', null, null);
+INSERT INTO `bkg` VALUES ('16270534307637831', '0000-00-00 00:00:00', '', '', '', '', '4', '', '', '2021-07-23 23:17:38', null, null);
+INSERT INTO `bkg` VALUES ('16270535283206496', '2021-07-23 15:18:48', '', '', '', '', '4', '', '', '2021-07-24 15:20:31', null, '5|4@2021-07-24 15:20:31');
 
 -- ----------------------------
 -- Table structure for booker
@@ -112,7 +114,7 @@ DROP TABLE IF EXISTS `container`;
 CREATE TABLE `container` (
   `id` varchar(255) NOT NULL,
   `common` varchar(255) DEFAULT NULL,
-  `van_plance` varchar(255) DEFAULT NULL,
+  `van_place` varchar(255) DEFAULT NULL,
   `remarks` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -124,10 +126,12 @@ INSERT INTO `container` VALUES ('16266599169334553', '', null, '');
 INSERT INTO `container` VALUES ('16266649767842942', '', null, '');
 INSERT INTO `container` VALUES ('16267506815131277', '', null, '');
 INSERT INTO `container` VALUES ('16267513267359986', 'PLASTIC', null, '');
-INSERT INTO `container` VALUES ('16270138748907216', '', null, '');
+INSERT INTO `container` VALUES ('16270138748907216', '233', '', '');
 INSERT INTO `container` VALUES ('16270141222352616', '', null, '');
 INSERT INTO `container` VALUES ('16270141750182028', '', null, '');
-INSERT INTO `container` VALUES ('16270376832708096', 'PLASTIC', null, '1123');
+INSERT INTO `container` VALUES ('16270376832708096', 'PLASTIC', '1|2|55', '');
+INSERT INTO `container` VALUES ('16270534307637831', '111', null, '');
+INSERT INTO `container` VALUES ('16270535283206496', '12', null, '');
 
 -- ----------------------------
 -- Table structure for container_detail
@@ -148,25 +152,30 @@ CREATE TABLE `container_detail` (
   `booker_place` varchar(255) DEFAULT NULL,
   `vanning_date` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `vanning_during` varchar(255) DEFAULT NULL,
+  `delete_at` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of container_detail
 -- ----------------------------
-INSERT INTO `container_detail` VALUES ('16266649768382616', '16266649767842942', '16266649768258434', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
-INSERT INTO `container_detail` VALUES ('16266650680673881', '16266649767842942', '16266650644673550', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
-INSERT INTO `container_detail` VALUES ('16266650721078917', '16266649767842942', '16266650644673550', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
-INSERT INTO `container_detail` VALUES ('16266695910301606', '16266599169334553', '16266687551765404', '20RF', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
-INSERT INTO `container_detail` VALUES ('16266695926305171', '16266599169334553', '16266695853502107', '20FR', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
-INSERT INTO `container_detail` VALUES ('16267506815927238', '16267506815131277', '16267506815744078', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
-INSERT INTO `container_detail` VALUES ('16270138749534921', '16270138748907216', '16270138749352584', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
-INSERT INTO `container_detail` VALUES ('16270141223019043', '16270141222352616', '16270141222794360', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
-INSERT INTO `container_detail` VALUES ('16270141750717178', '16270141750182028', '16270141750561545', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
-INSERT INTO `container_detail` VALUES ('16270376833506289', '16270376832708096', '16270376833219330', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
-INSERT INTO `container_detail` VALUES ('16270387183543798', '16270376832708096', '16270376833219330', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
-INSERT INTO `container_detail` VALUES ('16270411875462053', '16270376832708096', '16270376833219330', '40RF', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
-INSERT INTO `container_detail` VALUES ('16270411908275941', '16270376832708096', '16270387239452188', '40RF', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '');
+INSERT INTO `container_detail` VALUES ('16266649768382616', '16266649767842942', '16266649768258434', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '', null);
+INSERT INTO `container_detail` VALUES ('16266650680673881', '16266649767842942', '16266650644673550', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '', null);
+INSERT INTO `container_detail` VALUES ('16266650721078917', '16266649767842942', '16266650644673550', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '', null);
+INSERT INTO `container_detail` VALUES ('16266695910301606', '16266599169334553', '16266687551765404', '20RF', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '', null);
+INSERT INTO `container_detail` VALUES ('16266695926305171', '16266599169334553', '16266695853502107', '20FR', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '', null);
+INSERT INTO `container_detail` VALUES ('16267506815927238', '16267506815131277', '16267506815744078', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '', null);
+INSERT INTO `container_detail` VALUES ('16270138749534921', '16270138748907216', '16270138749352584', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '', null);
+INSERT INTO `container_detail` VALUES ('16270141223019043', '16270141222352616', '16270141222794360', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '', null);
+INSERT INTO `container_detail` VALUES ('16270141750717178', '16270141750182028', '16270141750561545', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '', null);
+INSERT INTO `container_detail` VALUES ('16270376833506289', '16270376832708096', '16270376833219330', '', '', '', '2021-07-24T04:03:54.000Z', '', '', '', '', '', '0000-00-00 00:00:00', '', '1');
+INSERT INTO `container_detail` VALUES ('16270387183543798', '16270376832708096', '16270376833219330', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '12:48 - 13:47', '1');
+INSERT INTO `container_detail` VALUES ('16270411875462053', '16270376832708096', '16270376833219330', '40RF', '', '', '', '', '', '', '', '', '1899-11-08 00:00:00', '12:48-23:46', '');
+INSERT INTO `container_detail` VALUES ('16270411908275941', '16270376832708096', '16270387239452188', '40RF', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '', '');
+INSERT INTO `container_detail` VALUES ('16270534308524675', '16270534307637831', '16270534308274803', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '', null);
+INSERT INTO `container_detail` VALUES ('16270535284153321', '16270535283206496', '16270535283931529', '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '', null);
+INSERT INTO `container_detail` VALUES ('16271062665626433', '16270138748907216', '16270138749352584', '', '233', '', 'P', '2', '', '', '', '', '0000-00-00 00:00:00', '', null);
+INSERT INTO `container_detail` VALUES ('16271062689063547', '16270138748907216', '16270138749352584', '', '233', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '', null);
 
 -- ----------------------------
 -- Table structure for container_type
@@ -194,6 +203,8 @@ INSERT INTO `container_type` VALUES ('16270141222794360', '16270141222352616', '
 INSERT INTO `container_type` VALUES ('16270141750561545', '16270141750182028', '', '', '0000-00-00 00:00:00');
 INSERT INTO `container_type` VALUES ('16270376833219330', '16270376832708096', '40RF', '234', '0000-00-00 00:00:00');
 INSERT INTO `container_type` VALUES ('16270387239452188', '16270376832708096', '40RF', '2', '2021-07-23 19:53:17');
+INSERT INTO `container_type` VALUES ('16270534308274803', '16270534307637831', '', '', '0000-00-00 00:00:00');
+INSERT INTO `container_type` VALUES ('16270535283931529', '16270535283206496', '', '', '0000-00-00 00:00:00');
 
 -- ----------------------------
 -- Table structure for country
@@ -14053,8 +14064,8 @@ INSERT INTO `option` VALUES ('76', '9', '富山港湾運送株式会社', '富�
 DROP TABLE IF EXISTS `port_of_delovery`;
 CREATE TABLE `port_of_delovery` (
   `id` varchar(255) NOT NULL,
-  `country` int(11) DEFAULT NULL,
-  `port` int(11) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `port` varchar(255) DEFAULT NULL,
   `eta` varchar(255) DEFAULT NULL,
   `free_time_dem` varchar(255) DEFAULT NULL,
   `free_time_det` varchar(255) DEFAULT NULL,
@@ -14068,10 +14079,12 @@ INSERT INTO `port_of_delovery` VALUES ('', '0', '0', '', '', '');
 INSERT INTO `port_of_delovery` VALUES ('16266599169334553', '0', '0', '', '', '');
 INSERT INTO `port_of_delovery` VALUES ('16266649767842942', '0', '0', '', '', '');
 INSERT INTO `port_of_delovery` VALUES ('16267513267359986', '0', '0', '', '', '');
-INSERT INTO `port_of_delovery` VALUES ('16270138748907216', '0', '0', '', '', '');
+INSERT INTO `port_of_delovery` VALUES ('16270138748907216', 'AI', 'AI  THE ROAD(AIROA)', '', '', '');
 INSERT INTO `port_of_delovery` VALUES ('16270141222352616', '0', '0', '', '', '');
 INSERT INTO `port_of_delovery` VALUES ('16270141750182028', '0', '0', '', '', '');
-INSERT INTO `port_of_delovery` VALUES ('16270376832708096', '0', '0', '2021-07-20T16:00:00.000Z', '1', '2');
+INSERT INTO `port_of_delovery` VALUES ('16270376832708096', '', '', '', '', '');
+INSERT INTO `port_of_delovery` VALUES ('16270534307637831', '0', '0', '', '', '');
+INSERT INTO `port_of_delovery` VALUES ('16270535283206496', '0', '0', '', '', '');
 
 -- ----------------------------
 -- Table structure for port_of_loading
@@ -14079,8 +14092,8 @@ INSERT INTO `port_of_delovery` VALUES ('16270376832708096', '0', '0', '2021-07-2
 DROP TABLE IF EXISTS `port_of_loading`;
 CREATE TABLE `port_of_loading` (
   `id` varchar(255) NOT NULL,
-  `country` int(11) DEFAULT NULL,
-  `port` int(11) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `port` varchar(255) DEFAULT NULL,
   `eta` varchar(255) DEFAULT NULL,
   `etd` varchar(255) DEFAULT NULL,
   `cy_open` varchar(255) DEFAULT NULL,
@@ -14096,10 +14109,30 @@ INSERT INTO `port_of_loading` VALUES ('', '0', '0', '', '', '', '', '');
 INSERT INTO `port_of_loading` VALUES ('16266599169334553', '0', '0', '', '', '', '', '');
 INSERT INTO `port_of_loading` VALUES ('16266649767842942', '0', '0', '', '', '', '', '');
 INSERT INTO `port_of_loading` VALUES ('16267513267359986', '0', '0', '', '', '', '', '');
-INSERT INTO `port_of_loading` VALUES ('16270138748907216', '0', '0', '', '', '', '', '');
+INSERT INTO `port_of_loading` VALUES ('16270138748907216', 'AI', 'AI  SARANDE(ALSAR)', '', '', '', '', '');
 INSERT INTO `port_of_loading` VALUES ('16270141222352616', '0', '0', '', '', '', '', '');
 INSERT INTO `port_of_loading` VALUES ('16270141750182028', '0', '0', '', '', '', '', '');
-INSERT INTO `port_of_loading` VALUES ('16270376832708096', '0', '0', '2021-07-27T16:00:00.000Z', '2021-07-19T16:00:00.000Z', '2021-07-26T16:00:00.000Z', '2021-07-20T16:00:00.000Z', '2021-07-06T16:00:00.000Z');
+INSERT INTO `port_of_loading` VALUES ('16270376832708096', 'AI', 'AI  OTHER(AIZZZ)', '2021-07-29', '', '', '', '');
+INSERT INTO `port_of_loading` VALUES ('16270534307637831', '0', '0', '', '', '', '', '');
+INSERT INTO `port_of_loading` VALUES ('16270535283206496', '0', '0', '', '', '', '', '');
+
+-- ----------------------------
+-- Table structure for prot_of_delovery
+-- ----------------------------
+DROP TABLE IF EXISTS `prot_of_delovery`;
+CREATE TABLE `prot_of_delovery` (
+  `id` varchar(255) NOT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `port` varchar(255) DEFAULT NULL,
+  `eta` varchar(255) DEFAULT NULL,
+  `free_time_dem` varchar(255) DEFAULT NULL,
+  `free_time_det` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of prot_of_delovery
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for select
@@ -14149,7 +14182,9 @@ INSERT INTO `shipper` VALUES ('16267513267359986', '', '', '', '', '');
 INSERT INTO `shipper` VALUES ('16270138748907216', '', '', '', '', '');
 INSERT INTO `shipper` VALUES ('16270141222352616', '', '', '', '', '');
 INSERT INTO `shipper` VALUES ('16270141750182028', '', '', '', '', '');
-INSERT INTO `shipper` VALUES ('16270376832708096', 'EASTERN CAR LINER, LTD', '达', '阿迪', '', '');
+INSERT INTO `shipper` VALUES ('16270376832708096', '', '', '', '', '');
+INSERT INTO `shipper` VALUES ('16270534307637831', '', '', '', '', '');
+INSERT INTO `shipper` VALUES ('16270535283206496', '', '', '', '', '');
 
 -- ----------------------------
 -- Table structure for table_config
@@ -14284,10 +14319,12 @@ INSERT INTO `trader` VALUES ('', '', '', '', '', '', '', '', '', null, null, nul
 INSERT INTO `trader` VALUES ('16266599169334553', '', '234', '', '', '11', '', '', '11', null, null, '2021-07-19 12:39:58');
 INSERT INTO `trader` VALUES ('16266649767842942', '', '', '', '', '', '', '', '', null, null, null);
 INSERT INTO `trader` VALUES ('16267513267359986', '萬和貿易 株式会社', '熊様', '', '', '', '', '', '', null, null, null);
-INSERT INTO `trader` VALUES ('16270138748907216', '', '', '', '', '', '', '', '', null, null, null);
+INSERT INTO `trader` VALUES ('16270138748907216', '有限会社 中信実業通商', '李様', '', '新和ロジ', '友重', '', '', '', null, null, '2021-07-24 13:59:54');
 INSERT INTO `trader` VALUES ('16270141222352616', '', '', '', '', '', '', '', '', null, null, null);
 INSERT INTO `trader` VALUES ('16270141750182028', '', '', '', '', '', '', '', '', null, null, null);
 INSERT INTO `trader` VALUES ('16270376832708096', '有限会社 中信実業通商', '李様', '是的', '国際エキス神戸', '正木', '爱迪生', '阿迪', '', null, null, '2021-07-23 19:53:17');
+INSERT INTO `trader` VALUES ('16270534307637831', '', '', '', '', '', '', '', '', null, null, null);
+INSERT INTO `trader` VALUES ('16270535283206496', '', '', '', '', '', '', '', '', null, null, null);
 
 -- ----------------------------
 -- Table structure for user

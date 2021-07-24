@@ -16,4 +16,15 @@ class UserModel extends Model {
             -> where('`enable` = 1')
             -> select();
     }
+    public function getLoginUser($username, $password){
+        return $this
+            ->field([
+                'id',
+                'name',
+            ])
+            ->where([
+                'username'=>$username,
+                'password'=>$password,
+            ])->find();
+    }
 }

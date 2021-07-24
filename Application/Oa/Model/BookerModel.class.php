@@ -16,4 +16,12 @@ class BookerModel extends Model {
         return $this->field($this->_fields)
             ->select();
     }
+    public function getBooker($booker){
+        return $this
+            ->where([
+                'booker'=>$booker,
+            ])
+            ->field($this->_fields)
+            ->find();
+    }
 }

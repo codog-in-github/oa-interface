@@ -16,6 +16,8 @@ class ContainerDetailModel extends BkgCommonModel {
         }
     }
     public function getData($bkg_id){
-        return [];
+        return $this->where([
+            'bkg_id' => $bkg_id,
+        ])->select();
     }
 }

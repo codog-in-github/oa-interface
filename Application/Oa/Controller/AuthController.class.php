@@ -6,6 +6,7 @@ class AuthController extends \Think\Controller
     //不需要验证登录的接口
     const NO_LOGIN_METHOD =[
         'login',
+        'needClear',
     ];
     //错误码
     const SUCCESS = 0;          #成功
@@ -24,22 +25,6 @@ class AuthController extends \Think\Controller
             );
         }
     }
-
-    // protected function  sqlResultAjaxReturn($model){
-    //     if($model->dataRow > 0){
-    //         $this->ajaxReturn([
-    //             'error'=>self::SUCCESS,
-    //             'message'=>'success',
-    //             'data'=>$model->data,
-    //         ]);
-    //     } else {
-    //         $this->ajaxReturn([
-    //             'error'=>self::CANNOT_FIND_RESULT,
-    //             'message'=>'CANNOT_FIND_RESULT',
-    //             'data'=>[],
-    //         ]);
-    //     }
-    // }
 
     protected function  ajaxSuccess($data){
         $this->ajaxReturn([

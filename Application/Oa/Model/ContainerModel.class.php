@@ -23,6 +23,7 @@ class ContainerModel extends Model {
         }
     }
     public function getData($bkg_id){
-        return [];
+        $containerData = $this->find($bkg_id);
+        return $containerData;
     }
 }
