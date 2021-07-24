@@ -21,6 +21,7 @@ class BkgModel extends BkgCommonModel {
         $info['list'] = $this
             ->_beforeQuery($query)
             ->limit($current * $size, $size)
+            ->order('bkg_date desc')
             ->select();
         return $info;
     }
