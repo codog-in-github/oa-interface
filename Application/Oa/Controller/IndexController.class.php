@@ -25,7 +25,7 @@ class IndexController extends AuthController
         
     }
     function needClear(){
-        $this->ajaxSuccess('2021-07-26');
+        $this->ajaxSuccess('2021-07-26.1');
     }
     
     public function login(){
