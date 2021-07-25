@@ -8,3 +8,9 @@ function addIntoArray(&$arr, $key, $on, $target, $id){
         $one[$key] = $idKeyArray[$one[$on]];
     }
 }
+
+function nextOrderNo($last){
+    $preg = '/[349]|(?:001)/';
+    while(preg_match($preg,++$last)){}
+    return $last;
+}

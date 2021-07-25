@@ -13,7 +13,32 @@ class BkgModel extends BkgCommonModel {
         'incoterms',
         'bkg_staff',
         'in_sales',
+        'CONCAT(`month`,`month_no`,`tag`)' =>'dg'
     ];
+    public function saveData($bkg,$bkgid){
+        $this->where([
+            'id'=>$bkgid,
+        ]);
+        $bkg['id'] = $bkgid;
+        if($this->count() == 0){
+            $month = date('Ym');
+            $last = $this->where([
+                'month' => $month,
+            ])
+            ->order('month_no desc')
+            ->find()['month_no'];
+            $current = 100;
+            if($last){
+                $current = nextOrderNo($last);
+            }
+            $bkg['month'] = $month;
+            $bkg['month_no'] = $current;
+            $bkg['tag'] = $_SESSION['userInfo']['tag'];
+            $this->add($bkg);
+        }else{
+            $this->save($bkg);
+        }
+    }
     public function getList($query,$size=100,$current=0){
         $info['total'] = $this
             ->_beforeQuery($query)

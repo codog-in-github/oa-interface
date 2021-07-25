@@ -16,6 +16,9 @@ class BkgCommonModel extends Model {
         }
     }
     public function getData($bkg_id){
+        if($this->_fields){
+            $this->field($this->_fields);
+        }
         return $this->find($bkg_id);
     }
 }

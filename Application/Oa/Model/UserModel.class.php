@@ -11,6 +11,7 @@ class UserModel extends Model {
             'id',
             '`name` as `label`',
             '`name` as `value`',
+            'tag',
         ];
         return  $this -> field($fields)
             -> where('`enable` = 1')
@@ -21,6 +22,7 @@ class UserModel extends Model {
             ->field([
                 'id',
                 'name',
+                'tag',
             ])
             ->where([
                 'username'=>$username,
