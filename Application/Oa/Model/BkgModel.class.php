@@ -59,7 +59,7 @@ class BkgModel extends BkgCommonModel {
             ->join('container_type AS ct ON b.id = bkg_id')
             ->group('b.id')
             ->limit($current * $size, $size)
-            ->order('bkg_date desc')
+            ->order('cy_cut desc')
             ->select();
         return $info;
     }
