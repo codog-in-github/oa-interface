@@ -30,19 +30,20 @@ class CountryModel extends Model {
             -> where('`pid` = 0')
             -> select();
     }
-    public function getPort($countryId){
+    public function getPort($code){
         
         $fields = [
-            'id',
-            'pid',
-            'label',
-            'code',
-            '`code` as `value`',
+            'p.id',
+            'p.pid',
+            'p.label',
+            'p.`code`',
+            'p.`code` as `value`',
         ];
-        return  $this 
+        return $this 
             -> field($fields)
+            ->join('JOIN country AS p ON country.id = p.pid')
             -> where([
-                'pid'=>$countryId
+                'country.`code`'=>$code
             ])
             -> select();
     }

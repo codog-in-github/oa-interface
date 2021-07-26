@@ -45,6 +45,19 @@ class BkgModel extends BkgCommonModel {
             ->count();
         $info['list'] = $this
             ->_beforeQuery($query)
+            ->field([
+                'b.id',
+                'cy_cut',
+                'bkg_date',
+                'booker',
+                'CONCAT(l.`port`,"/",d.`port`) as ld',
+                'bkg_no',
+                'group_concat(quantity) as quantity',
+                'group_concat(container_type) as container_type',
+                'state',
+            ])
+            ->join('container_type AS ct ON b.id = bkg_id')
+            ->group('b.id')
             ->limit($current * $size, $size)
             ->order('bkg_date desc')
             ->select();
@@ -59,6 +72,12 @@ class BkgModel extends BkgCommonModel {
     }
 
     protected function _beforeQuery($query){
-        return $this->field($this->_fields)->where($query);
+        return $this
+            ->alias('b')
+            ->join('port_of_loading AS l ON b.id = l.id')
+            ->join('port_of_delovery AS d ON b.id = d.id')
+            ->join('trader AS t ON b.id = t.id')
+            ->join('container AS c ON b.id = c.id')
+            ->where($query);
     }
 }
