@@ -140,7 +140,7 @@ class BkgController extends AuthController{
     public function changeOrderState(){
         $id = $_REQUEST['id'];
         $state = $_REQUEST['state'];
-        if($id && $state){
+        if($id){
             $this->ajaxSuccess(
                 (new ContainerModel())->changeOrderState($id, $state)
             );

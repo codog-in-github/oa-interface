@@ -27,6 +27,9 @@ class ContainerModel extends Model {
         return $containerData;
     }
     public function changeOrderState($id, $state){
-        return $this->where(['id'=>$id])->save(['state'=>$state]);
+        return $this->save([
+            'id'=>$id,
+            'state'=>$state]
+        );
     }
 }
