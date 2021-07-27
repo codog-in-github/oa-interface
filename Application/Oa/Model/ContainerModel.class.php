@@ -26,4 +26,7 @@ class ContainerModel extends Model {
         $containerData = $this->find($bkg_id);
         return $containerData;
     }
+    public function changeOrderState($id, $state){
+        return $this->where(['id'=>$id])->save(['state'=>$state]);
+    }
 }

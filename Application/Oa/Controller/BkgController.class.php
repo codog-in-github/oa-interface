@@ -65,29 +65,31 @@ class BkgController extends AuthController{
         $query = [];
         //模糊查询字段
         $likeCondition = [
-            'bkg_no',
-            'bl_no',
-            'bkg_type',
-            'incoterms',
-            'incoterms',
-            'bkg_staff',
-            'in_sales',
+            'bkg_no' => 'bkg_no',
+            'bl_no' => 'bl_no',
+            'pod' => 'd.`port`',
+            'pol' => 'l.`port`',
+            'booker' => 'booker',
+            // 'gd' => 'CONCAT(`month`,`month_no`,`tag`)',
         ];
-        foreach($likeCondition as $conditionName){
+        foreach($likeCondition as $conditionName =>$colNmae){
             if($condition[$conditionName]){
-                $query[$conditionName] = [
+                $query[$colNmae] = [
                     'LIKE',
                     '%'.$condition[$conditionName].'%',
                 ];
             }
         }
-        //日期
-        if($condition['bkg_date']){
-            $query['bkg_date'] = [
-                'BETWEEN',
-                $condition['bkg_date'],
-            ];
+        if($condition['dg']){
+            $query['_string'] = "CONCAT(`month`,`month_no`,`tag`) LIKE '%$condition[dg]%'";
         }
+        //日期
+        // if($condition['bkg_date']){
+        //     $query['bkg_date'] = [
+        //         'BETWEEN',
+        //         $condition['bkg_date'],
+        //     ];
+        // }
         //是否被删除
         if($_REQUEST['state'] == 'delete'){
             $query['delete_at'] = [
@@ -99,6 +101,21 @@ class BkgController extends AuthController{
                 'exp',
                 'IS NULL'
             ];
+            //订单状态筛选
+            if($_REQUEST['state'] == 'draft'){
+                $query[] = [
+                    'step' => 'draft',
+                    [
+                        'cy_cut' => ['ELT', date('Y-m-d',strtotime('-2 day'))],
+                        'step' => ['exp', 'IS NULL'],
+                    ],
+                    '_logic' => 'or',
+                ];
+            }elseif($_REQUEST['state'] == 'ready'){
+                $query['step'] = 'ready';
+            }elseif($_REQUEST['state'] == 'complete'){
+                $query['step'] = 'complete';
+            }
         }
         $current = $_REQUEST['page']?:0;
         $size = $_REQUEST['page_size']?:100;
@@ -119,5 +136,16 @@ class BkgController extends AuthController{
         $bkg = new BkgModel();
         $bkg->deleteOrder($id, $deleteInfo);
         $this->ajaxSuccess('');
+    }
+    public function changeOrderState(){
+        $id = $_REQUEST['id'];
+        $state = $_REQUEST['state'];
+        if($id && $state){
+            $this->ajaxSuccess(
+                (new ContainerModel())->changeOrderState($id, $state)
+            );
+        }else{
+            $this->ajaxError(3,'has no params');
+        }
     }
 }
