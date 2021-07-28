@@ -115,6 +115,11 @@ class BkgController extends AuthController{
                 $query['step'] = 'ready';
             }elseif($_REQUEST['state'] == 'complete'){
                 $query['step'] = 'complete';
+            }else{
+                $query[] = [
+                    'cy_cut' => ['GT', date('Y-m-d',strtotime('-2 day'))],
+                    'step' => ['exp', 'IS NULL'],
+                ];
             }
         }
         $current = $_REQUEST['page']?:0;
@@ -143,6 +148,17 @@ class BkgController extends AuthController{
         if($id){
             $this->ajaxSuccess(
                 (new ContainerModel())->changeOrderState($id, $state)
+            );
+        }else{
+            $this->ajaxError(3,'has no params');
+        }
+    }
+    public function changeOrderStep(){
+        $id = $_REQUEST['id'];
+        $step = $_REQUEST['step'];
+        if($id && $step){
+            $this->ajaxSuccess(
+                (new BkgModel())->changeOrderStep($id, $step)
             );
         }else{
             $this->ajaxError(3,'has no params');
