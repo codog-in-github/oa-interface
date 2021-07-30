@@ -117,8 +117,13 @@ class BkgController extends AuthController{
                 $query['step'] = 'complete';
             }else{
                 $query[] = [
-                    'cy_cut' => ['GT', date('Y-m-d',strtotime('-2 day'))],
-                    'step' => ['exp', 'IS NULL'],
+                    [
+                        'cy_cut' => ['GT', date('Y-m-d',strtotime('-2 day'))],
+                        'step' => ['exp', 'IS NULL'],
+                    ],
+                    'step' => 'normal',
+                    '_logic' => 'or',
+
                 ];
             }
         }
@@ -130,14 +135,19 @@ class BkgController extends AuthController{
     }
     public function deleteBkgOrder(){
         $id = $_REQUEST['id'];
+        $isDelete = $_REQUEST['is_delete'];
         if(!$id){
             die;
         }
-        $deleteInfo = $_SESSION['userInfo']['id']
-            . '|' 
-            . $_SESSION['userInfo']['name'] 
-            . '@'
-            . date('Y-m-d H:i:s');
+        if($isDelete == 'true' ){
+            $deleteInfo = $_SESSION['userInfo']['id']
+                . '|' 
+                . $_SESSION['userInfo']['name'] 
+                . '@'
+                . date('Y-m-d H:i:s');
+        }else{
+            $deleteInfo = null;
+        }
         $bkg = new BkgModel();
         $bkg->deleteOrder($id, $deleteInfo);
         $this->ajaxSuccess('');
