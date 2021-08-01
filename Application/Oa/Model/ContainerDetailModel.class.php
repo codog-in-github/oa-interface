@@ -42,7 +42,7 @@ class ContainerDetailModel extends BkgCommonModel {
                 'bkg_no',            #BKG NO
             ])
             ->limit($current * $size, $size)
-            ->order('vanning_date desc')
+            ->order('cy_cut')
             ->select();
             // die($this->getLastSql());
         return $info;
