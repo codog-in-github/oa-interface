@@ -37,6 +37,7 @@ class ContainerDetailModel extends BkgCommonModel {
                 'cy_cut',            #CY CUT
                 'bkg_date',          #BKG DATE
                 'CONCAT(l.`port`,"/",d.`port`) as ld',
+                'is_confirm',
                                      #POL/POD
                 'bkg_no',            #BKG NO
             ])
@@ -60,7 +61,21 @@ class ContainerDetailModel extends BkgCommonModel {
                     '',
                     'or',
                 ],
+                'vanning_date'=>[
+                    'BETWEEN',
+                    [
+                        date('Y-m-d 00:00:00',strtotime('-1 day')),
+                        date('Y-m-d 23:59:59',strtotime('+2 day')),
+                    ]
+                ]
             ])
             ->where($query);
+    }
+
+    public function confirm($id){
+        $this->save([
+            'id' =>$id,
+            'is_confirm' => 1,
+        ]);;
     }
 }

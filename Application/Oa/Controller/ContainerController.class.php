@@ -39,4 +39,9 @@ class ContainerController extends AuthController{
         $size = $_REQUEST['page_size']?:100;
         $this->ajaxSuccess((new ContainerDetailModel())->getList($query, $size, $current));
     }
+
+    public function confirm(){
+        $id = $_REQUEST['id'];
+        $this->ajaxSuccess((new ContainerDetailModel())->confirm($id));
+    }
 }
