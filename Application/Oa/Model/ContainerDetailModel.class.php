@@ -36,9 +36,9 @@ class ContainerDetailModel extends BkgCommonModel {
                 'transprotation',    #運送業 
                 'cy_cut',            #CY CUT
                 'bkg_date',          #BKG DATE
-                'CONCAT(l.`port`,"/",d.`port`) as ld',
-                'is_confirm',
+                'UPPER(CONCAT(SUBSTRING_INDEX(SUBSTRING_INDEX(l.`port`,"(",1)," ",-1),"-",SUBSTRING_INDEX(SUBSTRING_INDEX(d.`port`,"(",1)," ",-1))) as ld',
                                      #POL/POD
+                'is_confirm',
                 'bkg_no',            #BKG NO
             ])
             ->limit($current * $size, $size)
