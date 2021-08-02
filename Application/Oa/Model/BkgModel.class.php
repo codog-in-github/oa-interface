@@ -50,7 +50,7 @@ class BkgModel extends BkgCommonModel {
                 'cy_cut',
                 'bkg_date',
                 'booker',
-                'CONCAT(l.`port`,"/",d.`port`) as ld',
+                'UPPER(CONCAT(SUBSTRING_INDEX(SUBSTRING_INDEX(l.`port`,"(",1)," ",-1),"-",SUBSTRING_INDEX(SUBSTRING_INDEX(d.`port`,"(",1)," ",-1))) as ld',
                 'bkg_no',
                 'group_concat(quantity) as quantity',
                 'group_concat(container_type) as container_type',
