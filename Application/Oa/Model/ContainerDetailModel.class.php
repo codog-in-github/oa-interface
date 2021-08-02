@@ -36,14 +36,25 @@ class ContainerDetailModel extends BkgCommonModel {
                 'transprotation',    #運送業 
                 'cy_cut',            #CY CUT
                 'bkg_date',          #BKG DATE
-                'UPPER(CONCAT(SUBSTRING_INDEX(SUBSTRING_INDEX(l.`port`,"(",1)," ",-1),"-",SUBSTRING_INDEX(SUBSTRING_INDEX(d.`port`,"(",1)," ",-1))) as ld',
-                                     #POL/POD
+                'UPPER(l.`port`) as lp',
+                'UPPER(d.`port`) as dp',
+                                    #POL/POD
                 'is_confirm',
                 'bkg_no',            #BKG NO
             ])
             ->limit($current * $size, $size)
             ->order('cy_cut')
             ->select();
+        foreach($info['list'] as &$record){
+            $lp = explode(' ',explode('(',$record['lp'])[0]);
+            unset($lp[0]);
+            $lp = implode(' ',$lp);
+    
+            $dp = explode(' ',explode('(',$record['dp'])[0]);
+            unset($dp[0]);
+            $dp = implode(' ',$dp);
+            $record['ld'] = "$lp - $dp";
+        }
             // die($this->getLastSql());
         return $info;
     }

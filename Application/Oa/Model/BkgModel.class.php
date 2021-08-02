@@ -50,7 +50,8 @@ class BkgModel extends BkgCommonModel {
                 'cy_cut',
                 'bkg_date',
                 'booker',
-                'UPPER(CONCAT(SUBSTRING_INDEX(SUBSTRING_INDEX(l.`port`,"(",1)," ",-1),"-",SUBSTRING_INDEX(SUBSTRING_INDEX(d.`port`,"(",1)," ",-1))) as ld',
+                'UPPER(l.`port`) as lp',
+                'UPPER(d.`port`) as dp',
                 'bkg_no',
                 'group_concat(quantity) as quantity',
                 'group_concat(container_type) as container_type',
@@ -61,6 +62,16 @@ class BkgModel extends BkgCommonModel {
             ->limit($current * $size, $size)
             ->order('cy_cut desc')
             ->select();
+        foreach($info['list'] as &$record){
+            $lp = explode(' ',explode('(',$record['lp'])[0]);
+            unset($lp[0]);
+            $lp = implode(' ',$lp);
+
+            $dp = explode(' ',explode('(',$record['dp'])[0]);
+            unset($dp[0]);
+            $dp = implode(' ',$dp);
+            $record['ld'] = "$lp - $dp";
+        }
         return $info;
     }
     public function deleteOrder($bkgid,$deleteValue){
