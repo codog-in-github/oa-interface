@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body{
+            width: 100%;
+            height: 100%;
+        }
+        main,footer{
+            border: 2px solid #000;
+            padding: 0 30px;
+        }
+        table{
+            margin-bottom: 30px;
+        }
+        .row{
+            display: flex;
+            justify-content: space-between;
+        }
+        .date{
+            text-align: right;
+        }
+        h1{
+            text-decoration: underline;
+        }
+        h1,h2{
+            text-align: center;
+        }
+        td{
+            width: 50%;
+        }
+        article{
+            height: 25em;
+        }
+        .table-value{
+            border-bottom: #000 solid 1px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <div class="date">DATE: 2021/1/27</div>
+            <h1>BOOKING NOTICE</h1>
+        </header>
+        <table width="70%">
+            <tr>
+                <td>SHIPPER</tr><td class="table-value">{{$shipper}}</td>
+            </tr>
+            <tr>
+                <td>BOOKING NO</td><td class="table-value">{$booking_no}</td>
+            </tr>
+            <tr>
+                <td>VESSEL</td><td class="table-value">{$vessel}</td>
+            </tr>
+            <tr>
+                <td>VOY</td><td class="table-value">{$voy}</td>
+            </tr>
+            <tr>
+                <td >VESSEL CARRIER/td><td class="table-value">{$vessel_carrier}</td>
+            </tr>
+            <tr>
+                <td>POL</td><td class="table-value">{$pol}</td>
+            </tr>
+            <tr>
+                <td>POD</td><td class="table-value">{$pod}</td>
+            </tr>
+            <tr>
+                <td>ETD</td><td class="table-value">{$etd}</td>
+            </tr>
+            <tr>
+                <td>ETA</td><td class="table-value">{$eta}</td>
+            </tr>
+            <tr>
+                <td>CY CUT</td><td class="table-value">{$cy_cut}</td>
+            </tr>
+            <tr>
+                <td>DOC CUT</td><td class="table-value">{$doc_cut}</td>
+            </tr>
+            <volist name="container" id="c">
+                <tr>
+                    <td>CONTAINER</td><td class="table-value">{$c}</td>
+                </tr>
+            </volist>
+            <tr>
+                <td>貨物情報(COMMON)</td><td class="table-value">{$common}</td>
+            </tr>
+        </table>
+    </main>
+    <footer>
+        <h2>REMARKS</h2>
+        <article>{$remarks}</article>
+    </footer>
+</body>
+</html>
