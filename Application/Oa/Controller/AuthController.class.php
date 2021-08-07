@@ -33,7 +33,7 @@ class AuthController extends \Think\Controller
             'data'     =>  $data,
         ]);
     }
-    protected function ajaxError($errorNo, $message){
+    protected function ajaxError($errorNo = 999, $message = 'error'){
         $this->ajaxReturn([
             'error'    =>  $errorNo,
             'message'  =>  $message,
