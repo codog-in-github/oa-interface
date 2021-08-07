@@ -14,3 +14,10 @@ function nextOrderNo($last){
     while(preg_match($preg,++$last)){}
     return $last;
 }
+
+function rmSepStr($mixstr){
+    if(gettype($mixstr) === 'array'){
+        return array_map('rmSepStr',$mixstr);
+    }
+    return str_replace('　',' ',$mixstr);
+}

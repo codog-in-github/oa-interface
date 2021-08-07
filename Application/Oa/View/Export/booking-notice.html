@@ -19,18 +19,32 @@
         }
         .date{
             text-align: right;
+            font-weight: bold;
         }
-        h1{
-            text-decoration: underline;
+        .limit{
+            width: 100%;
+            padding: 0 130px;
+        }
+        .h1{
+            border-bottom: #fff solid 2px;
+            font-size: 19px;
+            text-align: center;
+            border-bottom: #000 solid 2px;
+            margin: 0 auto 10px;
+            padding-bottom: 10px;
+            font-weight: bold;
         }
         h1,h2{
             text-align: center;
         }
         td{
             width: 50%;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 18px;
         }
         article{
-            height: 25em;
+            height: 13em;
         }
         .table-value{
             border-bottom: #000 solid 1px;
@@ -41,14 +55,23 @@
     <main>
         <header>
             <div class="date">DATE: 2021/1/27</div>
-            <h1>BOOKING NOTICE</h1>
+            <div class="limit"> 
+                <div class="h1">
+                    BOOKING NOTICE
+                </div>
+            </div>
         </header>
-        <table width="70%">
+        <table width="100%">
             <tr>
-                <td>SHIPPER:</tr><td class="table-value">{$shipper}</td>
+                <td>SHIPPER:</tr><td class="table-value">{$shipper}</td><td style="width: 30%;"></td>
             </tr>
             <tr>
                 <td>BOOKING NO:</td><td class="table-value">{$booking_no}</td>
+            </tr>
+            <tr>
+                <td colspan="3" align="right">
+                    <img src="__PUBLIC__/chz.png" width="70%"></td>
+                </td>
             </tr>
             <tr>
                 <td>VESSEL:</td><td class="table-value">{$vessel}</td>
@@ -63,7 +86,7 @@
                 <td>POL:</td><td class="table-value">{$pol}</td>
             </tr>
             <tr>
-                <td>POD</td><td class="table-value">{$pod}</td>
+                <td>POD:</td><td class="table-value">{$pod}</td>
             </tr>
             <tr>
                 <td>ETD:</td><td class="table-value">{$etd}</td>
