@@ -7,6 +7,7 @@ class AuthController extends \Think\Controller
     const NO_LOGIN_METHOD =[
         'login',
         'needClear',
+        'verify',
     ];
     //错误码
     const SUCCESS = 0;          #成功
