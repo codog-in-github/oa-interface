@@ -7,7 +7,7 @@ class HandlingModel extends Model{
     public function getDataByBkgId($bkg_id){
         $bookData = $this
             ->where([
-                'bkgid'=>$bkg_id,
+                'bkg_id'=>$bkg_id,
             ])
             ->find();
         if($bookData){
@@ -62,6 +62,7 @@ class HandlingModel extends Model{
         $bookData['chassis'] =  implode(',',array_column($data['detail'],'chassis'));
         $bookData['van_day'] =  implode(',',array_map(function($item){return substr($item,0,10);},array_column($data['detail'],'vanning_date')));
         $bookData['van_place'] = implode(',',array_column($data['detail'],'booker_place'));
+        $bookData['c_book'] = 'INVOICE|許可書|B/L|サレンダーB/L|海上保険';
         return $bookData;
     }
     public function saveData($data){
