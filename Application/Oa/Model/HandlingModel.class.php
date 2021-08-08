@@ -45,13 +45,14 @@ class HandlingModel extends Model{
             'cy_open' => $data['loading']['cy_open'],
             'in_no' => $data['bkg']['dg'],
             'forwarder' => $data['trader']['forwarder'],
+            'unity' => '本',
             // 'sum_queantity' => $data['loading']['cy_cut'],
             // 'transprotation' => $data['loading']['cy_cut'],
             // 'expenses' => $data['loading']['cy_cut'],
             // 'chassis' => $data['loading']['cy_cut'],
             // 'van_day' => $data['loading']['cy_cut'],
             // 'van_place' => $data['loading']['cy_cut'],
-            'basel_charge' => $data['bkg']['bkg_no'],
+            'bkg_no' => $data['bkg']['bkg_no'],
             'bl_no' => $data['bkg']['bkg_no'],
         ];
         $bookData['sum_queantity'] = array_sum(array_map(function($item){
