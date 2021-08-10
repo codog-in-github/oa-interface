@@ -19,10 +19,15 @@ class ContainerDetailModel extends BkgCommonModel {
         return $this->where([
             'bkg_id' => $bkg_id,
             'delete_at' => [
-                'exp',
-                'IS NULL',
+                [
+                    'exp',
+                    'IS NULL',
+                ],
+                '',
+                'OR'
             ]
         ])->select();
+        
     }
     
     public function getList($query,$size=100,$current=0){

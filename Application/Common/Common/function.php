@@ -14,10 +14,16 @@ function nextOrderNo($last){
     while(preg_match($preg,++$last)){}
     return $last;
 }
-
+/**
+ * 全半角转换
+ */
 function rmSepStr($mixstr){
     if(gettype($mixstr) === 'array'){
         return array_map('rmSepStr',$mixstr);
     }
-    return str_replace('　',' ',$mixstr);
+    $replace = [
+        '　' => ' ',
+        'ー' => '-',
+    ];
+    return str_replace(array_keys($replace),array_values($replace),$mixstr);
 }
