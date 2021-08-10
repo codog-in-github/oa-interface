@@ -18,6 +18,10 @@ class ContainerDetailModel extends BkgCommonModel {
     public function getData($bkg_id){
         return $this->where([
             'bkg_id' => $bkg_id,
+            'delete_at' => [
+                'exp',
+                'IS NULL',
+            ]
         ])->select();
     }
     

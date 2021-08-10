@@ -34,16 +34,17 @@
     </style>
 </head>
 <body>
+    <div style="text-align:right">DATE:<?php echo date('Y/m/d'); ?></div>
     <div style="text-align:right">< exprot ></div>
     <table width="100%" cellspacing="0">
         <tr>
-            <td colspan="3" class="label-y">法人番号</td>
-            <td colspan="3" class="label-y">輸出者符号</td>
-            <td colspan="3" class="label-y">輸出者(SHIPPER)</td>
+            <td style="width:20%" colspan="3" class="label-y">法人番号</td>
+            <td style="width:20%" colspan="3" class="label-y">輸出者符号</td>
+            <td style="width:20%" colspan="3" class="label-y">輸出者(SHIPPER)</td>
             <!-- 左右分割 -->
-            <td rowspan="11" class="label">内容</td>
-            <td colspan="3" class="label">社内番号:{$in_no}</td>
-            <td colspan="2" class="label">INVOICE NO:{$invoice_no}</td>
+            <td style="width:6.6%" rowspan="11" class="label">内容</td>
+            <td style="width:19.8%" colspan="3" class="label">社内番号:{$in_no}</td>
+            <td style="width:13.2%" colspan="2" class="label">INVOICE NO:{$invoice_no}</td>
         </tr>
         <tr>
             <td colspan="3" class="label-y">{$croporate}</td>
@@ -138,7 +139,7 @@
             <td colspan="2" class="label">海上保険</td>
             <td colspan="2">{$sea_insurance}</td>
             <td class="label">バーゼル担当</td>
-            <td>{$basel_charge}</td>
+            <td style="width:6.6%">{$basel_charge}</td>
         </tr>
         <tr>
             <td class="label">HS CODE 指定</td>

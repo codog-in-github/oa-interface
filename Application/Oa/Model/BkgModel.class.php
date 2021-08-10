@@ -60,7 +60,7 @@ class BkgModel extends BkgCommonModel {
             ->join('container_type AS ct ON b.id = bkg_id')
             ->group('b.id')
             ->limit($current * $size, $size)
-            ->order('cy_cut desc')
+            ->order('cy_cut')
             ->select();
         foreach($info['list'] as &$record){
             $lp = explode(' ',explode('(',$record['lp'])[0]);
