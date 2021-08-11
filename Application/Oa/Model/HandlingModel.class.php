@@ -40,7 +40,7 @@ class HandlingModel extends Model{
             'voyage' => $data['shipper']['voyage'],
             'etd' => $data['loading']['etd'],
             // 'carrier' => $data['shipper']['carrier'],
-            'eta' => $data['delivery']['eta'],
+            'eta' => $data['loading']['eta'],
             'carrier_comp' => $data['shipper']['carrier'],
             'cy_open' => $data['loading']['cy_open'],
             'in_no' => $data['bkg']['dg'],
