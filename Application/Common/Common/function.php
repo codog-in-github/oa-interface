@@ -27,3 +27,18 @@ function rmSepStr($mixstr){
     ];
     return str_replace(array_keys($replace),array_values($replace),$mixstr);
 }
+/**
+ * impoldeWithoutEmpty
+ */
+function impoldeWithoutEmpty($glue, $array){
+    foreach($array as $cell){
+        if($cell){
+            if($str){
+                $str .= "$glue$cell";
+            }else{
+                $str = $cell;
+            }
+        }
+    }
+
+}

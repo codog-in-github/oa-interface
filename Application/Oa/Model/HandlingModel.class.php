@@ -39,8 +39,8 @@ class HandlingModel extends Model{
             'cy_cut' => $data['loading']['cy_cut'],
             'voyage' => $data['shipper']['voyage'],
             'etd' => $data['loading']['etd'],
-            'carrier' => $data['shipper']['carrier'],
-            'eta' => $data['loading']['eta'],
+            // 'carrier' => $data['shipper']['carrier'],
+            'eta' => $data['delivery']['eta'],
             'carrier_comp' => $data['shipper']['carrier'],
             'cy_open' => $data['loading']['cy_open'],
             'in_no' => $data['bkg']['dg'],
@@ -55,15 +55,24 @@ class HandlingModel extends Model{
             'bkg_no' => $data['bkg']['bkg_no'],
             'bl_no' => $data['bkg']['bkg_no'],
         ];
-        $bookData['sum_queantity'] = array_sum(array_map(function($item){
-            return $item['quantity'];
-        },$data['type']));
-        $bookData['transprotation'] =  implode(',',array_column($data['detail'],'transprotation'));
-        $bookData['expenses'] =  implode(',',array_column($data['detail'],'expenses'));
-        $bookData['chassis'] =  implode(',',array_column($data['detail'],'chassis'));
+        $bookData['sum_queantity'] = array_sum(array_column($data['type'],'quantity'));
+        $transprotation = [];
+       
+        $bookData['transprotation'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'transprotation'));
+        $bookData['expenses'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'expenses'));
+        // $bookData['chassis'] =  implode(',',array_column($data['detail'],'chassis'));
+        foreach ( array_column($data['detail'],'chassis') as $one){
+            if($one){
+                if($bookData['chassis']){
+                    $bookData['chassis'] .= ",$one";
+                }else{
+                    $bookData['chassis'] = $one;
+                }
+            }
+        }
         $bookData['van_day'] =  implode(',',array_map(function($item){return substr($item,0,10);},array_column($data['detail'],'vanning_date')));
         $bookData['van_place'] = implode(',',array_column($data['detail'],'booker_place'));
-        $bookData['c_book'] = 'INVOICE|許可書|B/L|サレンダーB/L|海上保険';
+        $bookData['c_book'] = 'INVOICE|許可書|B/L|サレンダ-B/L|海上保険';
         return $bookData;
     }
     public function saveData($data){
