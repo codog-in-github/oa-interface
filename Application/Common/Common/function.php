@@ -39,7 +39,6 @@ function impoldeWithoutEmpty($glue, $array){
                 $str = $cell;
             }
         }
-        return $str;
     }
-
+    return $str;
 }
