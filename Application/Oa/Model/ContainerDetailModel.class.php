@@ -82,11 +82,14 @@ class ContainerDetailModel extends BkgCommonModel {
                     'or',
                 ],
                 'vanning_date'=>[
-                    'BETWEEN',
-                    [
-                        date('Y-m-d 00:00:00',strtotime('-1 day')),
-                        date('Y-m-d 23:59:59',strtotime('+2 day')),
-                    ]
+                    // 'BETWEEN',
+                    // [
+                    //     date('Y-m-d 00:00:00',strtotime('-1 day')),
+                    //     date('Y-m-d 23:59:59',strtotime('+2 day')),
+                    // ]
+                    ['exp', 'IS NOT NULL'],
+                    ['neq', ''],
+                    ['neq', '0000-00-00 00:00:00'],
                 ]
             ])
             ->where($query);

@@ -31,7 +31,7 @@ class HandlingModel extends Model{
         if($data['trader']['booker']){
             $data['booker'] = (new BookerModel())->getBooker($data['trader']['booker']);
         }
-        // dump($data['bkg']);die;
+        // dump($data);die;
         $bookData = [
             'shipper' => $data['trader']['booker'],
             'doc_cut' => $data['loading']['doc_cut'],
@@ -41,7 +41,7 @@ class HandlingModel extends Model{
             'etd' => $data['loading']['etd'],
             'carrier' => $data['shipper']['carrier'],
             'eta' => $data['loading']['eta'],
-            // 'carrier_comp' => $data['shipper']['carrier'],
+            'booking' => $data['trader']['drayage'],
             'cy_open' => $data['loading']['cy_open'],
             'in_no' => $data['bkg']['dg'],
             'forwarder' => $data['trader']['forwarder'],
