@@ -56,7 +56,6 @@ class HandlingModel extends Model{
             'bl_no' => $data['bkg']['bkg_no'],
         ];
         $bookData['sum_queantity'] = array_sum(array_column($data['type'],'quantity'));
-        $transprotation = [];
        
         $bookData['transprotation'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'transprotation'));
         $bookData['expenses'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'expenses'));
