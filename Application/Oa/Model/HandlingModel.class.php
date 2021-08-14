@@ -30,9 +30,9 @@ class HandlingModel extends Model{
             'vessel_name' => $data['shipper']['vessel_name'],
             'cy_cut' => $data['loading']['cy_cut'],
             'voyage' => $data['shipper']['voyage'],
-            'etd' => $data['loading']['etd'],
+            'etd' =>  exportToGetPort($data['loading']['port']) . ' ' . $data['loading']['etd'],
             'carrier' => $data['shipper']['carrier'],
-            'eta' => $data['loading']['eta'],
+            'eta' => exportToGetPort($data['delivery']['port']) . ' ' . $data['delivery']['eta'],
             'booking' => $data['trader']['drayage'],
             'cy_open' => $data['loading']['cy_open'],
             'in_no' => $data['bkg']['dg'],
@@ -43,22 +43,25 @@ class HandlingModel extends Model{
             'c_book' => 'INVOICE|許可書|B/L|サレンダ-B/L|海上保険',
         ];
         $defaultData['sum_queantity'] = array_sum(array_column($data['type'],'quantity'));
-        $transprotation = array_column($data['detail'],'transprotation');
         // print_r($transprotation);die;
+        $defaultData['expenses'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'expenses'));
+        $defaultData['chassis'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'chassis'));
+        $defaultData['van_place'] = impoldeWithoutEmpty(',',array_column($data['detail'],'booker_place'));
+        $defaultData['van_day'] =  impoldeWithoutEmpty(
+            ',',
+            array_map(
+                function($item){
+                    return substr($item,0,10);
+                },
+                array_column($data['detail'],'vanning_date')
+            )
+        );
         $tmp = [];
+        $transprotation = array_column($data['detail'],'transprotation');
         foreach($transprotation as $one){
             $tmp[$one] = $one;
         }
         $defaultData['transprotation'] =  impoldeWithoutEmpty(',',$tmp);
-        $defaultData['expenses'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'expenses'));
-        $defaultData['chassis'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'chassis'));
-        $defaultData['van_day'] =  impoldeWithoutEmpty(
-            ',',
-            array_map(function($item){return substr($item,0,10);},
-            array_column($data['detail'],'vanning_date'))
-        );
-        $defaultData['van_place'] = impoldeWithoutEmpty(',',array_column($data['detail'],'booker_place'));
-
         //查表是否被填写
         $bookData = $this
             ->where([

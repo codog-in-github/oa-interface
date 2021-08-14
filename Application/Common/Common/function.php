@@ -47,3 +47,10 @@ function impoldeWithoutEmpty($glue, $array){
 function isEmpty($val){
     return !$val || $val == '0000-00-00 00:00:00' || $val == '0000-00-00';
 }
+
+function exportToGetPort($portInSql){
+    $countryAndPort = explode('(',$portInSql)[0];
+    $pice = explode(' ',$countryAndPort);
+    unset($pice[0]);
+    return implode(' ',$pice);
+}
