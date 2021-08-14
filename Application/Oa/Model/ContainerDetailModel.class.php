@@ -44,10 +44,13 @@ class ContainerDetailModel extends BkgCommonModel {
                 'booker_place',      #バンニング場所
                 'transprotation',    #運送業 
                 'cy_cut',            #CY CUT
-                'bkg_date',          #BKG DATE
+                // 'bkg_date',          #BKG DATE
                 'UPPER(l.`port`) as lp',
                 'UPPER(d.`port`) as dp',
                                     #POL/POD
+                'pick_order_request',
+                'send_pick_order',
+                'free_pick_day',
                 'is_confirm',
                 'bkg_no',            #BKG NO
             ])
@@ -73,6 +76,7 @@ class ContainerDetailModel extends BkgCommonModel {
             ->join('bkg AS b ON b.id = c.bkg_id')
             ->join('port_of_loading AS l ON l.id = c.bkg_id')
             ->join('port_of_delovery AS d ON d.id = c.bkg_id')
+            ->join('container AS ct ON ct.id = c.bkg_id')
             ->join('trader AS t ON t.id = c.bkg_id')
             ->where([
                 'b.delete_at' => ['exp','IS NULL'],
