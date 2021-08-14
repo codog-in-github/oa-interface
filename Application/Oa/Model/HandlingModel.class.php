@@ -5,15 +5,7 @@ use Think\Model;
 
 class HandlingModel extends Model{
     public function getDataByBkgId($bkg_id){
-        $bookData = $this
-            ->where([
-                'bkg_id'=>$bkg_id,
-            ])
-            ->find();
-        if($bookData){
-            return $bookData;
-        }
-        
+        //默认值 获取
         $models = [
             'bkg' => new BkgModel(),
             'trader' => new TraderModel(),
@@ -32,7 +24,7 @@ class HandlingModel extends Model{
             $data['booker'] = (new BookerModel())->getBooker($data['trader']['booker']);
         }
         // dump($data);die;
-        $bookData = [
+        $defaultData = [
             'shipper' => $data['trader']['booker'],
             'doc_cut' => $data['loading']['doc_cut'],
             'vessel_name' => $data['shipper']['vessel_name'],
@@ -46,29 +38,44 @@ class HandlingModel extends Model{
             'in_no' => $data['bkg']['dg'],
             'forwarder' => $data['trader']['forwarder'],
             'unity' => '本',
-            // 'sum_queantity' => $data['loading']['cy_cut'],
-            // 'transprotation' => $data['loading']['cy_cut'],
-            // 'expenses' => $data['loading']['cy_cut'],
-            // 'chassis' => $data['loading']['cy_cut'],
-            // 'van_day' => $data['loading']['cy_cut'],
-            // 'van_place' => $data['loading']['cy_cut'],
             'bkg_no' => $data['bkg']['bkg_no'],
             'bl_no' => $data['bkg']['bkg_no'],
+            'c_book' => 'INVOICE|許可書|B/L|サレンダ-B/L|海上保険',
         ];
-        $bookData['sum_queantity'] = array_sum(array_column($data['type'],'quantity'));
+        $defaultData['sum_queantity'] = array_sum(array_column($data['type'],'quantity'));
         $transprotation = array_column($data['detail'],'transprotation');
         // print_r($transprotation);die;
         $tmp = [];
         foreach($transprotation as $one){
             $tmp[$one] = $one;
         }
-        $bookData['transprotation'] =  impoldeWithoutEmpty(',',$tmp);
-        $bookData['expenses'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'expenses'));
-        $bookData['chassis'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'chassis'));
-        $bookData['van_day'] =  impoldeWithoutEmpty(',',array_map(function($item){return substr($item,0,10);},array_column($data['detail'],'vanning_date')));
-        $bookData['van_place'] = impoldeWithoutEmpty(',',array_column($data['detail'],'booker_place'));
-        $bookData['c_book'] = 'INVOICE|許可書|B/L|サレンダ-B/L|海上保険';
-        return $bookData;
+        $defaultData['transprotation'] =  impoldeWithoutEmpty(',',$tmp);
+        $defaultData['expenses'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'expenses'));
+        $defaultData['chassis'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'chassis'));
+        $defaultData['van_day'] =  impoldeWithoutEmpty(
+            ',',
+            array_map(function($item){return substr($item,0,10);},
+            array_column($data['detail'],'vanning_date'))
+        );
+        $defaultData['van_place'] = impoldeWithoutEmpty(',',array_column($data['detail'],'booker_place'));
+
+        //查表是否被填写
+        $bookData = $this
+            ->where([
+                'bkg_id'=>$bkg_id,
+            ])
+            ->find();
+        if($bookData){
+            //填写完成空值赋默认值
+            foreach ($bookData as $colName => &$cell){
+                if(isEmpty($cell)){
+                    $cell = $defaultData[$colName];
+                }
+            }
+            return $bookData;
+        }else{
+            return $defaultData;
+        }
     }
     public function saveData($data){
 

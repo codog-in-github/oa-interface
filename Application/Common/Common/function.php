@@ -32,7 +32,7 @@ function rmSepStr($mixstr){
  */
 function impoldeWithoutEmpty($glue, $array){
     foreach($array as $cell){
-        if($cell && $cell != '0000-00-00 00:00:00' && $cell != '0000-00-00'){
+        if(!isEmpty($cell)){
             if($str){
                 $str .= "$glue$cell";
             }else{
@@ -41,4 +41,9 @@ function impoldeWithoutEmpty($glue, $array){
         }
     }
     return $str;
+}/**
+ * 
+ */
+function isEmpty($val){
+    return !$val || $val == '0000-00-00 00:00:00' || $val == '0000-00-00';
 }
