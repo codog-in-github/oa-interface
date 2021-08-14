@@ -65,8 +65,8 @@ class HandlingModel extends Model{
         $bookData['transprotation'] =  impoldeWithoutEmpty(',',$tmp);
         $bookData['expenses'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'expenses'));
         $bookData['chassis'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'chassis'));
-        $bookData['van_day'] =  implode(',',array_map(function($item){return substr($item,0,10);},array_column($data['detail'],'vanning_date')));
-        $bookData['van_place'] = implode(',',array_column($data['detail'],'booker_place'));
+        $bookData['van_day'] =  impoldeWithoutEmpty(',',array_map(function($item){return substr($item,0,10);},array_column($data['detail'],'vanning_date')));
+        $bookData['van_place'] = impoldeWithoutEmpty(',',array_column($data['detail'],'booker_place'));
         $bookData['c_book'] = 'INVOICE|許可書|B/L|サレンダ-B/L|海上保険';
         return $bookData;
     }
