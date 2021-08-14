@@ -38,12 +38,14 @@ class HandlingModel extends Model{
             'in_no' => $data['bkg']['dg'],
             'forwarder' => $data['trader']['forwarder'],
             'unity' => '本',
+            'container_type' =>  $data['type'][0]['container_type'],
             'surrender_arrangement' => $data['container']['surrender_arrangement'],
             'pick_order_request' => $data['container']['pick_order_request'],
             'send_pick_order' => $data['container']['send_pick_order'],
             'bkg_no' => $data['bkg']['bkg_no'],
             'bl_no' => $data['bkg']['bkg_no'],
             'c_book' => 'INVOICE|許可書|B/L|サレンダ-B/L|海上保険',
+            'consignee' =>  $data['trader']['consignee'],
         ];
         $defaultData['sum_queantity'] = array_sum(array_column($data['type'],'quantity'));
         // print_r($transprotation);die;
