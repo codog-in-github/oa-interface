@@ -47,9 +47,12 @@ class HandlingModel extends Model{
             'c_book' => 'INVOICE|許可書|B/L|サレンダ-B/L|海上保険',
             'consignee' =>  $data['trader']['consignee'],
         ];
+        // dump($defaultData);die;
+
         $defaultData['sum_queantity'] = array_sum(array_column($data['type'],'quantity'));
         // print_r($transprotation);die;
         $defaultData['expenses'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'expenses'));
+        $defaultData['free_day'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'free_pick_day'));
         $defaultData['chassis'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'chassis'));
         $defaultData['van_place'] = impoldeWithoutEmpty(',',array_column($data['detail'],'booker_place'));
         $defaultData['van_day'] =  impoldeWithoutEmpty(
