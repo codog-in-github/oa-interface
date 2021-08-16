@@ -47,7 +47,7 @@ class BkgModel extends BkgCommonModel {
             ->_beforeQuery($query)
             ->field([
                 'b.id',
-                'cy_cut',
+                'CASE `doc_cut` WHEN "" THEN `cy_cut` ELSE `doc_cut` END AS show_cy_cut',
                 'bkg_date',
                 'booker',
                 'UPPER(l.`port`) as lp',
@@ -60,7 +60,7 @@ class BkgModel extends BkgCommonModel {
             ->join('container_type AS ct ON b.id = bkg_id')
             ->group('b.id')
             ->limit($current * $size, $size)
-            ->order('cy_cut')
+            ->order('show_cy_cut')
             ->select();
         foreach($info['list'] as &$record){
             $lp = explode(' ',explode('(',$record['lp'])[0]);
