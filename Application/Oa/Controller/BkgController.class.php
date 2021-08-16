@@ -58,7 +58,7 @@ class BkgController extends AuthController{
         if($data['trader']['booker']){
             $data['booker'] = (new BookerModel())->getBooker($data['trader']['booker']);
         }
-        $this->ajaxSuccess($data);
+        $this->ajaxSuccess(clearEmptyDate($data));
     }
     public function getlist (){
         $condition = $_REQUEST['condition'];

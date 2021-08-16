@@ -80,9 +80,9 @@ class HandlingModel extends Model{
                     $cell = $defaultData[$colName];
                 }
             }
-            return $bookData;
+            return clearEmptyDate($bookData);
         }else{
-            return $defaultData;
+            return clearEmptyDate($defaultData);
         }
     }
     public function saveData($data){

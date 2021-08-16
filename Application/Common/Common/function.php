@@ -31,6 +31,17 @@ function rmSepStr($mixstr){
         return str_replace(array_keys($replace),array_values($replace),$mixstr);
     }
 }
+
+function clearEmptyDate($mixstr){
+    if(gettype($mixstr) === 'array'){
+        return array_map('clearEmptyDate',$mixstr);
+    }
+    if(isEmptyDate($mixstr)){
+        return '';
+    }else{
+        return $mixstr;
+    }
+}
 /**
  * impoldeWithoutEmpty
  */
@@ -49,7 +60,11 @@ function impoldeWithoutEmpty($glue, $array){
  * 
  */
 function isEmpty($val){
-    return !$val || $val == '0000-00-00 00:00:00' || $val == '0000-00-00';
+    return !$val || isEmptyDate($val);
+}
+
+function isEmptyDate($val){
+    return $val == '0000-00-00 00:00:00' || $val == '0000-00-00';
 }
 
 function exportToGetPort($portInSql){
