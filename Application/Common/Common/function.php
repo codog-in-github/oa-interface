@@ -21,11 +21,15 @@ function rmSepStr($mixstr){
     if(gettype($mixstr) === 'array'){
         return array_map('rmSepStr',$mixstr);
     }
-    $replace = [
-        '　' => ' ',
-        'ー' => '-',
-    ];
-    return str_replace(array_keys($replace),array_values($replace),$mixstr);
+    if(isEmpty($mixstr)){
+        return '&nbsp;';
+    }else{
+        $replace = [
+            '　' => ' ',
+            'ー' => '-',
+        ];
+        return str_replace(array_keys($replace),array_values($replace),$mixstr);
+    }
 }
 /**
  * impoldeWithoutEmpty
