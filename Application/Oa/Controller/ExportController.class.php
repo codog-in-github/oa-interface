@@ -29,7 +29,7 @@ class ExportController extends AuthController
     }
     protected function _exportPdf($temp, $data, $extra = [])
     {
-        $this->assign(rmSepStr($data));
+    $this->assign(rmSepStr($data));
         header("Content-type:application/pdf");
         header("Content-Disposition:attachment;filename=Export_test.pdf");
         $default = [
