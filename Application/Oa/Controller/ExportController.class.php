@@ -15,6 +15,10 @@ class ExportController extends AuthController
         (new HandlingModel())->saveData($_REQUEST);
         $this->_exportPdf('handling', $_REQUEST, [
             'orientation' => 'L',
+            'margin_left'=>4,
+            'margin_right'=>4,
+            'margin_top'=>4,
+            'margin_bottom'=>4,
         ]);
     }
     public function getHandlngData()
@@ -29,12 +33,11 @@ class ExportController extends AuthController
     }
     protected function _exportPdf($temp, $data, $extra = [])
     {
-    $this->assign(rmSepStr($data));
-        header("Content-type:application/pdf");
-        header("Content-Disposition:attachment;filename=Export_test.pdf");
+        $this->assign(rmSepStr($data));
         $default = [
+            'mode' => 'utf-8',
+            'format' => 'A4',
         ];
-
         $mpdf = new \Mpdf\Mpdf(array_merge($default, $extra));
         $mpdf->autoLangToFont = true;
         $mpdf->autoScriptToLang = true;

@@ -57,12 +57,16 @@ class HandlingModel extends Model{
         $defaultData['chassis'] =  impoldeWithoutEmpty(',',array_column($data['detail'],'chassis'));
         $defaultData['van_place'] = impoldeWithoutEmpty(',',array_column($data['detail'],'booker_place'));
         $defaultData['van_day'] =  impoldeWithoutEmpty(
-            ',',
+            ', ',
             array_map(
                 function($item){
-                    return substr($item,0,10);
+                    if(isEmptyDate($item['vanning_date'])){
+                        return '';
+                    }else{
+                        return substr($item['vanning_date'],0,10) . ' ' .$item['vanning_during'] ;
+                    }
                 },
-                array_column($data['detail'],'vanning_date')
+                $data['detail']
             )
         );
         $tmp = [];
