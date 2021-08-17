@@ -29,6 +29,7 @@ class HandlingModel extends Model{
             'doc_cut' => $data['loading']['doc_cut'],
             'vessel_name' => $data['shipper']['vessel_name'],
             'cy_cut' => $data['loading']['cy_cut'],
+            'cy_open' => $data['loading']['cy_open'],
             'voyage' => $data['shipper']['voyage'],
             'etd' =>  exportToGetPort($data['loading']['port']) . ' ' . $data['loading']['etd'],
             'carrier' => $data['shipper']['carrier'],
