@@ -8,6 +8,8 @@ class ExportController extends AuthController
 {
     public function bookingNotice()
     {
+        $base64 = imgToBase64(__DIR__.'/../../../Public/chz.png');
+        $this->assign('img',$base64);
         $this->_exportPdf('booking-notice', $_REQUEST);
     }
     public function handling()
