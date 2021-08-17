@@ -55,13 +55,14 @@
             <td width="9%" style="border: none;height: 0;"></td>
             <td width="9%" style="border: none;height: 0;"></td>
             <td width="20%" style="border: none;height: 0;"></td>
+            <td width="0" style="border: none;height: 0;"></td>
         </tr>
         <tr>
             <td colspan="4" class="label-y">法人番号</td>
             <td colspan="3" class="label-y">輸出者符号</td>
             <td colspan="3" class="label-y">輸出者(SHIPPER)</td>
             <!-- 左右分割 -->
-            <td style="width: 3px;" rowspan="11" class="label">内容</td>
+            <td style="width: 3px;" rowspan="12" class="label">内容</td>
             <td colspan="3" class="label">社内番号:{$in_no}</td>
             <td colspan="2" class="label">INVOICE NO:{$invoice_no}</td>
         </tr>
@@ -69,7 +70,7 @@
             <td colspan="4" class="label-y">{$croporate}</td>
             <td colspan="3" class="label-y">{$outputer_symbol}</td>
             <td colspan="3" class="label-y">{$shipper}</td>
-            <td rowspan="10" colspan="5" class="wrap">{$content}</td>
+            <td rowspan="11" colspan="5" class="wrap">{$content}</td>
             <!-- 左右分割 -->
         </tr>
         <tr>
@@ -145,10 +146,14 @@
             <!-- 左右分割 -->
         </tr>
         <tr>
-            <td class="label" colspan="2">CONSIGNEE/BL品名</td>
-            <td colspan="8">{$consignee}</td>
+            <td class="label" colspan="2" rowspan="2" style="height: 50px;">CONSIGNEE/BL品名</td>
+            <td colspan="8" rowspan="2" >{$consignee}</td>
             <!-- 左右分割 -->
-            <td colspan="6" align="center" class="label">進捗状況</td>
+            <td style="height: 120px;border: none;"></td>
+        </tr>
+        <tr>
+            <!-- 左右分割 -->
+            <td colspan="6" align="center" class="label" >進捗状況</td>
         </tr>
         <tr>
             <td class="label"  colspan="2">HS CODE 指定</td>
