@@ -1,122 +1,129 @@
-
-<!DOCTYPE html>
-<head>
-    <style>
-        body{
-            width: 100%;
-            height: 100%;
-        }
-        main,footer{
-            border: 2px solid #000;
-            padding: 0 30px;
-        }
-        main{
-            padding-right: 0;
-        }
-        table{
-            margin-bottom: 30px;
-        }
-        .row{
-            display: flex;
-            justify-content: space-between;
-        }
-        .date{
-            padding-right: 5px;
-            text-align: right;
-            font-weight: bold;
-        }
-        .limit{
-            width: 100%;
-            padding: 0 130px;
-        }
-        .h1{
-            border-bottom: #fff solid 2px;
-            font-size: 19px;
-            text-align: center;
-            border-bottom: #000 solid 2px;
-            margin: 0 auto 10px;
-            padding-bottom: 10px;
-            font-weight: bold;
-        }
-        h1,h2{
-            text-align: center;
-        }
-        td{
-            width: 50%;
-            padding: 10px;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        article{
-            height: 13em;
-        }
-        .table-value{
-            border-bottom: #000 solid 1px;
-        }
-    </style>
-</head>
-<body>
-    <main>
+<html>
+    <head>
+        <style>
+            header{
+                padding-bottom: 10px;
+                border-bottom:1px dashed #000 ;
+            }
+            .logo{
+                width: 40%;
+                float: left;
+            }
+            .address{
+                float: right;
+                width: 50%;
+            }
+            .title h1{
+                width: 70%;
+                font-size: 40px;
+                float: left;
+            }
+            .title .date{
+                float: right;
+                width: 20%;
+                text-align: right;
+            }
+            .main{
+                background: #f3f3f3;
+                padding: 20px 0;
+            }
+            .row{
+                margin:10px 0;
+                padding: 0 10px;
+            }
+            .label{
+                width: 20%;
+                float: left;
+            }
+            .cell{
+                width: 75%;
+                float: right;
+            }
+            footer{
+                border: 1px solid #000;
+                padding: 10px;
+                height: 300px;
+            }
+        </style>
+    </head>
+    <body>
         <header>
-            <div class="date">DATE: <?php echo date('Y/m/d') ?></div>
-            <div class="limit"> 
-                <div class="h1">
-                    BOOKING NOTICE
+            <div class="logo fl">
+                <img src="{$img}">
+            </div>
+            <div class="address">{$address}</div>
+        </header>
+        <main>
+            <div class="title">
+                <h1>BOOKING NOTICE</h1>
+                <div class="date">DATE<br/><?php echo date('Y-m-d') ?></div>
+            </div>
+            <div class="form">
+                <div class="header">
+                    <div class="row">
+                        <div class="label">SHIPPER:</div>
+                        <div class="cell">{$shipper}</div>
+                    </div>
+                    <div class="row">
+                        <div class="lable">BOOKING NO:</div>
+                        <div class="cell">{$booking_no}</div>
+                    </div>
+                </div>
+                <div class="main">
+                    <div class="row">
+                        <div class="label">VESSEL:</div>
+                        <div class="cell">{$vessel}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">VOY:</div>
+                        <div class="cell">{$voy}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">VESSEL CARRIER:</div>
+                        <div class="cell">{$vessel_carrier}</div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="row">
+                        <div class="label">POL:</div>
+                        <div class="cell">{$pol}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">POD:</div>
+                        <div class="cell">{$pod}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">ETD:</div>
+                        <div class="cell">{$etd}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">ETA:</div>
+                        <div class="cell">{$eta}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">CY CUT:</div>
+                        <div class="cell">{$cy_cut}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">DOC CUT:</div>
+                        <div class="cell">{$doc_cut}</div>
+                    </div>
+                    <volist name="container" id="c">
+                        <div class="row">
+                            <div class="label">CONTAINER:</div>
+                            <div class="cell">{$c}</div>
+                        </div>
+                    </volist>
+                    <div class="row">
+                        <div class="label">COMMODITY:</div>
+                        <div class="cell">{$common}</div>
+                    </div>
                 </div>
             </div>
-        </header>
-        <table width="100%">
-            <tr>
-                <td>SHIPPER:</tr><td class="table-value">{$shipper}</td><td style="width: 30%;"></td>
-            </tr>
-            <tr>
-                <td>BOOKING NO:</td><td class="table-value">{$booking_no}</td>
-            </tr>
-            <tr>
-                <td colspan="3" align="right">
-                    <img src="{$img}" width="40%"></td>
-                </td>
-            </tr>
-            <tr>
-                <td>VESSEL:</td><td class="table-value">{$vessel}</td>
-            </tr>
-            <tr>
-                <td>VOY:</td><td class="table-value">{$voy}</td>
-            </tr>
-            <tr>
-                <td >VESSEL CARRIER:</td><td class="table-value">{$vessel_carrier}</td>
-            </tr>
-            <tr>
-                <td>POL:</td><td class="table-value">{$pol}</td>
-            </tr>
-            <tr>
-                <td>POD:</td><td class="table-value">{$pod}</td>
-            </tr>
-            <tr>
-                <td>ETD:</td><td class="table-value">{$etd}</td>
-            </tr>
-            <tr>
-                <td>ETA:</td><td class="table-value">{$eta}</td>
-            </tr>
-            <tr>
-                <td>CY CUT:</td><td class="table-value">{$cy_cut}</td>
-            </tr>
-            <tr>
-                <td>DOC CUT:</td><td class="table-value">{$doc_cut}</td>
-            </tr>
-            <volist name="container" id="c">
-                <tr>
-                    <td>CONTAINER:</td><td class="table-value">{$c}</td>
-                </tr>
-            </volist>
-            <tr>
-                <td>貨物情報(COMMON):</td><td class="table-value">{$common}</td>
-            </tr>
-        </table>
-    </main>
-    <footer>
-        <h2>REMARKS</h2>
-        <article>{$remarks}</article>
-    </footer>
-</body>
+        </main>
+        <footer>
+            <h2>REMARKS</h2>
+            <article>{$remarks}</article>
+        </footer>
+    </body>
 </html>

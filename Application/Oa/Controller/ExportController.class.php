@@ -10,6 +10,17 @@ class ExportController extends AuthController
     {
         $base64 = imgToBase64(__DIR__.'/../../../Public/chz.png');
         $this->assign('img',$base64);
+
+        $address = [
+            '本社' =>  '本社〒650-0041
+兵庫県神戸市中央区新港町8番2号 新港貿易会館4F
+TEL: 078-381-7888　FAX: 078-381-7887',
+
+            '九州営業所' => '九州営業所〒812-0016
+福岡県福岡市博多区博多駅南4-4-17 第5博多IR BLD.602
+TEL: 092-409-5608　FAX: 092-409-5609',
+        ];
+        $_REQUEST['address'] = $address[$_REQUEST['address']];
         $this->_exportPdf('booking-notice', $_REQUEST);
     }
     public function handling()
