@@ -72,6 +72,7 @@ class BkgModel extends BkgCommonModel {
             $dp = implode(' ',$dp);
             $record['ld'] = "$lp - $dp";
         }
+        // echo $this->getLastSql();die;
         return $info;
     }
     public function deleteOrder($bkgid,$deleteValue){

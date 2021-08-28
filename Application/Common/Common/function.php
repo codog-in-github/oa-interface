@@ -25,7 +25,8 @@ function rmSepStr($mixstr){
         return '&nbsp;';
     }else{
         $replace = [
-            '　' => ' ',
+            '　' => '&nbsp;',
+            ' ' => '&nbsp;',
             'ー' => '-',
             '１'=> '1',
             '２'=> '2',

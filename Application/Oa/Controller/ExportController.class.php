@@ -21,6 +21,7 @@ TEL: 078-381-7888　FAX: 078-381-7887',
 TEL: 092-409-5608　FAX: 092-409-5609',
         ];
         $_REQUEST['address'] = $address[$_REQUEST['address']];
+        if(!$_REQUEST['consiginee']) unset($_REQUEST['consiginee']);
         $this->_exportPdf('booking-notice', $_REQUEST);
     }
     public function handling()
@@ -54,6 +55,7 @@ TEL: 092-409-5608　FAX: 092-409-5609',
         $mpdf = new \Mpdf\Mpdf(array_merge($default, $extra));
         $mpdf->autoLangToFont = true;
         $mpdf->autoScriptToLang = true;
+        // $this->display($temp);die;
         $mpdf->WriteHTML($this->fetch($temp));
         $mpdf->Output();
     }

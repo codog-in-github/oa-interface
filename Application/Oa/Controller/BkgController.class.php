@@ -60,6 +60,25 @@ class BkgController extends AuthController{
         }
         $this->ajaxSuccess(clearEmptyDate($data));
     }
+    
+    public function getBkgOrderID(){
+        $bkg_no = $_GET['bkg_no'];
+        if(!$bkg_no){
+            exit;
+        }
+        $this->ajaxSuccess(
+            (new BkgModel())
+            ->where([
+                'bkg_no' => $bkg_no,
+                'delete_at' => [
+                    ['exp', 'IS NULL'],
+                    ['eq', ''],
+                    'or'
+                ]
+            ])
+            ->find()[id]
+        );
+    }
     public function getlist (){
         $condition = $_REQUEST['condition'];
         $query = [];
@@ -92,14 +111,13 @@ class BkgController extends AuthController{
         // }
         //是否被删除
         if($_REQUEST['state'] == 'delete'){
-            $query['delete_at'] = [
+            $query['b.delete_at'] = [
                 'exp',
                 'IS NOT NULL'
             ];
         }else{
-            $query['delete_at'] = [
-                'exp',
-                'IS NULL'
+            $query['b.delete_at'] = [
+                'exp', 'IS NULL'
             ];
             //订单状态筛选
             if($_REQUEST['state'] == 'draft'){

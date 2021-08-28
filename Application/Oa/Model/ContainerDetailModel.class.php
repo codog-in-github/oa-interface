@@ -38,7 +38,7 @@ class ContainerDetailModel extends BkgCommonModel {
             ->_beforeQuery($query)
             ->field([
                 'c.id',              #id
-                'bkg_id',            #主表id
+                'c.bkg_id',            #主表id
                 'vanning_date',      #バンニング日
                 'booker',            #booker
                 'booker_place',      #バンニング場所
@@ -77,10 +77,20 @@ class ContainerDetailModel extends BkgCommonModel {
             ->join('port_of_loading AS l ON l.id = c.bkg_id')
             ->join('port_of_delovery AS d ON d.id = c.bkg_id')
             ->join('container AS ct ON ct.id = c.bkg_id')
+            ->join('container_type AS ct_t ON ct_t.bkg_id = c.bkg_id')
             ->join('trader AS t ON t.id = c.bkg_id')
             ->where([
-                'b.delete_at' => ['exp','IS NULL'],
+                'b.delete_at' =>[
+                    ['exp','IS NULL'],
+                    '',
+                    'or',
+                ],
                 'c.delete_at' => [
+                    ['exp','IS NULL'],
+                    '',
+                    'or',
+                ],
+                'ct_t.delete_at' => [
                     ['exp','IS NULL'],
                     '',
                     'or',

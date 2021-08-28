@@ -11,7 +11,7 @@
             }
             .address{
                 float: right;
-                width: 50%;
+                width: 55%;
             }
             .title h1{
                 width: 70%;
@@ -34,6 +34,7 @@
             .label{
                 width: 20%;
                 float: left;
+                font-weight: bold;
             }
             .cell{
                 width: 75%;
@@ -65,7 +66,7 @@
                         <div class="cell">{$shipper}</div>
                     </div>
                     <div class="row">
-                        <div class="lable">BOOKING NO:</div>
+                        <div class="label">BOOKING NO:</div>
                         <div class="cell">{$booking_no}</div>
                     </div>
                 </div>
@@ -101,6 +102,10 @@
                         <div class="cell">{$eta}</div>
                     </div>
                     <div class="row">
+                        <div class="label">CY OPEN:</div>
+                        <div class="cell">{$cy_open}</div>
+                    </div>
+                    <div class="row">
                         <div class="label">CY CUT:</div>
                         <div class="cell">{$cy_cut}</div>
                     </div>
@@ -122,6 +127,10 @@
             </div>
         </main>
         <footer>
+            <if condition="$consiginee neq ''">
+                <h2 >CONSIGINEE</h2>
+                <article>{$consiginee}</article>
+            </if>
             <h2>REMARKS</h2>
             <article>{$remarks}</article>
         </footer>
