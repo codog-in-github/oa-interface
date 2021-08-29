@@ -133,3 +133,9 @@ function imgToBase64($img_file) {
 
     return $img_base64; //返回图片的base64
 }
+/**
+ * 创建随机id
+ */
+function getRandomID(){
+    return time() . rand(1000, 9999);
+}
