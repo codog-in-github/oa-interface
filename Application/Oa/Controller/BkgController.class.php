@@ -10,6 +10,7 @@ use Oa\Model\ContainerModel;
 use Oa\Model\BookerModel;
 use Oa\Model\ContainerTypeModel;
 use Oa\Model\ContainerDetailModel;
+use Oa\Model\HandlingModel;
 
 class BkgController extends AuthController{
     public function saveData(){
@@ -34,6 +35,9 @@ class BkgController extends AuthController{
             foreach($_POST['detail'] as $singleDetail){
                 $containerDetail->saveData($singleDetail,$bkgid);
             }
+        }
+        if($_POST['copy_id']){
+            (new HandlingModel())->copy($_POST['copy_id'], $bkgid);
         }
     }
     public function getBkgOrder(){
@@ -145,6 +149,7 @@ class BkgController extends AuthController{
                 ];
             }
         }
+        
         $current = $_REQUEST['page']?:0;
         $size = $_REQUEST['page_size']?:100;
         $bkg = new BkgModel();

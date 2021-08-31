@@ -58,6 +58,13 @@ class BkgModel extends BkgCommonModel {
                 'state',
             ])
             ->join('container_type AS ct ON b.id = bkg_id')
+            ->where([
+                'ct.delete_at' => [
+                    ['exp', 'IS NULL'],
+                    ['eq', ''],
+                    'or'
+                ]
+            ])
             ->group('b.id')
             ->limit($current * $size, $size)
             ->order('show_cy_cut')

@@ -107,4 +107,12 @@ class HandlingModel extends Model{
             $this->add($data);
         }
     }
+    public function copy($copy_id, $bkg_id){
+        $c = $this->where(['bkg_id' => $copy_id])->find();
+        if($c){
+            unset($c['id']);
+            $c['bkg_id'] = $bkg_id;
+            $this->add($c);
+        }
+    }
 }
