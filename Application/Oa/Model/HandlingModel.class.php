@@ -84,10 +84,13 @@ class HandlingModel extends Model{
         if($bookData){
             //填写完成空值赋默认值
             foreach ($bookData as $colName => &$cell){
-                if(!in_array($cell, [
-                    'c_book',
-                    'unity',
-                ])){
+                if(
+                    !in_array($colName, [
+                        'c_book',
+                        'unity',
+                    ])
+                    && in_array($colName, array_keys($defaultData))
+                ){
                     $cell = $defaultData[$colName];
                 }
             }
