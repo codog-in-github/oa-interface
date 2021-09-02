@@ -112,7 +112,18 @@ class HandlingModel extends Model{
     public function copy($copy_id, $bkg_id){
         $c = $this->where(['bkg_id' => $copy_id])->find();
         if($c){
+            //清空字段
             unset($c['id']);
+            $c['contoms_document'] = '';
+            $c['request_date'] = '';
+            $c['permission_date'] = '';
+            $c['request_no'] = '';
+            $c['type'] = '';
+            $c['acl_insert'] = '';
+            $c['surrender_arrangement'] = '';
+            $c['bl_send'] = '';
+            $c['extra_money'] = '';
+            $c['request_book'] = '';
             $c['bkg_id'] = $bkg_id;
             $this->add($c);
         }
