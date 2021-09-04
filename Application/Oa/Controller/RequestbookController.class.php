@@ -12,6 +12,7 @@ use Oa\Model\ContainerTypeModel;
 use Oa\Model\ContainerDetailModel;
 use Oa\Model\RequestbookModel;
 use Oa\Model\RequestbookExtraModel;
+use Oa\Model\RequestbookDetailModel;
 
 class RequestbookController extends AuthController{
     public function saveData(){
@@ -50,6 +51,9 @@ class RequestbookController extends AuthController{
             'date' => date('Y-m-d'),
             'booker_name' => $data['trader']['booker'],
         ];
+        if($isSave){
+            $default = $rb + $default;
+        }
         $extraDefault = [
             '積地/揚地：' => exportToGetPort($data['loading']['port']) . '⇒' . exportToGetPort($data['delivery']['port']),
             '出港日：' => $data['loading']['etd'],
@@ -62,6 +66,7 @@ class RequestbookController extends AuthController{
                 )
             ),
             'B/L NO：' => $data['bkg']['bl_no'],
+            'EXCH：' => 'USD|1',
         ];
         if($isSave){
             $rbe = (new RequestbookExtraModel()) -> getByBkgId($bkg_id);
