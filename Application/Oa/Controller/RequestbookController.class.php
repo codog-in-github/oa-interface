@@ -55,7 +55,7 @@ class RequestbookController extends AuthController{
             $default = $rb + $default;
         }
         $extraDefault = [
-            '積地/揚地：' => exportToGetPort($data['loading']['port']) . '⇒' . exportToGetPort($data['delivery']['port']),
+            '積地/揚地：' => exportToGetPort($data['loading']['port']) . '->' . exportToGetPort($data['delivery']['port']),
             '出港日：' => $data['loading']['etd'],
             '船名：' => $data['shipper']['vessel_name'],
             'VAN 日：' => implode(

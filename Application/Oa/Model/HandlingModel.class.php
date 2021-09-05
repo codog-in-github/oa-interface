@@ -81,19 +81,7 @@ class HandlingModel extends Model{
             ])
             ->find();
         if($bookData){
-            //填写完成空值赋默认值
-            foreach ($bookData as $colName => &$cell){
-                if(
-                    !in_array($colName, [
-                        'c_book',
-                        'unity',
-                    ])
-                    && in_array($colName, array_keys($defaultData))
-                ){
-                    $cell = $defaultData[$colName];
-                }
-            }
-            return clearEmptyDate($bookData);
+            return clearEmptyDate($defaultData + $bookData);
         }else{
             return clearEmptyDate($defaultData);
         }

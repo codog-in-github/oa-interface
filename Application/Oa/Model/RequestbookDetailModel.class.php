@@ -8,7 +8,7 @@ class RequestbookDetailModel extends Model {
         return $this->where(['bkg_id' => $bkgid])->select();
     }
     public function updateBook($id, $bkg_id, $data){
-        $data = json_decode($data['detail'], true);
+        $data = $data['detail'];
         foreach ($data as &$item){
             $item['request_id'] = $id;
             $item['bkg_id'] = $bkg_id;

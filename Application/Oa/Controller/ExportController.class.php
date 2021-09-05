@@ -7,6 +7,7 @@ use Oa\Model\HandlingModel;
 use Oa\Model\RequestbookModel;
 use Oa\Model\RequestbookDetailModel;
 use Oa\Model\RequestbookExtraModel;
+use Oa\Model\BookingNoticeModel;
 
 class ExportController extends AuthController
 {
@@ -37,6 +38,9 @@ TEL: 092-409-5608　FAX: 092-409-5609',
 
         $_REQUEST['address'] = $this->address[$_REQUEST['address']];
         if(!$_REQUEST['consiginee']) unset($_REQUEST['consiginee']);
+
+        (new BookingNoticeModel())->setRemarks($_REQUEST);
+        
         $this->_exportPdf('booking-notice', $_REQUEST);
     }
 
@@ -63,8 +67,10 @@ TEL: 092-409-5608　FAX: 092-409-5609',
     }
     public function requestbook()
     {
-        $id = $_REQUEST['id'];
-        $bkg_id = $_REQUEST['bkg_id'];
+        $id = $_POST['id'];
+        $bkg_id = $_POST['bkg_id'];
+        $_POST['detail'] = json_decode($_POST['detail'], true);
+        $_POST['extra'] = json_decode($_POST['extra'], true);
         $models = [
             new RequestbookModel(),
             new RequestbookDetailModel(),
@@ -73,13 +79,46 @@ TEL: 092-409-5608　FAX: 092-409-5609',
         foreach($models as $model){
             $model -> updateBook($id,$bkg_id,$_POST);
         }
+        
+        $base64 = imgToBase64(__DIR__.'/../../../Public/chz.png');
+        $this->assign('img',$base64);
+
+        $this->assign('moneyMap',['USD'=>'＄']);
+
+        $_POST['address'] = $this->address[$_REQUEST['address']];
+        $_POST['bank'] = $this->bank[$_REQUEST['bank']];
+
+        // dump($_POST);die;
+        $this->_exportPdf('requestbook', $_POST, [
+            'margin_left'=>10,
+            'margin_right'=>10,
+            'margin_top'=>10,
+            'margin_bottom'=>10,
+        ]);
     }
     protected function _exportPdf($temp, $data, $extra = [])
     {
         $this->assign(rmSepStr($data));
+        
+
+        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+
+        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+        // dump($fontData);die;
         $default = [
             'mode' => 'utf-8',
             'format' => 'A4',
+            'fontDir' => array_merge($fontDirs, [
+                __DIR__.'/../../../Public/fonts',
+            ]),
+            'fontdata' => $fontData + [
+                'msyh' => [
+                    'R' => 'wryh.ttf',
+                ]
+            ],
+            // 'default_font' => 'msyh'
         ];
         $mpdf = new \Mpdf\Mpdf(array_merge($default, $extra));
         $mpdf->autoLangToFont = true;

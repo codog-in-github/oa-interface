@@ -13,7 +13,7 @@ class RequestbookExtraModel extends Model {
     }
 
     public function updateBook($id, $bkg_id, $data){
-        $data = json_decode($data['extra'], true);
+        $data = $data['extra'];
         // dump($data);
         $update = [
             'id' => $bkg_id,
