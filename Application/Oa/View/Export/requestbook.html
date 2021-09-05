@@ -68,8 +68,13 @@
             <td style="text-align: center;">消費税</td>
             <td style="text-align: right;">金額</td>
         </tr>
+        <?php $i = 0; ?>
         <volist name="detail" id="row">
+            <?php if($i % 2 === 0 ){ ?>
+            <tr style="background-color: #f2f2f2;">
+            <?php }else { ?>
             <tr>
+            <?php } ?>
                 <td style="text-align: left;">{$row.item_name}</td>
                 <td style="text-align: center;">{$row.detail}<?php echo $moneyMap[$row['currency']] ?></td>
                 <td style="text-align: right;">¥ {$row.price}</td>
@@ -80,7 +85,7 @@
             </tr>
         </volist>
     </table>
-    <div style="text-align: right;padding: 10px 0;">[*消費税対象金額 ¥ {$in_tak}]</div>
+    <div style="text-align: right;padding: 10px 0;">[*消費税対象金額 ¥ {$in_tak|default='0'}]</div>
     <hr>
     <table class="full">
         <tr>
@@ -89,7 +94,7 @@
         </tr>
         <tr>
             <td>消費税</td>
-            <td style="text-align: right;">¥ {$tak_total}</td>
+            <td style="text-align: right;">¥ {$tak_total|default='0'}</td>
         </tr>
         <tr>
             <td style="font-size: 16px;font-weight: bold;">御請求金額</td>
@@ -98,11 +103,12 @@
     </table>
     <hr>
     <div style="margin: 10px 0;">ご送金の節は下記へお願い申し上げます。</div>
-    <div style="margin: 10px 0;">尚、振り込み手数料は御社にてご負担下さいますようお願い申し上げます。</div>
+    <div style="margin: 10px 0 30px;">尚、振り込み手数料は御社にてご負担下さいますようお願い申し上げます。</div>
     <table class="full">
         <tr>
-            <td>{$bank}</td>
-            <td>{$address}</td>
+            <td style="vertical-align: top;line-height: 22px;">{$bank}</td>
+            <td style="width: 1em;vertical-align: top;line-height: 22px;"><li style="color: #558ed5;float: left;font-size: 30px;"></li></td>
+            <td style="vertical-align: top;line-height: 22px;"><div style="float: right;">{$address}</div></td>
         </tr>
     </table>
 </body>

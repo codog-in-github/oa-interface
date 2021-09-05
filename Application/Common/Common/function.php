@@ -21,7 +21,7 @@ function rmSepStr($mixstr){
     if(gettype($mixstr) === 'array'){
         return array_map('rmSepStr',$mixstr);
     }
-    if(isEmpty($mixstr)){
+    if(isEmpty($mixstr) && $mixstr !=='0'){
         return '&nbsp;';
     }else{
         $replace = [
