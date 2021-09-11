@@ -97,6 +97,13 @@ class BkgModel extends BkgCommonModel {
             ]
         );
     }
+    public function changeOrderRequestStep($id, $step){
+        return $this->save([
+            'id'=>$id,
+            'request_step'=>$step
+            ]
+        );
+    }
     protected function _beforeQuery($query){
         return $this
             ->alias('b')

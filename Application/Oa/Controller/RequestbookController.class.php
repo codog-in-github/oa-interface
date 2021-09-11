@@ -73,6 +73,7 @@ class RequestbookController extends AuthController{
             'VOYAGE' => $data['shipper']['voyage'],
             'ETA' => $data['delivery']['eta'],
         ];
+        // dump($rb);die;
         if($isSave){
             $rbe = (new RequestbookExtraModel()) -> getByBkgId($bkg_id);
             if(!$rbe){

@@ -130,29 +130,42 @@ class BkgController extends AuthController{
                 'exp', 'IS NULL'
             ];
             //订单状态筛选
-            if($_REQUEST['state'] == 'draft'){
-                $query[] = [
-                    'step' => 'draft',
-                    [
-                        'cy_cut' => ['ELT', date('Y-m-d',strtotime('-2 day'))],
-                        'step' => ['exp', 'IS NULL'],
-                    ],
-                    '_logic' => 'or',
-                ];
-            }elseif($_REQUEST['state'] == 'ready'){
-                $query['step'] = 'ready';
-            }elseif($_REQUEST['state'] == 'complete'){
-                $query['step'] = 'complete';
+            if(array_key_exists('req_state',$_REQUEST)){
+                if(in_array($_REQUEST['req_state'],['1','2'])){
+                    $query['request_step'] = $_REQUEST['req_state'];
+                }else{
+                    $query['request_step'] = [
+                        ['exp', 'IS NULL'],
+                        '0',
+                        '',
+                        'or',
+                    ];
+                }
             }else{
-                $query[] = [
-                    [
-                        'cy_cut' => ['GT', date('Y-m-d',strtotime('-2 day'))],
-                        'step' => ['exp', 'IS NULL'],
-                    ],
-                    'step' => 'normal',
-                    '_logic' => 'or',
-
-                ];
+                if($_REQUEST['state'] == 'draft'){
+                    $query[] = [
+                        'step' => 'draft',
+                        [
+                            'cy_cut' => ['ELT', date('Y-m-d',strtotime('-2 day'))],
+                            'step' => ['exp', 'IS NULL'],
+                        ],
+                        '_logic' => 'or',
+                    ];
+                }elseif($_REQUEST['state'] == 'ready'){
+                    $query['step'] = 'ready';
+                }elseif($_REQUEST['state'] == 'complete'){
+                    $query['step'] = 'complete';
+                }else{
+                    $query[] = [
+                        [
+                            'cy_cut' => ['GT', date('Y-m-d',strtotime('-2 day'))],
+                            'step' => ['exp', 'IS NULL'],
+                        ],
+                        'step' => 'normal',
+                        '_logic' => 'or',
+    
+                    ];
+                }
             }
         }
         
@@ -198,6 +211,17 @@ class BkgController extends AuthController{
         if($id && $step){
             $this->ajaxSuccess(
                 (new BkgModel())->changeOrderStep($id, $step)
+            );
+        }else{
+            $this->ajaxError(3,'has no params');
+        }
+    }
+    public function changeOrderRequestStep(){
+        $id = $_REQUEST['id'];
+        $step = $_REQUEST['step'];
+        if($id && $step){
+            $this->ajaxSuccess(
+                (new BkgModel())->changeOrderRequestStep($id, $step)
             );
         }else{
             $this->ajaxError(3,'has no params');
