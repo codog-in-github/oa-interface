@@ -18,4 +18,15 @@ class RequestbookDetailModel extends Model {
             $this->add($rec);
         }
     }
+    public function copy($copyID, $newID, $reqID){
+        $copyData = $this->where(['bkg_id'=>$copyID])->select();
+        if($copyData){
+            foreach($copyData as $row){
+                unset($row['id']);
+                $row['bkg_id'] = $newID;
+                $row['request_id'] = $reqID;
+                $this->add($row);
+            }
+        }
+    }
 }

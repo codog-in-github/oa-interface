@@ -55,32 +55,42 @@ class RequestbookController extends AuthController{
             $default = $rb + $default;
         }
         $extraDefault = [
-            '積地/揚地：' => exportToGetPort($data['loading']['port']) . '->' . exportToGetPort($data['delivery']['port']),
-            '出港日：' => $data['loading']['etd'],
-            '船名：' => $data['shipper']['vessel_name'],
-            'VAN 日：' => implode(
+            '積地/揚地' => exportToGetPort($data['loading']['port']) . '->' . exportToGetPort($data['delivery']['port']),
+            '出港日' => $data['loading']['etd'],
+            '船名' => $data['shipper']['vessel_name'],
+            'VAN 日' => implode(
                 ',',
                 array_map(
                     function($item){return substr($item['vanning_date'],0,10);}
                     ,$data['detail']
                 )
             ),
-            'B/L NO：' => $data['bkg']['bl_no'],
-            'EXCH：' => 'USD|1',
+            'B/L NO' => $data['bkg']['bl_no'],
+            'EXCH' => 'USD|1',
+            'CARRIER' => $data['shipper']['carrier'],
+            'C/STAFF' => $data['shipper']['c_staff'],
+            'VESSEL NAME' => $data['shipper']['bl_no'],
+            'VOYAGE' => $data['shipper']['voyage'],
+            'ETA' => $data['delivery']['eta'],
         ];
         if($isSave){
             $rbe = (new RequestbookExtraModel()) -> getByBkgId($bkg_id);
+            if(!$rbe){
+                $cols = [
+                    '',
+                    '',
+                ];
+                $rbe = [];
+                foreach($cols as $i => $col){
+                    $rbe['label_'.$i] = $col;
+                    $rbe['value_'.$i] = $extraDefault[$col]?:'';
+                }
+            }
             $rbd = (new RequestbookDetailModel()) -> getByBkgId($bkg_id);
         }else{
             $cols = [
-                '積地/揚地：',
-                '出港日：',
-                '船名：',
-                'VAN 日：',
-                'B/L NO：',
-                '許可書：',
-                'コンテナNO：',
-                'EXCH：',
+                '',
+                '',
             ];
             $rbe = [];
             foreach($cols as $i => $col){

@@ -11,6 +11,9 @@ use Oa\Model\BookerModel;
 use Oa\Model\ContainerTypeModel;
 use Oa\Model\ContainerDetailModel;
 use Oa\Model\HandlingModel;
+use Oa\Model\RequestbookModel;
+use Oa\Model\RequestbookDetailModel;
+// use Oa\Model\RequestExtraModel;
 
 class BkgController extends AuthController{
     public function saveData(){
@@ -38,6 +41,9 @@ class BkgController extends AuthController{
         }
         if($_POST['copy_id']){
             (new HandlingModel())->copy($_POST['copy_id'], $bkgid);
+            $reqID = (new RequestbookModel())->copy($_POST['copy_id'], $bkgid);
+            (new RequestbookDetailModel())->copy($_POST['copy_id'], $bkgid, $reqID);
+            // (new RequestExtraModel())->copy($_POST['copy_id'], $bkgid);
         }
     }
     public function getBkgOrder(){

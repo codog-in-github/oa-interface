@@ -80,8 +80,10 @@ class HandlingModel extends Model{
                 'bkg_id'=>$bkg_id,
             ])
             ->find();
+        // print_r($bookData);
+        // print_r(($bookData + $defaultData));die;
         if($bookData){
-            return clearEmptyDate($defaultData + $bookData);
+            return clearEmptyDate($bookData + $defaultData);
         }else{
             return clearEmptyDate($defaultData);
         }
