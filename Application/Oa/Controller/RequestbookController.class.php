@@ -20,11 +20,17 @@ class RequestbookController extends AuthController{
     }
     public function getBook(){
         $bkg_id = $_GET['bkg_id'];
+        $copy_bkg_id = $_GET['copy_bkg_id'];
         if(!$bkg_id){
             exit;
         }
-
-        $rb =  (new RequestbookModel())->getRequestbookByBkgId($bkg_id);
+        $bookId = '';
+        $rb =  (new RequestbookModel())->getRequestbookByBkgId($copy_bkg_id?:$bkg_id);
+        if($rb && $copy_bkg_id){
+            $bookId = $rb['id'];
+            unset($rb['id']);
+            $rb['bkg_id'] = $bkg_id;
+        }
         $isSave = boolval($rb);
 
         $models = [
@@ -87,7 +93,14 @@ class RequestbookController extends AuthController{
                     $rbe['value_'.$i] = $extraDefault[$col]?:'';
                 }
             }
-            $rbd = (new RequestbookDetailModel()) -> getByBkgId($bkg_id);
+            $rbd = (new RequestbookDetailModel()) -> getByBkgId($copy_bkg_id?:$bkg_id);
+            if($copy_bkg_id && $rbd){
+                foreach($rbd as &$row){
+                    unset($row['id']);
+                    unset($row['request_id']);
+                    unset($row['bkg_id']);
+                }
+            }
         }else{
             $cols = [
                 '',
@@ -104,6 +117,10 @@ class RequestbookController extends AuthController{
         $default['detail'] = $rbd;
         $default['extraDefault'] = $extraDefault;
         $this->ajaxSuccess(clearEmptyDate($default));
+    }
+    public function hasBook(){
+        $bkg_id = $_GET['bkg_id'];
+        $this->ajaxSuccess(boolval((new RequestbookModel())->getRequestbookByBkgId($bkg_id)));
     }
     
 }
