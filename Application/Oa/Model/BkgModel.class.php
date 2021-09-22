@@ -104,6 +104,21 @@ class BkgModel extends BkgCommonModel {
             ]
         );
     }
+    public function checkBkgNo($bkg_id, $bkg_no){
+        return $this->where([
+            'bkg_no'=>$bkg_no,
+            'id'=>[
+                'neq', $bkg_id
+            ],
+            'delete_at' => [
+                ['exp', 'IS NULL'],
+                '',
+                'or'
+            ]
+            
+        ])->count();
+    }
+
     protected function _beforeQuery($query){
         return $this
             ->alias('b')

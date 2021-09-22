@@ -27,7 +27,7 @@ class AuthController extends \Think\Controller
         }
     }
 
-    protected function  ajaxSuccess($data){
+    protected function  ajaxSuccess($data = 'SUCCESS'){
         $this->ajaxReturn([
             'error'    =>  self::SUCCESS,
             'message'  =>  'success',

@@ -20,7 +20,15 @@ class BkgController extends AuthController{
         // print_r($_POST);
         $bkgid = $_POST['header']['id'];
         $bkg = new BkgModel();
+        //检查bkgno 是否重复
+        $count = $bkg->checkBkgNo($bkgid, $_POST['header']['bkg_no']);
+        if($count){
+            // $this->ajaxError(7,$bkg->getLastSql());
+            $this->ajaxError(7,'BKG NO EXISTS');
+            die;
+        }
         $bkg->saveData($_POST['header'],$bkgid);
+        //检查bkgno 师傅重复
         $trander = new TraderModel();
         $trander->saveData($_POST['upper'],$bkgid);
         $loading = new PortOfLoadingModel();
@@ -45,6 +53,7 @@ class BkgController extends AuthController{
             (new RequestbookDetailModel())->copy($_POST['copy_id'], $bkgid, $reqID);
             // (new RequestExtraModel())->copy($_POST['copy_id'], $bkgid);
         }
+        $this->ajaxSuccess();
     }
     public function getBkgOrder(){
         $bkg_id = $_GET['bkg_id'];
