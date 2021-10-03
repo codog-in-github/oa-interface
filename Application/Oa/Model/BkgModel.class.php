@@ -33,7 +33,7 @@ class BkgModel extends BkgCommonModel {
             }
             $bkg['month'] = $month;
             $bkg['month_no'] = $current;
-            $bkg['tag'] = $_SESSION['userInfo']['tag'];
+            $bkg['tag'] = $_SESSION['user_info']['tag'];
             $this->add($bkg);
         }else{
             $this->save($bkg);

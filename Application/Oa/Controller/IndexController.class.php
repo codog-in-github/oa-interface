@@ -7,18 +7,18 @@ use Oa\Model\UserModel;
 class IndexController extends AuthController
 {
     function index(){
-        if($_SESSION['userInfo']){
+        if($_SESSION['user_info']){
             
             $this->ajaxReturn([
                 'error' => parent::SUCCESS,
                 'message' =>'hello',
-                'data'  => $_SESSION['userInfo'],
+                'data'  => $_SESSION['user_info'],
             ]);
         }else{
             $this->ajaxReturn([
                 'error' => parent::WITHOUT_LOGIN,
                 'message' =>'hello',
-                'data'  => $_SESSION['userInfo'],
+                'data'  => $_SESSION['user_info'],
             ]);
         }
         // print_r($data);
@@ -47,7 +47,7 @@ class IndexController extends AuthController
             'message' => $res ? 'success':'USERNAME/PASSWORD ERROR',
             'data' => $res,
         ];
-        if($res) $_SESSION['userInfo'] = $res;
+        if($res) $_SESSION['user_info'] = $res;
         $this->ajaxReturn($returnData);
     }
     public function verify(){
@@ -61,7 +61,7 @@ class IndexController extends AuthController
     }
     public function logout()
     {
-        unset($_SESSION['userInfo']);
+        unset($_SESSION['user_info']);
         $this->ajaxReturn([
             'error' => parent::WITHOUT_LOGIN,
             'message' => 'WITHOUT_LOGIN',
