@@ -21,7 +21,8 @@ class AuthController extends Controller
     ];
     //不需要验证权限的方法
     const NO_AUTH_METHOD = [
-        'getMenu'
+        'logout',
+        'getMenu',
     ];
 
     public function __construct(){

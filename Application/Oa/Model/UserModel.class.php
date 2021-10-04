@@ -23,6 +23,7 @@ class UserModel extends Model {
                 'id',
                 'name',
                 'tag',
+                'role_id',
             ])
             ->where([
                 'username'=>$username,

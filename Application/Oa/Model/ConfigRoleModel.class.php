@@ -9,7 +9,7 @@ class ConfigRoleModel extends Model{
     
     public function __construct($user_info){
         parent::__construct();
-        $this->$_user_info = $_SESSION['user_info'];
+        $this->_user_info = $user_info;
     }
     public function getUserRole(){
         $this->_role_data = $this
@@ -23,10 +23,13 @@ class ConfigRoleModel extends Model{
         return array_column(
             $this
             ->alias('r')
-            ->field('ra.id')
+            ->field('ra.auth_id')
+            ->where([
+                'r.id' => $this->_user_info['role_id'],
+            ])
             ->join('config_role_auth AS ra ON r.id = ra.role_id')
             ->select(),
-            'id'
+            'auth_id'
         );
             
     }

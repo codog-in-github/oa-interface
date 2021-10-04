@@ -4,6 +4,7 @@ namespace Oa\Controller ;
 use Oa\Controller\AuthController;
 use Oa\Model\UserModel;
 use Oa\Model\ConfigAuthModel;
+use Think\Verify;
 
 class IndexController extends AuthController
 {
@@ -33,7 +34,7 @@ class IndexController extends AuthController
         $map['username'] = $_POST['username'];
         $map['password'] = $_POST['password'];
         $code = $_REQUEST['verify'];
-        $verify = new \Think\Verify();
+        $verify = new Verify();
         $isVerifyTrue =  $verify->check($code, '');
         if(!$isVerifyTrue && C('mode') !== 'development'){
             $this->ajaxReturn([
@@ -61,7 +62,7 @@ class IndexController extends AuthController
         $this->ajaxSuccess($group);
     }
     public function verify(){
-        $Verify = new \Think\Verify([
+        $Verify = new Verify([
             'expire' => 60*2,
         ]);
         $Verify->fontSize = 30;

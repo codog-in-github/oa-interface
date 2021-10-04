@@ -11,13 +11,12 @@ class ConfigAuthModel extends Model {
         parent::__construct();
         $this->_user_info = $user_info;
         $this->_role = new ConfigRoleModel($this->_user_info);
-
     }
 
     private function _init(){
         return $this
             ->alias('parent')
-            ->join('config_auth AS child ON  parent.id = child.pid AND parent.type = child.type ')
+            ->join('config_auth AS child ON  parent.id = child.pid AND parent.type = child.type')
             ->where([
                 'parent.delete_at' => ['exp', 'IS NULL'],
                 'child.delete_at' => ['exp', 'IS NULL'],
