@@ -3,6 +3,7 @@ namespace Oa\Controller ;
 
 use Oa\Controller\AuthController;
 use Oa\Model\UserModel;
+use Oa\Model\ConfigAuthModel;
 
 class IndexController extends AuthController
 {
@@ -49,6 +50,15 @@ class IndexController extends AuthController
         ];
         if($res) $_SESSION['user_info'] = $res;
         $this->ajaxReturn($returnData);
+    }
+    public function getMenu(){
+        $auth = new ConfigAuthModel($_SESSION['user_info']);
+        $menus = $auth->getMenu();
+        $group = [];
+        foreach($menus as $menu){
+            $group[$menu['id']][] = $menu;
+        }
+        $this->ajaxSuccess($group);
     }
     public function verify(){
         $Verify = new \Think\Verify([

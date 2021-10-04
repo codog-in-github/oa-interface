@@ -11,7 +11,7 @@ class AuthController extends Controller
     const WITHOUT_LOGIN = 1;    # 未登录
     const PASSWORD_ERROR = 2;   # 账号密码错误
     const AUTH_ERROR = 3;       # 权限错误
-    const UNKNOW_ERROR = 999;   # 账号密码错误
+    const UNKNOW_ERROR = 999;
 
     //不需要验证登录的方法
     const NO_LOGIN_METHOD = [
@@ -19,11 +19,9 @@ class AuthController extends Controller
         'needClear',
         'verify',
     ];
-    //不需要验证登录的方法
+    //不需要验证权限的方法
     const NO_AUTH_METHOD = [
-        'login',
-        'needClear',
-        'verify',
+        'getMenu'
     ];
 
     public function __construct(){
@@ -37,7 +35,8 @@ class AuthController extends Controller
             );
         }
         // 权限验证
-        if( !in_array(ACTION_NAME, self::NO_AUTH_METHOD) 
+        if( !in_array(ACTION_NAME, self::NO_LOGIN_METHOD) 
+            && !in_array(ACTION_NAME, self::NO_AUTH_METHOD) 
             && !$this->_checkAuth() ){
             $this->ajaxError(
                 self::AUTH_ERROR,
@@ -47,7 +46,6 @@ class AuthController extends Controller
     }
 
     protected function _checkAuth(){
-        // TODO
         if(!$_SESSION['auth_info'][CONTROLLER_NAME  . '-' . ACTION_NAME]){
             $auth_model = new ConfigAuthModel($_SESSION['user_info']);
             $_SESSION['auth_info'][CONTROLLER_NAME  . '-' . ACTION_NAME] = boolval($auth_model->getMethodRole());

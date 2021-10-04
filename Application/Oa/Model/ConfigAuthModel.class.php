@@ -21,20 +21,40 @@ class ConfigAuthModel extends Model {
             ->where([
                 'parent.delete_at' => ['exp', 'IS NULL'],
                 'child.delete_at' => ['exp', 'IS NULL'],
-                'parent.enable' => 1,
-                'child.enable' => 1,
             ]);
     }
-
+    
     public function getMethodRole(){
         return $this
             ->_init()
             ->where([
                 'child.type' => 1,
+                'parent.enable' => 1,
+                'child.enable' => 1,
                 'parent.id' => ['in', $this->_role->getAllAuthId()],
                 'child.id' => ['in', $this->_role->getAllAuthId()],
                 'parent.target' => CONTROLLER_NAME,
                 'child.target' => ACTION_NAME,
+            ])
+            ->select();
+    }
+    public function getMenu() {
+        return $this
+            ->_init()
+            ->field([
+                'parent.id',
+                'parent.target',
+                'parent.extra',
+                'child.id AS c_id',
+                'child.target AS c_target',
+                'child.extra AS c_extra'
+            ])
+            ->where([
+                'child.type' => 0,
+                'parent.enable' => 1,
+                'child.enable' => 1,
+                'parent.id' => ['in', $this->_role->getAllAuthId()],
+                'child.id' => ['in', $this->_role->getAllAuthId()],
             ])
             ->select();
     }
