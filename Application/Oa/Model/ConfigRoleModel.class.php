@@ -33,4 +33,12 @@ class ConfigRoleModel extends Model{
         );
             
     }
+    public function getRoleList(){
+        return $this
+            ->where([
+                'delete_at' => ['exp','is null'],
+                'enable' => 1,
+            ])
+            ->select();
+    }
 }

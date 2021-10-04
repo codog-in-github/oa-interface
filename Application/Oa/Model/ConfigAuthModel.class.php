@@ -57,4 +57,38 @@ class ConfigAuthModel extends Model {
             ])
             ->select();
     }
+
+    public function getAllMenu(){
+        return $this
+            ->_init()
+            ->field([
+                'parent.id',
+                'parent.target',
+                'parent.extra',
+                'child.id AS c_id',
+                'child.target AS c_target',
+                'child.extra AS c_extra'
+            ])
+            ->where([
+                'child.type' => 0,
+            ])
+            ->select();
+    }
+
+    public function getAllMethod(){
+        return $this
+            ->_init()
+            ->field([
+                'parent.id',
+                'parent.target',
+                'parent.extra',
+                'child.id AS c_id',
+                'child.target AS c_target',
+                'child.extra AS c_extra'
+            ])
+            ->where([
+                'child.type' => 1,
+            ])
+            ->select();
+    }
 }
