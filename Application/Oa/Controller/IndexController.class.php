@@ -34,7 +34,7 @@ class IndexController extends AuthController
         $code = $_REQUEST['verify'];
         $verify = new \Think\Verify();
         $isVerifyTrue =  $verify->check($code, '');
-        if(!$isVerifyTrue){
+        if(!$isVerifyTrue && C('mode') !== 'development'){
             $this->ajaxReturn([
                 'error' => parent::PASSWORD_ERROR,
                 'message' => 'verify is error',
