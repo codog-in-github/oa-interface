@@ -68,4 +68,37 @@ class AuthController extends Controller
             'data'     =>  '',
         ]);
     }
+
+    protected function _checkParams($params, $method = 'REQUEST', $check_function = []){
+        $state = true;
+        $target;
+        switch($method){
+            case 'REQUEST':{
+                $target = $_REQUEST;
+                break;
+            }
+            case 'GET':{
+                $target = $_GET;
+                break;
+            }
+            case 'POST':{
+                $target = $_POST;
+                break;
+            }
+            case 'PUTS':{
+                $target = $PUTS;
+                break;
+            }
+        }
+        for($i=0; $i<count($params); $i++){
+            if(gettype($check_function[$i]) === 'function' && !$check_function[$i]($target[$params[$i]])){
+                $state = false;
+            }elseif(!boolval($target[$params[$i]])){
+                $state = false;
+            }
+        }
+        if(!$state){
+            $this->ajaxError(parent::ILLEGAL_PARAMS, 'ILLEGAL_PARAMS');
+        }
+    }
 }

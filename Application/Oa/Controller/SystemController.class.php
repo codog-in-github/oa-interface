@@ -19,12 +19,20 @@ class SystemController extends AuthController{
     }
 
     public function getRoleAuthList(){
+        $this->_checkParams(['role_id']);
         $role_id = $_REQUEST['role_id'];
-        if(!$role_id){
-            $this->ajaxError(parent::ILLEGAL_PARAMS, 'ILLEGAL_PARAMS');
-        }
         $auth = new Auth(['role_id'=>$role_id]);
         $authIds = $auth->getAuthIds();
         $this->ajaxSuccess($authIds);
+    }
+
+    public function getParentMenu(){
+        $auth = new Auth($_SESSION['user_info']);
+        $this->ajaxSuccess($auth->getParentMenu());
+    }
+
+    public function getController(){
+        $auth = new Auth($_SESSION['user_info']);
+        $this->ajaxSuccess($auth->getController());
     }
 }

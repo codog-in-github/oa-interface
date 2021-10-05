@@ -95,4 +95,19 @@ class ConfigAuthModel extends Model {
     public function getAuthIds(){
         return $this->_role->getAllAuthId();
     }
+    
+    public function getParentMenu(){
+        return $this->where([
+            'pid'=>0,
+            'type'=>0
+        ])
+        ->select();
+    }
+    public function getController(){
+        return $this->where([
+            'pid'=>0,
+            'type'=>1
+        ])
+        ->select();
+    }
 }
