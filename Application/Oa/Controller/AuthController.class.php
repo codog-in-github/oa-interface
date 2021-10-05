@@ -11,6 +11,7 @@ class AuthController extends Controller
     const WITHOUT_LOGIN = 1;    # 未登录
     const PASSWORD_ERROR = 2;   # 账号密码错误
     const AUTH_ERROR = 3;       # 权限错误
+    const ILLEGAL_PARAMS = 20;       # 参数不合法
     const UNKNOW_ERROR = 999;
 
     //不需要验证登录的方法

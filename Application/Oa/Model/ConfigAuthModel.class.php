@@ -91,4 +91,8 @@ class ConfigAuthModel extends Model {
             ])
             ->select();
     }
+
+    public function getAuthIds(){
+        return $this->_role->getAllAuthId();
+    }
 }
