@@ -48,12 +48,13 @@ class AuthController extends Controller
     }
 
     protected function _checkAuth(){
-        if(!$_SESSION['auth_info'][CONTROLLER_NAME  . '-' . ACTION_NAME]){
+        if(!isset($_SESSION['auth_info'][CONTROLLER_NAME  . '-' . ACTION_NAME])){
             $auth_model = new ConfigAuthModel($_SESSION['user_info']);
             $_SESSION['auth_info'][CONTROLLER_NAME  . '-' . ACTION_NAME] = boolval($auth_model->getMethodRole());
         }
         return $_SESSION['auth_info'][CONTROLLER_NAME  . '-' . ACTION_NAME];
     }
+
     protected function  ajaxSuccess($data = 'SUCCESS'){
         $this->ajaxReturn([
             'error'    =>  self::SUCCESS,
@@ -61,6 +62,7 @@ class AuthController extends Controller
             'data'     =>  $data,
         ]);
     }
+
     protected function ajaxError($errorNo = self::UNKNOW_ERROR, $message = 'UNKNOW_ERROR'){
         $this->ajaxReturn([
             'error'    =>  $errorNo,
@@ -85,20 +87,20 @@ class AuthController extends Controller
                 $target = $_POST;
                 break;
             }
-            case 'PUTS':{
-                $target = $PUTS;
+        }
+        for($i=0; $i<count($params); $i++){
+            if( gettype($check_function[$i]) === 'object' || gettype($check_function[$i]) === 'string' ){
+                if(!$check_function[$i]($target[$params[$i]])){
+                    $state = false;
+                    break;
+                }
+            } elseif (!boolval($target[$params[$i]])) {
+                $state = false;
                 break;
             }
         }
-        for($i=0; $i<count($params); $i++){
-            if(gettype($check_function[$i]) === 'function' && !$check_function[$i]($target[$params[$i]])){
-                $state = false;
-            }elseif(!boolval($target[$params[$i]])){
-                $state = false;
-            }
-        }
         if(!$state){
-            $this->ajaxError(parent::ILLEGAL_PARAMS, 'ILLEGAL_PARAMS');
+            $this->ajaxError(self::ILLEGAL_PARAMS, 'ILLEGAL_PARAMS');
         }
     }
 }
