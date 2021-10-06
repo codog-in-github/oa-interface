@@ -26,13 +26,17 @@ class SystemController extends AuthController{
         $this->ajaxSuccess($authIds);
     }
 
-    public function getParentMenu(){
+    public function getParentAuth(){
         $auth = new Auth($_SESSION['user_info']);
-        $this->ajaxSuccess($auth->getParentMenu());
-    }
-
-    public function getController(){
-        $auth = new Auth($_SESSION['user_info']);
-        $this->ajaxSuccess($auth->getController());
+        $this->_checkParams(
+            ['type'],
+            'GET',
+            [
+                function ($type){
+                    return $type === '1' || $type === '0';
+                },
+            ]
+        );
+        $this->ajaxSuccess($auth->getParentAuth($_GET['type']));
     }
 }
