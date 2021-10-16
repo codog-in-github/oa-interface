@@ -11,6 +11,7 @@ class ConfigAuthModel extends Model {
         parent::__construct();
         $this->_user_info = $user_info;
         $this->_role = new ConfigRoleModel($this->_user_info);
+        $this->_roleAuth = new ConfigRoleAuthModel($this->_role);
     }
 
     private function _init(){
@@ -103,4 +104,10 @@ class ConfigAuthModel extends Model {
         ])
         ->select();
     }
+
+    public function changeAuth($ids){
+        $this->_roleAuth->deleteAllAuth();
+        $this->_roleAuth->addAuth($ids);
+    }
+
 }

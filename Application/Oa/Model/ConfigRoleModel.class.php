@@ -41,4 +41,10 @@ class ConfigRoleModel extends Model{
             ])
             ->select();
     }
+
+    public function __get($name){
+        if(array_key_exists($name, $this->_user_info)){
+            return $this->_user_info[$name];
+        }
+    }
 }

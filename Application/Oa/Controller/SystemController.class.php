@@ -39,4 +39,14 @@ class SystemController extends AuthController{
         );
         $this->ajaxSuccess($auth->getParentAuth($_GET['type']));
     }
+
+    public function changeRoleAuth(){
+        $this->_checkParams(
+            ['role_id', 'ids'],
+            'POST'
+        );
+        $auth = new Auth(['role_id'=>$_POST['role_id']]);
+        $auth->changeAuth(explode(',',$_POST['ids']));
+        $this->ajaxSuccess();
+    }
 }
