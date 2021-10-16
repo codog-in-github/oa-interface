@@ -112,11 +112,11 @@ class ConfigAuthModel extends Model {
 
     public function addMenu($type, $parent, $child){
         if($parent['id']){
-            return $this->_addSingleMenu($parent['id'], $type, $child['target'], $child['extra']);
+            return [$parent['id'], $this->_addSingleMenu($parent['id'], $type, $child['target'], $child['extra'])];
         } else {
             $pid = $this->_addSingleMenu(0, $type, $parent['target'], $parent['extra']);
             
-            return $this->_addSingleMenu($pid, $type, $child['target'], $child['extra']);
+            return [$pid, $this->_addSingleMenu($pid, $type, $child['target'], $child['extra'])];
         }
     }
 

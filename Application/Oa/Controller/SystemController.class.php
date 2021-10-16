@@ -68,6 +68,7 @@ class SystemController extends AuthController{
             ]
         );
         $auth = new Auth($_SESSION['user_info']);
-        $auth->addMenu($_POST['type'], $_POST['parent'], $_POST['child']);
+        $id = $auth->addMenu($_POST['type'], $_POST['parent'], $_POST['child']);
+        $this->ajaxSuccess($id);
     }
 }
