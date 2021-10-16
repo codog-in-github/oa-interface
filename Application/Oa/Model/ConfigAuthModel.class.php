@@ -110,4 +110,24 @@ class ConfigAuthModel extends Model {
         $this->_roleAuth->addAuth($ids);
     }
 
+    public function addMenu($type, $parent, $child){
+        if($parent['id']){
+            return $this->_addSingleMenu($parent['id'], $type, $child['target'], $child['extra']);
+        } else {
+            $pid = $this->_addSingleMenu(0, $type, $parent['target'], $parent['extra']);
+            
+            return $this->_addSingleMenu($pid, $type, $child['target'], $child['extra']);
+        }
+    }
+
+    private function _addSingleMenu($pid, $type, $target, $extra){
+        $insert = [
+            'pid' =>$pid,
+            'type' => $type,
+            'target' => $target,
+            'extra' => $extra,
+            'enable' => 1,
+        ];
+        return $this->add($insert);
+    }
 }
