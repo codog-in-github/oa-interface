@@ -31,16 +31,16 @@ class IndexController extends AuthController
     public function login(){
         $map['username'] = $_POST['username'];
         $map['password'] = $_POST['password'];
-        $code = $_REQUEST['verify'];
-        $verify = new \Think\Verify();
-        $isVerifyTrue =  $verify->check($code, '');
-        if(!$isVerifyTrue){
-            $this->ajaxReturn([
-                'error' => parent::PASSWORD_ERROR,
-                'message' => 'verify is error',
-                'data' => null,
-            ]);
-        }
+        // $code = $_REQUEST['verify'];
+        // $verify = new \Think\Verify();
+        // $isVerifyTrue =  $verify->check($code, '');
+        // if(!$isVerifyTrue){
+        //     $this->ajaxReturn([
+        //         'error' => parent::PASSWORD_ERROR,
+        //         'message' => 'verify is error',
+        //         'data' => null,
+        //     ]);
+        // }
         $res = (new UserModel())->getLoginUser($_POST['username'],$_POST['password']);
         $returnData = [
             'error' => $res? parent::SUCCESS : parent::PASSWORD_ERROR,
