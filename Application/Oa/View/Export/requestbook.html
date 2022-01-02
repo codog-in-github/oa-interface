@@ -6,7 +6,7 @@
     <title>Document</title>
     <style>
         body{
-            font-family: msyh;
+            font-family: deng;
         }
         h1{
             text-align: center;
@@ -25,13 +25,16 @@
         hr{
             margin: 20px 0;
         }
+        .company-name{
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <h1>請 求 書</h1>
     <table class="full">
         <tr>
-            <td class="head-left">〒{$tel}</td>
+            <td class="head-left ">〒{$tel}</td>
             <td class="head-right">請求番号：{$no}</td>
         </tr>
         <tr>
@@ -39,8 +42,8 @@
             <td class="head-right">請求日：{$date}</td>
         </tr>
         <tr>
-            <td class="head-left">{$booker_name} 御中</td>
-            <td class="head-right"><img class="logo" style="height: 60px;" src="{$img}" alt=""></td>
+            <td class="head-left"><b>{$booker_name}</b> 御中</td>
+            <td class="head-right"><img class="logo" style="height: 60px;" src="{$img}"></td>
         </tr>
     </table>
     <hr>
@@ -72,33 +75,33 @@
         <volist name="detail" id="row">
             <?php if($i % 2 === 0 ){ ?>
             <tr style="background-color: #f2f2f2;">
-            <?php }else { ?>
+            <?php } else { ?>
             <tr>
             <?php } ?>
                 <td style="text-align: left;">{$row.item_name}</td>
                 <td style="text-align: center;">{$row.detail}<?php echo $moneyMap[$row['currency']] ?></td>
-                <td style="text-align: right;">¥ {$row.price}</td>
+                <td style="text-align: right;">¥ {$row.price|number_format}</td>
                 <td style="text-align: center;">{$row.num}</td>
                 <td style="text-align: center;">{$row.unit}</td>
                 <td style="text-align: center;">{$row.tax}</td>
-                <td style="text-align: right;">¥ {$row.total}</td>
+                <td style="text-align: right;">¥ {$row.total|number_format}</td>
             </tr>
         </volist>
     </table>
-    <div style="text-align: right;padding: 10px 0;">[*消費税対象金額 ¥ {$in_tak|default='0'}]</div>
+    <div style="text-align: right;padding: 10px 0;">[*消費税対象金額 ¥ {$in_tak|default='0'|number_format}]</div>
     <hr>
     <table class="full">
         <tr>
             <td>小計</td>
-            <td style="text-align: right;">¥ {$subtotal}</td>
+            <td style="text-align: right;">¥ {$subtotal|number_format}</td>
         </tr>
         <tr>
             <td>消費税</td>
-            <td style="text-align: right;">¥ {$tak_total|default='0'}</td>
+            <td style="text-align: right;">¥ {$tak_total|default='0'|number_format}</td>
         </tr>
         <tr>
             <td style="font-size: 16px;font-weight: bold;">御請求金額</td>
-            <td style="text-align: right;font-size: 16px;font-weight: bold;">¥ {$total|floor}</td>
+            <td style="text-align: right;font-size: 16px;font-weight: bold;">¥ {$total|floor|number_format}</td>
         </tr>
     </table>
     <hr>
