@@ -8,12 +8,16 @@ class RequestbookModel extends Model {
         return $this->where(['bkg_id' => $bkgid])->find();
     }
 
-    public function getRequestbookByCompanyNo($company_no){
-        return $this
+    public function getRequestbookByCompanyNo($copy_value, $copy_field = 1){
+        $prev = $this
             ->alias('r')
-            ->join('bkg AS b ON b.id = r.bkg_id')
-            ->where(['concat(`month`, `month_no`, `tag`)' => $company_no])
-            ->find();
+            ->join('bkg AS b ON b.id = r.bkg_id');
+        if($copy_field == 1){
+            $prev->where(['bkg_no' => $copy_value]);
+        }else{
+            $prev->where(['concat(`month`, `month_no`, `tag`)' => $copy_value]);
+        }
+        return $prev->find();
     }
 
     public function updateBook($id, $bkg_id, $data){

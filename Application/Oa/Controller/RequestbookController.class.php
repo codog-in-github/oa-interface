@@ -122,7 +122,8 @@ class RequestbookController extends AuthController{
 
     public function hasBookByCompanyNo(){
         $company_no = $_GET['company_no'];
-        $bkg_id = (new RequestbookModel())->getRequestbookByCompanyNo($company_no)['bkg_id'];
+        $copy_field = $_GET['copy_field'];
+        $bkg_id = (new RequestbookModel())->getRequestbookByCompanyNo($company_no, $copy_field)['bkg_id'];
         if($bkg_id){
             $this->ajaxSuccess($bkg_id);
         }else{
