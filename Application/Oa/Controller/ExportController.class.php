@@ -84,7 +84,9 @@ TEL: 092-409-5608　FAX: 092-409-5609',
         }
         
         $base64 = imgToBase64(__DIR__.'/../../../Public/chz.png');
+        $sign = imgToBase64(__DIR__.'/../../../Public/chz-sign.png');
         $this->assign('img',$base64);
+        $this->assign('signImg',$sign);
 
         $this->assign('moneyMap',['USD'=>'＄']);
 

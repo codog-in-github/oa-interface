@@ -28,13 +28,25 @@
         .company-name{
             font-weight: bold;
         }
+        .sign{
+            width:50px;
+            float: right;
+        }
+        .tb-up{
+            width: 90%;
+            float: left;
+        }
     </style>
 </head>
 <body>
     <h1>請 求 書</h1>
     <table class="full">
         <tr>
-            <td class="head-left ">〒{$tel}</td>
+            <if condition="$tel !== '&nbsp;'">
+                <td class="head-left ">〒{$tel}</td>
+                <else />
+                <td class="head-left "></td>
+            </if>
             <td class="head-right">請求番号：{$no}</td>
         </tr>
         <tr>
@@ -42,18 +54,25 @@
             <td class="head-right">請求日：{$date}</td>
         </tr>
         <tr>
-            <td class="head-left"><b>{$booker_name}</b> 御中</td>
+            <if condition="$booker_name !== '&nbsp;'">
+                <td class="head-left"><b>{$booker_name}</b> 御中</td>
+                <else />
+                <td class="head-left"></td>
+            </if>
             <td class="head-right"><img class="logo" style="height: 60px;" src="{$img}"></td>
         </tr>
     </table>
     <hr>
-    <table class="full" style="padding-bottom: 30px;">
+    <if condition="$sign === 'true'">
+        <img class="sign" src="{$signImg}">
+    </if>
+    <table class="tb-up" style="padding-bottom: 30px;">
         <volist name="extra" id="row">
             <tr>
                 <volist name="row" id="col">
-                    <if condition="$col['label'] == 'EXCH：'">
+                    <if condition="$col['label'] === 'EXCH'">
                         <td style="width: 25%;">{$col['label']}</td>
-                        <td style="width: 25%;"><?php  echo explode('|',$col['value'])[1]  ?> ￥・＄</td>
+                        <td style="width: 25%;"><?php  echo explode('|',$col['value'])[1]  ?> ￥/＄</td>
                         <else/>
                         <td style="width: 25%;">{$col['label']}</td><td style="width: 25%;">{$col['value']}</td>
                     </if>
