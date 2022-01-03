@@ -71,7 +71,7 @@
             <tr>
                 <volist name="row" id="col">
                     <if condition="$col['label'] === 'EXCH'">
-                        <td style="width: 25%;">{$col['label']}</td>
+                        <td style="width: 25%;">RATE</td>
                         <td style="width: 25%;"><?php  echo explode('|',$col['value'])[1]  ?> ￥/＄</td>
                         <else/>
                         <td style="width: 25%;">{$col['label']}</td><td style="width: 25%;">{$col['value']}</td>
