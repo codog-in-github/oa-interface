@@ -18,6 +18,7 @@ class RequestbookController extends AuthController{
     public function saveData(){
         // print_r($_POST);
     }
+
     public function getBook(){
         $bkg_id = $_GET['bkg_id'];
         $copy_bkg_id = $_GET['copy_bkg_id'];
@@ -79,7 +80,7 @@ class RequestbookController extends AuthController{
             'VOYAGE' => $data['shipper']['voyage'],
             'ETA' => $data['delivery']['eta'],
         ];
-        // dump($rb);die;
+        // var_dump($isSave);die;
         if($isSave){
             $rbe = (new RequestbookExtraModel()) -> getByBkgId($bkg_id);
             if(!$rbe){
@@ -118,6 +119,17 @@ class RequestbookController extends AuthController{
         $default['extraDefault'] = $extraDefault;
         $this->ajaxSuccess(clearEmptyDate($default));
     }
+
+    public function hasBookByCompanyNo(){
+        $company_no = $_GET['company_no'];
+        $bkg_id = (new RequestbookModel())->getRequestbookByCompanyNo($company_no)['bkg_id'];
+        if($bkg_id){
+            $this->ajaxSuccess($bkg_id);
+        }else{
+            $this->ajaxError(999, 'CAN\'T FIND THIS ORDER');
+        }
+    }
+
     public function hasBook(){
         $bkg_id = $_GET['bkg_id'];
         $this->ajaxSuccess(boolval((new RequestbookModel())->getRequestbookByBkgId($bkg_id)));
