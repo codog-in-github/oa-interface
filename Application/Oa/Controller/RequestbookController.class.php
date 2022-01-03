@@ -72,7 +72,7 @@ class RequestbookController extends AuthController{
                 )
             ),
             'B/L NO' => $data['bkg']['bl_no'],
-            'EXCH' => 'USD|1',
+            'RATE' => 'USD|1',
             'CARRIER' => $data['shipper']['carrier'],
             'C/STAFF' => $data['shipper']['c_staff'],
             'VESSEL NAME' => $data['shipper']['bl_no'],

@@ -36,6 +36,12 @@
             width: 90%;
             float: left;
         }
+        .tb-bottom{
+            margin-top: 5px;
+        }
+        .client{
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -55,7 +61,7 @@
         </tr>
         <tr>
             <if condition="$booker_name !== '&nbsp;'">
-                <td class="head-left"><b>{$booker_name}</b> 御中</td>
+                <td class="head-left"><b><big>{$booker_name}</big></b> 御中</td>
                 <else />
                 <td class="head-left"></td>
             </if>
@@ -63,24 +69,26 @@
         </tr>
     </table>
     <hr>
-    <if condition="$sign === 'true'">
-        <img class="sign" src="{$signImg}">
-    </if>
-    <table class="tb-up" style="padding-bottom: 30px;">
-        <volist name="extra" id="row">
-            <tr>
-                <volist name="row" id="col">
-                    <if condition="$col['label'] === 'EXCH'">
-                        <td style="width: 25%;">RATE</td>
-                        <td style="width: 25%;"><?php  echo explode('|',$col['value'])[1]  ?> ￥/＄</td>
-                        <else/>
-                        <td style="width: 25%;">{$col['label']}</td><td style="width: 25%;">{$col['value']}</td>
-                    </if>
-                </volist>
-            </tr>
-        </volist>
-    </table>
-    <table class="full" border="1" cellspacing="0">
+    <div class="full">
+        <if condition="$sign === 'true'">
+            <img class="sign" src="{$signImg}">
+        </if>
+        <table class="tb-up" style="padding-bottom: 30px;">
+            <volist name="extra" id="row">
+                <tr>
+                    <volist name="row" id="col">
+                        <if condition="$col['label'] === 'RATE'">
+                            <td style="width: 25%;">RATE</td>
+                            <td style="width: 25%;"><?php  echo explode('|',$col['value'])[1]  ?> ￥/＄</td>
+                            <else/>
+                            <td style="width: 25%;">{$col['label']}</td><td style="width: 25%;">{$col['value']}</td>
+                        </if>
+                    </volist>
+                </tr>
+            </volist>
+        </table>
+    </div>
+    <table class="full tb-bottom" border="1" cellspacing="0">
         <tr style="background-color: #d9d9d9;">
             <td style="text-align: left;">明細項目</td>
             <td style="text-align: center;">詳細</td>
