@@ -76,14 +76,26 @@
         <table class="tb-up" style="padding-bottom: 30px;">
             <volist name="extra" id="row">
                 <tr>
-                    <volist name="row" id="col">
-                        <if condition="$col['label'] === 'RATE'">
-                            <td style="width: 25%;">RATE</td>
-                            <td style="width: 25%;"><?php  echo explode('|',$col['value'])[1]  ?> ￥/＄</td>
-                            <else/>
-                            <td style="width: 25%;">{$col['label']}</td><td style="width: 25%;">{$col['value']}</td>
-                        </if>
-                    </volist>
+                    <if condition="count($row) == 2">
+                        <volist name="row" id="col">
+                            <if condition="$col['label'] === 'RATE'">
+                                <td style="width: 25%;">RATE</td>
+                                <td style="width: 25%;"><?php  echo explode('|',$col['value'])[1]  ?> ￥/＄</td>
+                                <else/>
+                                <td style="width: 25%;">{$col['label']}</td><td style="width: 25%;">{$col['value']}</td>
+                            </if>
+                        </volist>
+                        <else/>
+                        <volist name="row" id="col">
+                            <if condition="$col['label'] === 'RATE'">
+                                <td style="width: 25%;">RATE</td>
+                                <td colspan="3" style="width: 25%;"><?php  echo explode('|',$col['value'])[1]  ?> ￥/＄</td>
+                                <else/>
+                                <td style="width: 25%;">{$col['label']}</td><td colspan="3" style="width: 25%;">{$col['value']}</td>
+                            </if>
+                        </volist>
+                    </if>
+                    
                 </tr>
             </volist>
         </table>

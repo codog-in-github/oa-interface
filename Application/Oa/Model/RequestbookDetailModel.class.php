@@ -7,6 +7,7 @@ class RequestbookDetailModel extends Model {
     public function getByBkgId($bkgid){
         return $this->where(['bkg_id' => $bkgid])->select();
     }
+    
     public function updateBook($id, $bkg_id, $data){
         $data = $data['detail'];
         foreach ($data as &$item){
@@ -15,9 +16,11 @@ class RequestbookDetailModel extends Model {
         }
         $this->where(['request_id'=>$id])->delete();
         foreach($data as $rec){
+            unset($rec['id']);
             $this->add($rec);
         }
     }
+
     public function copy($copyID, $newID, $reqID){
         $copyData = $this->where(['bkg_id'=>$copyID])->select();
         if($copyData){

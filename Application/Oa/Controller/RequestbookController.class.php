@@ -51,10 +51,12 @@ class RequestbookController extends AuthController{
         if($data['trader']['booker']){
             $data['booker'] = (new BookerModel())->getBooker($data['trader']['booker']);
         }
+        
         $default = [
             'tel' => $data['booker']['tel'],
+            'booker_place' => $data['booker']['place'],
             'no' => $data['bkg']['dg'],
-            'booker_place' => $data['detail'][0]['booker_place'],
+            // 'booker_place' => $data['detail'][0]['booker_place'],
             'date' => date('Y-m-d'),
             'booker_name' => $data['trader']['booker'],
         ];
