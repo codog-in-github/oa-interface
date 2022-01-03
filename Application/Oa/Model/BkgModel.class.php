@@ -56,6 +56,7 @@ class BkgModel extends BkgCommonModel {
                 'group_concat(quantity) as quantity',
                 'group_concat(container_type) as container_type',
                 'state',
+                'concat(month, month_no, tag) as company_no'
             ])
             ->join('container_type AS ct ON b.id = bkg_id')
             ->where([
