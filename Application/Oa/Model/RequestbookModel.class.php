@@ -12,8 +12,8 @@ class RequestbookModel extends Model {
         return $this
             ->alias('r')
             ->join('bkg as b')
-            ->field('')
-            ->where(['concat(month, month_no, tag)' => $company_no])
+            ->on('b.id = r.bkg_id')
+            ->where(['concat(`month`, `month_no`, `tag`)' => $company_no])
             ->find();
     }
 
