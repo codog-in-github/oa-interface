@@ -88,7 +88,7 @@ TEL: 092-409-5608　FAX: 092-409-5609',
         $this->assign('img',$logo);
         $this->assign('signImg',$sign);
 
-        $this->assign('moneyMap',['USD'=>'＄']);
+        $this->assign('moneyMap',['USD'=>' $']);
 
         $_POST['address'] = $this->address[$_REQUEST['address']];
         $_POST['bank'] = $this->bank[$_REQUEST['bank']];
