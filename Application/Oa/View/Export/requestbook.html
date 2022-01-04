@@ -134,7 +134,7 @@
                     <tr>
                 <?php } ?>
                     <td style="text-align: left;">{$row.item_name}</td>
-                    <td style="text-align: center;">{$row.detail}<?php echo $moneyMap[$row['currency']] ?></td>
+                    <td style="text-align: center;"><?php echo $moneyMap[$row['currency']] ?>{$row.detail}</td>
                     <td style="text-align: right;">¥ {$row.price|number_format}</td>
                     <td style="text-align: center;">{$row.num}</td>
                     <td style="text-align: center;">{$row.unit}</td>
