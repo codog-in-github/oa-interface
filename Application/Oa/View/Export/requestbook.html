@@ -70,7 +70,7 @@
             <tr>
                 <if condition="$tel !== '&nbsp;'">
                     <td class="head-left ">〒{$tel}</td>
-                    <else />
+                <else />
                     <td class="head-left "></td>
                 </if>
                 <td class="head-right">請求番号：{$no}</td>
@@ -82,7 +82,7 @@
             <tr>
                 <if condition="$booker_name !== '&nbsp;'">
                     <td class="head-left"><b><big>{$booker_name}</big></b> 御中</td>
-                    <else />
+                <else />
                     <td class="head-left"></td>
                 </if>
             </tr>
@@ -97,16 +97,16 @@
                                 <if condition="$col['label'] === 'RATE'">
                                     <td style="width: 25%;">RATE</td>
                                     <td style="width: 25%;"><?php  echo explode('|',$col['value'])[1]  ?> ￥/＄</td>
-                                    <else/>
+                                <else/>
                                     <td style="width: 25%;">{$col['label']}</td><td style="width: 25%;">{$col['value']}</td>
                                 </if>
                             </volist>
-                            <else/>
+                        <else/>
                             <volist name="row" id="col">
                                 <if condition="$col['label'] === 'RATE'">
                                     <td style="width: 25%;">RATE</td>
                                     <td colspan="3" style="width: 25%;"><?php  echo explode('|',$col['value'])[1]  ?> ￥/＄</td>
-                                    <else/>
+                                <else/>
                                     <td style="width: 25%;">{$col['label']}</td><td colspan="3" style="width: 25%;">{$col['value']}</td>
                                 </if>
                             </volist>
@@ -129,9 +129,9 @@
             <?php $i = 0; ?>
             <volist name="detail" id="row">
                 <?php if($i % 2 === 0 ){ ?>
-                <tr style="background-color: #f2f2f2;">
+                    <tr style="background-color: #f2f2f2;">
                 <?php } else { ?>
-                <tr>
+                    <tr>
                 <?php } ?>
                     <td style="text-align: left;">{$row.item_name}</td>
                     <td style="text-align: center;">{$row.detail}<?php echo $moneyMap[$row['currency']] ?></td>
