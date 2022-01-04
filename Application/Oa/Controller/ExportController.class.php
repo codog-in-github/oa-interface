@@ -83,9 +83,9 @@ TEL: 092-409-5608　FAX: 092-409-5609',
             $model -> updateBook($id,$bkg_id,$_POST);
         }
         
-        $base64 = imgToBase64(__DIR__.'/../../../Public/chz.png');
+        $logo = imgToBase64(__DIR__.'/../../../Public/chz.png');
         $sign = imgToBase64(__DIR__.'/../../../Public/chz-sign.png');
-        $this->assign('img',$base64);
+        $this->assign('img',$logo);
         $this->assign('signImg',$sign);
 
         $this->assign('moneyMap',['USD'=>'＄']);
