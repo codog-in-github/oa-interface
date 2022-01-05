@@ -81,6 +81,8 @@ class RequestbookController extends AuthController{
             'VESSEL NAME' => $data['shipper']['bl_no'],
             'VOYAGE' => $data['shipper']['voyage'],
             'ETA' => $data['delivery']['eta'],
+            'BKG NO.' => $data['bkg']['bkg_no'],
+            'COMMON' => $data['container']['common'],
         ];
         // var_dump($isSave);die;
         if($isSave){
