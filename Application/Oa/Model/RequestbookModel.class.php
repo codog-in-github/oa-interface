@@ -7,9 +7,16 @@ class RequestbookModel extends Model {
     public function getRequestbookByBkgId($bkgid){
         return $this->where(['bkg_id' => $bkgid])->find();
     }
-    
-    public function getRequestbookId($id){
+
+    public function getRequestbookById($id){
         return $this->where(['id' => $id])->find();
+    }
+
+    public function getList($bkgId){
+        return $this->where([
+            'bkg_id' => $bkgId,
+            'delete_at' => ['exp','IS NULL'],
+        ])->select();
     }
 
     public function getRequestbookByCompanyNo($copy_value, $copy_field = 1){
