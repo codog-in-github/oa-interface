@@ -7,6 +7,10 @@ class RequestbookDetailModel extends Model {
     public function getByBkgId($bkgid){
         return $this->where(['bkg_id' => $bkgid])->select();
     }
+
+    public function getByRequestId($reqID){
+        return $this->where(['request_id' => $reqID])->select();
+    }
     
     public function updateBook($id, $bkg_id, $data){
         $data = $data['detail'];

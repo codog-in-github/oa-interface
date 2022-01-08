@@ -12,6 +12,10 @@ class RequestbookExtraModel extends Model {
         return $this->where(['bkg_id' => $bkgid])->find();
     }
 
+    public function getByRequestId($bkgid){
+        return $this->where(['request_id' => $bkgid])->find();
+    }
+
     public function updateBook($id, $bkg_id, $data){
         $data = $data['extra'];
         // dump($data);

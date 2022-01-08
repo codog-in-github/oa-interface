@@ -15,25 +15,7 @@ use Oa\Model\RequestbookExtraModel;
 use Oa\Model\RequestbookDetailModel;
 
 class RequestbookController extends AuthController{
-    public function saveData(){
-        // print_r($_POST);
-    }
-
-    public function getBook(){
-        $bkg_id = $_GET['bkg_id'];
-        $copy_bkg_id = $_GET['copy_bkg_id'];
-        if(!$bkg_id){
-            exit;
-        }
-        $bookId = '';
-        $rb =  (new RequestbookModel())->getRequestbookByBkgId($copy_bkg_id?:$bkg_id);
-        if($rb && $copy_bkg_id){
-            $bookId = $rb['id'];
-            unset($rb['id']);
-            $rb['bkg_id'] = $bkg_id;
-        }
-        $isSave = boolval($rb);
-
+    protected function _getBkgInfo($bkgId){
         $models = [
             'bkg' => new BkgModel(),
             'trader' => new TraderModel(),
@@ -44,84 +26,112 @@ class RequestbookController extends AuthController{
             'type' => new ContainerTypeModel(),
             'detail' => new ContainerDetailModel(),
         ];
-        $data = [];
+        $bkgInfo = [];
         foreach($models as $k => $model){
-            $data[$k] = $model->getData($bkg_id);
+            $bkgInfo[$k] = $model->getData($bkgId);
         }
-        if($data['trader']['booker']){
-            $data['booker'] = (new BookerModel())->getBooker($data['trader']['booker']);
+        if($bkgInfo['trader']['booker']){
+            $bkgInfo['booker'] = (new BookerModel())->getBooker($bkgInfo['trader']['booker']);
         }
-        
-        $default = [
-            'tel' => $data['booker']['tel'],
-            'booker_place' => $data['booker']['place'],
-            'no' => $data['bkg']['dg'],
-            // 'booker_place' => $data['detail'][0]['booker_place'],
+        return $bkgInfo;
+    }
+
+    protected function _getDefault($bkgInfo){
+        return [
+            'tel' => $bkgInfo['booker']['tel'],
+            'booker_place' => $bkgInfo['booker']['place'],
+            'no' => $bkgInfo['bkg']['dg'],
+            // 'booker_place' => $bkgInfo['detail'][0]['booker_place'],
             'date' => date('Y-m-d'),
-            'booker_name' => $data['trader']['booker'],
+            'booker_name' => $bkgInfo['trader']['booker'],
         ];
-        if($isSave){
-            $default = $rb + $default;
-        }
-        $extraDefault = [
-            '積地/揚地' => exportToGetPort($data['loading']['port']) . '->' . exportToGetPort($data['delivery']['port']),
-            '出港日' => $data['loading']['etd'],
-            '船名' => $data['shipper']['vessel_name'],
+    }
+
+    protected function _getDefaultExtra($bkgInfo){
+        return [
+            '積地/揚地' => exportToGetPort($bkgInfo['loading']['port']) . '->' . exportToGetPort($bkgInfo['delivery']['port']),
+            '出港日' => $bkgInfo['loading']['etd'],
+            '船名' => $bkgInfo['shipper']['vessel_name'],
             'VAN 日' => implode(
                 ',',
                 array_map(
                     function($item){return substr($item['vanning_date'],0,10);}
-                    ,$data['detail']
+                    ,$bkgInfo['detail']
                 )
             ),
-            'B/L NO' => $data['bkg']['bl_no'],
+            'B/L NO' => $bkgInfo['bkg']['bl_no'],
             'RATE' => 'USD|1',
-            'CARRIER' => $data['shipper']['carrier'],
-            'C/STAFF' => $data['shipper']['c_staff'],
-            'VESSEL NAME' => $data['shipper']['bl_no'],
-            'VOYAGE' => $data['shipper']['voyage'],
-            'ETA' => $data['delivery']['eta'],
-            'BKG NO.' => $data['bkg']['bkg_no'],
-            'COMMON' => $data['container']['common'],
+            'CARRIER' => $bkgInfo['shipper']['carrier'],
+            'C/STAFF' => $bkgInfo['shipper']['c_staff'],
+            'VESSEL NAME' => $bkgInfo['shipper']['bl_no'],
+            'VOYAGE' => $bkgInfo['shipper']['voyage'],
+            'ETA' => $bkgInfo['delivery']['eta'],
+            'BKG NO.' => $bkgInfo['bkg']['bkg_no'],
+            'COMMON' => $bkgInfo['container']['common'],
         ];
-        // var_dump($isSave);die;
-        if($isSave){
-            $rbe = (new RequestbookExtraModel()) -> getByBkgId($bkg_id);
-            if(!$rbe){
-                $cols = [
-                    '',
-                    '',
-                ];
-                $rbe = [];
-                foreach($cols as $i => $col){
-                    $rbe['label_'.$i] = $col;
-                    $rbe['value_'.$i] = $extraDefault[$col]?:'';
-                }
+    }
+
+    protected function _formatEmptyExtra($extraDefault){
+        $cols = [
+            '',
+            '',
+        ];
+        $extra = [];
+        foreach($cols as $i => $col){
+            $extra['label_'.$i] = $col;
+            $extra['value_'.$i] = $extraDefault[$col]?:'';
+        }
+        return $extra;
+    }
+
+    protected function _getBookDetail($bkg_id, $copy_bkg_id){
+        $isCopy = boolval($copy_bkg_id);
+        $requestBook =  (new RequestbookModel())->getRequestbookByBkgId($isCopy? $copy_bkg_id :$bkg_id);
+        $isSaved = boolval($requestBook);
+        if($isSaved && $isCopy){
+            unset($requestBook['id']);
+            $requestBook['bkg_id'] = $bkg_id;
+        }
+        $bkgInfo = $this->_getBkgInfo(bkg_id);;
+        $default = $this->_getDefault($bkgInfo);
+        if($isSaved){
+            $default = $requestBook + $default;
+        }
+        $extraDefault = _getDefaultExtra($bkgInfo);
+        // var_dump($isSaved);die;
+        if($isSaved){
+            $extra = (new RequestbookExtraModel()) -> getByBkgId($isCopy? $copy_bkg_id :$bkg_id);
+            if(!$extra){
+                $extra = $this->_formatEmptyExtra($extraDefault);
             }
-            $rbd = (new RequestbookDetailModel()) -> getByBkgId($copy_bkg_id?:$bkg_id);
-            if($copy_bkg_id && $rbd){
-                foreach($rbd as &$row){
+            $detail = (new RequestbookDetailModel()) -> getByBkgId($isCopy? $copy_bkg_id :$bkg_id);
+            if($isCopy && $detail){
+                foreach($detail as &$row){
                     unset($row['id']);
                     unset($row['request_id']);
                     unset($row['bkg_id']);
                 }
             }
         }else{
-            $cols = [
-                '',
-                '',
-            ];
-            $rbe = [];
-            foreach($cols as $i => $col){
-                $rbe['label_'.$i] = $col;
-                $rbe['value_'.$i] = $extraDefault[$col]?:'';
-            }
-            $rbd = [];
+            $extra = $this->_formatEmptyExtra($extraDefault);
+            $detail = [];
         }
-        $default['extra'] = $rbe;
-        $default['detail'] = $rbd;
+        $default['extra'] = $extra;
+        $default['detail'] = $detail;
         $default['extraDefault'] = $extraDefault;
         $this->ajaxSuccess(clearEmptyDate($default));
+    }
+
+    public function getBook(){
+        $bkg_id = $_GET['bkg_id'];
+        $copy_bkg_id = $_GET['copy_bkg_id'];
+        if(!$bkg_id){
+            exit;
+        }
+        $this->_getBookDetail($bkg_id, $copy_bkg_id);
+    }
+
+    public function getBookList(){
     }
 
     public function hasBookByCompanyNo(){
