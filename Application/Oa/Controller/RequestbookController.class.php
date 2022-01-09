@@ -94,8 +94,11 @@ class RequestbookController extends AuthController{
             unset($requestBook['id']);
             $requestBook['bkg_id'] = $bkg_id;
         }
-        $bkgInfo = $this->_getBkgInfo($bkg_id);;
+        $bkgInfo = $this->_getBkgInfo($bkg_id);
         $default = $this->_getDefault($bkgInfo);
+        if($bkgInfo['booker']){
+            unset($requestBook['booker_place']);
+        }
         if($isSaved){
             $default = $requestBook + $default;
         }
