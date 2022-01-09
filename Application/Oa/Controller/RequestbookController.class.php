@@ -84,9 +84,10 @@ class RequestbookController extends AuthController{
         return $extra;
     }
 
-    protected function _getBookDetail($bkg_id, $copy_bkg_id){
-        $isCopy = boolval($copy_bkg_id);
-        $requestBook =  (new RequestbookModel())->getRequestbookByBkgId($isCopy? $copy_bkg_id :$bkg_id);
+    protected function _getBookDetail($bkg_id, $id, $copy_id){
+        $isCopy = boolval($copy_id);
+        $requestBook =  (new RequestbookModel())->getRequestbookById($isCopy? $copy_id :$id);
+
         $isSaved = boolval($requestBook);
         if($isSaved && $isCopy){
             unset($requestBook['id']);
@@ -100,11 +101,11 @@ class RequestbookController extends AuthController{
         $extraDefault = $this->_getDefaultExtra($bkgInfo);
         // var_dump($isSaved);die;
         if($isSaved){
-            $extra = (new RequestbookExtraModel()) -> getByBkgId($isCopy? $copy_bkg_id :$bkg_id);
+            $extra = (new RequestbookExtraModel()) -> getByBkgRequestId($isCopy? $copy_id :$id);
             if(!$extra){
                 $extra = $this->_formatEmptyExtra($extraDefault);
             }
-            $detail = (new RequestbookDetailModel()) -> getByBkgId($isCopy? $copy_bkg_id :$bkg_id);
+            $detail = (new RequestbookDetailModel()) -> getByBkgRequestId($isCopy? $copy_id :$id);
             if($isCopy && $detail){
                 foreach($detail as &$row){
                     unset($row['id']);
@@ -124,11 +125,12 @@ class RequestbookController extends AuthController{
 
     public function getBook(){
         $bkg_id = $_GET['bkg_id'];
-        $copy_bkg_id = $_GET['copy_bkg_id'];
+        $id = $_GET['id'];
+        $copy_id = $_GET['copy_id'];
         if(!$bkg_id){
             exit;
         }
-        $this->_getBookDetail($bkg_id, $copy_bkg_id);
+        $this->_getBookDetail($bkg_id, $id, $copy_id);
     }
 
     public function getBookList(){
