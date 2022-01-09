@@ -4,8 +4,8 @@ namespace Oa\Model;
 use Think\Model;
 
 class RequestbookDetailModel extends Model {
-    public function getByBkgRequestId($bkgid){
-        return $this->where(['request_id' => $bkgid])->select();
+    public function getByRequestId($requestId){
+        return $this->where(['request_id' => $requestId])->select();
     }
 
     public function updateBook($id, $bkg_id, $data){

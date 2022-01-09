@@ -33,9 +33,11 @@ class RequestbookModel extends Model {
 
     public function updateBook($id, $bkg_id, $data){
         $isEdited = boolval($this->find($id));
+        // dump($data);die;
         if($isEdited){
             $this->save($data);
         }else{
+            $data['create_time'] = date('Y-m-d H:i:s');
             $this->add($data);
         }
     }

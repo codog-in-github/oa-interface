@@ -8,8 +8,8 @@ class RequestbookExtraModel extends Model {
     protected $_rowNum = 5;
     protected $_colNum = 2;
 
-    public function getByBkgByRequestId($bkgid){
-        return $this->where(['request_id' => $bkgid])->find();
+    public function getByRequestId($requestId){
+        return $this->where(['request_id' => $requestId])->find();
     }
 
 
@@ -17,7 +17,7 @@ class RequestbookExtraModel extends Model {
         $data = $data['extra'];
         // dump($data);
         $update = [
-            'id' => $bkg_id,
+            'id' => $id,
             'bkg_id' => $bkg_id,
             'request_id' => $id,
         ];
@@ -28,10 +28,7 @@ class RequestbookExtraModel extends Model {
             }
         }
         // dump($update);
-        if($this->find($bkg_id)){
-            $this->save($update);
-        }else{
-            $this->add($update);
-        }
+        $this->where(['request_id'=>$id])->delete();
+        $this->add($update);
     }
 }
