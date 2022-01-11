@@ -99,9 +99,17 @@ class RequestbookController extends AuthController{
         if($bkgInfo['booker']){
             unset($requestBook['booker_place']);
         }
+        
+        if($isCopy){
+            unset($requestBook['no']);
+            unset($requestBook['booker_name']);
+            unset($requestBook['booker_place']);
+        }
+
         if($isSaved){
             $default = $requestBook + $default;
         }
+
 
         $extraDefault = $this->_getDefaultExtra($bkgInfo);
         // var_dump($isSaved);die;
@@ -152,6 +160,7 @@ class RequestbookController extends AuthController{
         $company_no = $_GET['company_no'];
         $copy_field = $_GET['copy_field'];
         $bkg_id = (new RequestbookModel())->getRequestbookByCompanyNo($company_no, $copy_field)['bkg_id'];
+        // var_dump($bkg_id);die;
         if($bkg_id){
             $this->ajaxSuccess($bkg_id);
         }else{
