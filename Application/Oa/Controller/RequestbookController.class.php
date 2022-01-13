@@ -84,6 +84,12 @@ class RequestbookController extends AuthController{
         return $extra;
     }
 
+    protected function _updateExtra(&$extra, $extraDefault){
+        for($i=0; $i<RequestbookExtraModel::getExtraMaxSize(); $i++){
+            $extra['lable_'.$i] = $extraDefault[$extra['lable_'.$i]] ?? '';
+        }
+    }
+
     protected function _getBookDetail($bkg_id, $id, $copy_id){
         $isCopy = boolval($copy_id);
         $requestBook =  (new RequestbookModel())->getRequestbookById($isCopy? $copy_id : $id);
@@ -117,6 +123,8 @@ class RequestbookController extends AuthController{
             $extra = (new RequestbookExtraModel()) -> getByRequestId($isCopy? $copy_id :$id);
             if(!$extra){
                 $extra = $this->_formatEmptyExtra($extraDefault);
+            }elseif( $isCopy ){
+                $this->_updateExtra($extra, $extraDefault);
             }
             $detail = (new RequestbookDetailModel()) -> getByRequestId($isCopy? $copy_id :$id);
             if($isCopy && $detail){

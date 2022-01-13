@@ -5,8 +5,12 @@ use Think\Model;
 
 class RequestbookExtraModel extends Model {
 
-    protected $_rowNum = 5;
-    protected $_colNum = 2;
+    const ROW_NUM = 5;
+    const COL_NUM = 2;
+
+    public static function getExtraMaxSize(){
+        return self::ROW_NUM * self::COL_NUM;
+    }
 
     public function getByRequestId($requestId){
         return $this->where(['request_id' => $requestId])->find();
@@ -21,10 +25,10 @@ class RequestbookExtraModel extends Model {
             'bkg_id' => $bkg_id,
             'request_id' => $id,
         ];
-        for($row=0; $row < $this->_rowNum; $row++){
-            for($col=0; $col<$this->_colNum ;$col++){
-                $update['label_'.($row * $this->_colNum + $col)] = $data[$row][$col]['label'];
-                $update['value_'.($row * $this->_colNum + $col)] = $data[$row][$col]['value'];
+        for($row=0; $row < self::ROW_NUM; $row++){
+            for($col=0; $col<self::COL_NUM ;$col++){
+                $update['label_'.($row * self::COL_NUM + $col)] = $data[$row][$col]['label'];
+                $update['value_'.($row * self::COL_NUM + $col)] = $data[$row][$col]['value'];
             }
         }
         // dump($update);
