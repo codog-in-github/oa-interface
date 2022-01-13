@@ -80,10 +80,7 @@ function isEmptyDate($val){
 }
 
 function exportToGetPort($portInSql){
-    $countryAndPort = explode('(',$portInSql)[0];
-    $pice = explode(' ',$countryAndPort);
-    unset($pice[0]);
-    return implode(' ',$pice);
+    return $country = explode('(',$portInSql)[0];
 }
 /**
  * 获取图片的Base64编码(支持url)
