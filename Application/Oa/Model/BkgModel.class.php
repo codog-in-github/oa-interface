@@ -71,14 +71,7 @@ class BkgModel extends BkgCommonModel {
             ->order('show_cy_cut')
             ->select();
         foreach($info['list'] as &$record){
-            $lp = explode(' ',explode('(',$record['lp'])[0]);
-            unset($lp[0]);
-            $lp = implode(' ',$lp);
-
-            $dp = explode(' ',explode('(',$record['dp'])[0]);
-            unset($dp[0]);
-            $dp = implode(' ',$dp);
-            $record['ld'] = "$lp - $dp";
+            $record['ld'] = exportToGetPort($record['lp']) . '-' . exportToGetPort($record['dp']);
         }
         // echo $this->getLastSql();die;
         return $info;

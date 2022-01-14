@@ -121,13 +121,6 @@ class BkgController extends AuthController{
         if($condition['dg']){
             $query['_string'] = "CONCAT(`month`,`month_no`,`tag`) LIKE '%$condition[dg]%'";
         }
-        //日期
-        // if($condition['bkg_date']){
-        //     $query['bkg_date'] = [
-        //         'BETWEEN',
-        //         $condition['bkg_date'],
-        //     ];
-        // }
         //是否被删除
         if($_REQUEST['state'] == 'delete'){
             $query['b.delete_at'] = [

@@ -41,7 +41,6 @@ class RequestbookController extends AuthController{
             'tel' => $bkgInfo['booker']['tel'],
             'booker_place' => $bkgInfo['booker']['place'],
             'no' => $bkgInfo['bkg']['dg'],
-            // 'booker_place' => $bkgInfo['detail'][0]['booker_place'],
             'date' => date('Y-m-d'),
             'booker_name' => $bkgInfo['trader']['booker'],
         ];
@@ -86,7 +85,7 @@ class RequestbookController extends AuthController{
 
     protected function _updateExtra(&$extra, $extraDefault){
         for($i=0; $i<RequestbookExtraModel::getExtraMaxSize(); $i++){
-            $extra['lable_'.$i] = $extraDefault[$extra['lable_'.$i]] ?? '';
+            $extra['value_'.$i] = $extraDefault[$extra['label_'.$i]] ?? '';
         }
     }
 
@@ -108,8 +107,6 @@ class RequestbookController extends AuthController{
         
         if($isCopy){
             unset($requestBook['no']);
-            unset($requestBook['booker_name']);
-            unset($requestBook['booker_place']);
         }
 
         if($isSaved){
