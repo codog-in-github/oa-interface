@@ -85,8 +85,7 @@ class BkgController extends AuthController{
         if(!$bkg_no){
             exit;
         }
-        $this->ajaxSuccess(
-            (new BkgModel())
+        $id = (new BkgModel())
             ->where([
                 'bkg_no' => $bkg_no,
                 'delete_at' => [
@@ -95,8 +94,12 @@ class BkgController extends AuthController{
                     'or'
                 ]
             ])
-            ->find()[id]
-        );
+            ->find()['id'];
+        if($id){
+            $this->ajaxSuccess($id);
+        }else{
+            $this->ajaxError(998, 'CAN NOT FOUND THIS ORDER');
+        }
     }
     public function getlist (){
         $condition = $_REQUEST['condition'];
