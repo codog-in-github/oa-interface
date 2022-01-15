@@ -175,7 +175,11 @@ class RequestbookController extends AuthController{
 
     public function hasBook(){
         $bkg_id = $_GET['bkg_id'];
-        $this->ajaxSuccess(boolval((new RequestbookModel())->getRequestbookByBkgId($bkg_id)));
+        if(boolval((new RequestbookModel())->getRequestbookByBkgId($bkg_id))){
+            $this->ajaxSuccess();
+        }else{
+            $this->ajaxError(998, 'PLEASE COPY BEFORE');
+        }
     }
     
 }
