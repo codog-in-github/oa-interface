@@ -8,21 +8,10 @@ class IndexController extends AuthController
 {
     function index(){
         if($_SESSION['userInfo']){
-            
-            $this->ajaxReturn([
-                'error' => parent::SUCCESS,
-                'message' =>'hello',
-                'data'  => $_SESSION['userInfo'],
-            ]);
+            $this->ajaxSuccess($_SESSION['userInfo']);
         }else{
-            $this->ajaxReturn([
-                'error' => parent::WITHOUT_LOGIN,
-                'message' =>'hello',
-                'data'  => $_SESSION['userInfo'],
-            ]);
+            $this->ajaxError(parent::WITHOUT_LOGIN,'WITHOUT_LOGIN');
         }
-        // print_r($data);
-        
     }
     function needClear(){
         $this->ajaxSuccess(M('cash')->find(1)['value']);
@@ -31,24 +20,13 @@ class IndexController extends AuthController
     public function login(){
         $map['username'] = $_POST['username'];
         $map['password'] = $_POST['password'];
-        // $code = $_REQUEST['verify'];
-        // $verify = new \Think\Verify();
-        // $isVerifyTrue =  $verify->check($code, '');
-        // if(!$isVerifyTrue){
-        //     $this->ajaxReturn([
-        //         'error' => parent::PASSWORD_ERROR,
-        //         'message' => 'verify is error',
-        //         'data' => null,
-        //     ]);
-        // }
         $res = (new UserModel())->getLoginUser($_POST['username'],$_POST['password']);
-        $returnData = [
-            'error' => $res? parent::SUCCESS : parent::PASSWORD_ERROR,
-            'message' => $res ? 'success':'USERNAME/PASSWORD ERROR',
-            'data' => $res,
-        ];
-        if($res) $_SESSION['userInfo'] = $res;
-        $this->ajaxReturn($returnData);
+        if($res){
+            $_SESSION['userInfo'] = $res;
+            $this->ajaxSuccess($res);
+        }else{
+            $this->ajaxError(parent::PASSWORD_ERROR, 'USERNAME/PASSWORD ERROR');
+        }
     }
     public function verify(){
         $Verify = new \Think\Verify([
