@@ -21,7 +21,7 @@ function rmSepStr($mixstr){
     if(gettype($mixstr) === 'array'){
         return array_map('rmSepStr',$mixstr);
     }
-    if(isEmpty($mixstr) && $mixstr !=='0'){
+    if(isEmpty($mixstr)){
         return '&nbsp;';
     }else{
         $replace = [
@@ -72,7 +72,7 @@ function impoldeWithoutEmpty($glue, $array){
  * 
  */
 function isEmpty($val){
-    return !$val || isEmptyDate($val);
+    return $val !== 0 && $val !== '0' && (!$val || isEmptyDate($val));
 }
 
 function isEmptyDate($val){

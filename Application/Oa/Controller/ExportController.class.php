@@ -58,6 +58,7 @@ TEL: 092-409-5608　FAX: 092-409-5609',
             'margin_bottom'=>4,
         ]);
     }
+
     public function getHandlngData()
     {
         $bkg_id = $_REQUEST['bkg_id'];
@@ -68,6 +69,7 @@ TEL: 092-409-5608　FAX: 092-409-5609',
             (new HandlingModel())->getDataByBkgId($bkg_id)
         );
     }
+
     public function requestbook()
     {
         $id = $_POST['id'];
@@ -87,9 +89,9 @@ TEL: 092-409-5608　FAX: 092-409-5609',
         $sign = imgToBase64(__DIR__.'/../../../Public/chz-sign.png');
         $this->assign('img',$logo);
         $this->assign('signImg',$sign);
-
+        
         $this->assign('moneyMap',['USD'=>' $']);
-
+        
         $_POST['address'] = $this->address[$_REQUEST['address']];
         $_POST['bank'] = $this->bank[$_REQUEST['bank']];
 
@@ -101,10 +103,10 @@ TEL: 092-409-5608　FAX: 092-409-5609',
             'margin_bottom'=>10,
         ]);
     }
+
     protected function _exportPdf($temp, $data, $extra = [])
     {
         $this->assign(rmSepStr($data));
-        
 
         $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
         $fontDirs = $defaultConfig['fontDir'];
