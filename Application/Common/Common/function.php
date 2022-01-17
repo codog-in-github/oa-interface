@@ -58,6 +58,7 @@ function clearEmptyDate($mixstr){
  * impoldeWithoutEmpty
  */
 function impoldeWithoutEmpty($glue, $array){
+    $str = "";
     foreach($array as $cell){
         if(!isEmpty($cell)){
             if($str){
