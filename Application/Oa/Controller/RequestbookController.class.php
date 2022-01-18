@@ -67,6 +67,11 @@ class RequestbookController extends AuthController{
             'ETA' => $bkgInfo['delivery']['eta'],
             'BKG NO.' => $bkgInfo['bkg']['bkg_no'],
             'COMMON' => $bkgInfo['container']['common'],
+            '物量' => implode(', ', 
+                array_map(function($type){
+                    return $type['container_type'] . ' * ' .$type['quantity'];
+                },$bkgInfo['type'])
+            ),
             '許可書' => $bkgInfo['container']['permision_book'],
             'CNTR. NO' => impoldeWithoutEmpty(',', array_column($bkgInfo['detail'],'cntr_no')),
         ];
