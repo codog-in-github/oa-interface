@@ -39,6 +39,7 @@ class HandlingModel extends Model{
             'in_no' => $data['bkg']['dg'],
             'forwarder' => $data['trader']['forwarder'],
             'unity' => '本',
+            'request_no'=> $data['container']['permision_book'],
             'container_type' =>  $data['type'][0]['container_type'],
             'pick_order' => $data['container']['pick_order'],
             'pick_order_request' => $data['container']['pick_order_request'],
