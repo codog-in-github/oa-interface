@@ -84,7 +84,7 @@ class HandlingModel extends Model{
         // print_r($bookData);
         // print_r(($bookData + $defaultData));die;
         if($bookData){
-            return clearEmptyDate($bookData + $defaultData);
+            return clearEmptyDate(['request_no'=> $data['container']['permision_book']] + $bookData + $defaultData);
         }else{
             return clearEmptyDate($defaultData);
         }
