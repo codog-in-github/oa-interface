@@ -191,8 +191,8 @@ class BkgController extends AuthController{
             foreach($list as &$bkg){
                 $bkg['lp'] = trim(explode('(',$bkg['lp'])[1], ')');
                 $bkg['dp'] = trim(explode('(',$bkg['dp'])[1], ')');
-                $bkg['calendar_status'] = $bkg['calendar_status'] ?? explode('|', $bkg['state'])[0];
-                $bkg['short_name'] = $bkg['short_name'] ?? mb_substr($bkg['booker'], 0, 1, 'utf-8');
+                $bkg['calendar_status'] = $bkg['calendar_status'] ?: explode('|', $bkg['state'])[0];
+                $bkg['short_name'] = $bkg['short_name'] ?: mb_substr($bkg['booker'], 0, 1, 'utf-8');
             }
             $this->ajaxSuccess($list);
         }
@@ -208,7 +208,8 @@ class BkgController extends AuthController{
                 $bkg['lp'] = trim(explode('(',$bkg['lp'])[1], ')');
                 $bkg['dp'] = trim(explode('(',$bkg['dp'])[1], ')');
                 $bkg['calendar_status'] = $bkg['calendar_status'] ?? explode('|', $bkg['state'])[0];
-                $bkg['short_name'] = $bkg['short_name'] ?? mb_substr($bkg['transprotation'], 0, 1, 'utf-8');
+                $bkg['short_name'] = $bkg['short_name'] ?: mb_substr($bkg['booker'], 0, 1, 'utf-8');
+                $bkg['transprotation_short_name'] = $bkg['transprotation_short_name'] ?: mb_substr($bkg['transprotation'], 0, 1, 'utf-8');
             }
             $this->ajaxSuccess($list);
         }

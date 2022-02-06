@@ -132,15 +132,16 @@ class BkgModel extends BkgCommonModel {
             ->field([
                 'b.id',
                 'cd.id as detail_id',
+                'booker',
+                't.short_name as short_name',
                 'transprotation',
-                't.short_name',
+                'cd.short_name as transprotation_short_name',
                 'calendar_status',
                 'l.port AS lp',
                 'free_pick_day',
                 'd.port AS dp',
                 'sum(quantity) as quantity',
                 'bkg_no',
-                'state'
             ])
             ->join('container_type AS ct ON b.id = ct.bkg_id')
             ->join('container_detail AS cd ON b.id = cd.bkg_id')

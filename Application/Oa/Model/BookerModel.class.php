@@ -11,6 +11,7 @@ class BookerModel extends Model {
         'place',
         'staff',
         'staff_tel',
+        'short_name',
     ];
     public function getOption(){
         return $this->field($this->_fields)
