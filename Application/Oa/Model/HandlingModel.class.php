@@ -89,8 +89,8 @@ class HandlingModel extends Model{
             return clearEmptyDate($defaultData);
         }
     }
-    public function saveData($data){
 
+    public function saveData($data){
         $data['item_type'] = implode('|',$data['item_type']);
         $data['c_book'] = implode('|',$data['c_book']);
         $count = $this->where(['bkg_id'=>$data['bkg_id']])->count();
@@ -100,6 +100,7 @@ class HandlingModel extends Model{
             $this->add($data);
         }
     }
+
     public function copy($copy_id, $bkg_id){
         $c = $this->where(['bkg_id' => $copy_id])->find();
         if($c){

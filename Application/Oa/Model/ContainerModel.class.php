@@ -22,14 +22,17 @@ class ContainerModel extends Model {
             $this->save($container);
         }
     }
+
     public function getData($bkg_id){
         $containerData = $this->find($bkg_id);
         return $containerData;
     }
+
     public function changeOrderState($id, $state){
         return $this->save([
-            'id'=>$id,
-            'state'=>$state]
-        );
+            'id' => $id,
+            'state' => $state,
+        ]);
     }
+
 }

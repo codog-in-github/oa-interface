@@ -15,6 +15,7 @@ class BkgModel extends BkgCommonModel {
         'in_sales',
         'CONCAT(`month`,`month_no`,`tag`)' =>'dg'
     ];
+
     public function saveData($bkg,$bkgid){
         $this->where([
             'id'=>$bkgid,
@@ -39,6 +40,7 @@ class BkgModel extends BkgCommonModel {
             $this->save($bkg);
         }
     }
+
     public function getList($query,$size=100,$current=0){
         $info['total'] = $this
             ->_beforeQuery($query)
@@ -76,28 +78,64 @@ class BkgModel extends BkgCommonModel {
         // echo $this->getLastSql();die;
         return $info;
     }
+
+    public function getCalendarData($startDate, $endDate){
+        $query  = [
+            'l.cy_cut' => [
+                ['EGT', $startDate],
+                ['ELT', $endDate]
+            ],
+            'b.delete_at' => [
+                ['EXP', 'IS NULL'],
+                '',
+                'or'
+            ]
+        ];
+    
+        return $this->_beforeQuery($query)
+            ->field([
+                'b.id',
+                'booker',
+                'short_name',
+                'calendar_status',
+                'l.port AS lp',
+                'cy_cut',
+                'd.port AS dp',
+                'sum(quantity) as quantity',
+                'bkg_no',
+                'state'
+            ])
+            ->join('container_type AS ct ON b.id = bkg_id')
+            ->group('b.id')
+            ->select();
+    }
+
     public function deleteOrder($bkgid,$deleteValue){
-        $this->where([
-            'id'=>$bkgid,
-        ])->save([
-            'delete_at'=> $deleteValue,
-        ]);
+        $this->where([ 'id' => $bkgid, ])
+            ->save([ 'delete_at' => $deleteValue, ]);
     }
 
     public function changeOrderStep($id, $step){
         return $this->save([
-            'id'=>$id,
-            'step'=>$step
-            ]
-        );
+            'id' => $id,
+            'step' => $step
+        ]);
     }
+
+    public function setCalendarStatus($id, $status){
+        return $this->save([
+            'id' => $id,
+            'calendar_status' => $status
+        ]);
+    }
+
     public function changeOrderRequestStep($id, $step){
         return $this->save([
             'id'=>$id,
             'request_step'=>$step
-            ]
-        );
+        ]);
     }
+
     public function checkBkgNo($bkg_id, $bkg_no){
         return $this->where([
             'bkg_no'=>$bkg_no,
@@ -105,11 +143,10 @@ class BkgModel extends BkgCommonModel {
                 'neq', $bkg_id
             ],
             'delete_at' => [
-                ['exp', 'IS NULL'],
+                ['EXP', 'IS NULL'],
                 '',
                 'or'
             ]
-            
         ])->count();
     }
 

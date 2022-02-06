@@ -13,6 +13,7 @@ class AuthController extends \Think\Controller
     const SUCCESS = 0;          #成功
     const WITHOUT_LOGIN = 1;    #未登录
     const PASSWORD_ERROR = 2;   #账号密码错误
+    const PARAMS_ERROR = 3;     #参数错误
 
 
     public function __construct(){
@@ -27,7 +28,7 @@ class AuthController extends \Think\Controller
         }
     }
 
-    protected function  ajaxSuccess($data = 'SUCCESS'){
+    protected function ajaxSuccess($data = 'SUCCESS'){
         $this->ajaxReturn([
             'error'    =>  self::SUCCESS,
             'message'  =>  'SUCCESS',

@@ -28,7 +28,7 @@ class BkgController extends AuthController{
             die;
         }
         $bkg->saveData($_POST['header'],$bkgid);
-        //检查bkgno 师傅重复
+        //检查bkgno 是否重复
         $trander = new TraderModel();
         $trander->saveData($_POST['upper'],$bkgid);
         $loading = new PortOfLoadingModel();
@@ -101,6 +101,7 @@ class BkgController extends AuthController{
             $this->ajaxError(998, 'CAN NOT FOUND THIS ORDER');
         }
     }
+
     public function getlist (){
         $condition = $_REQUEST['condition'];
         $query = [];
@@ -111,8 +112,8 @@ class BkgController extends AuthController{
             'pod' => 'd.`port`',
             'pol' => 'l.`port`',
             'booker' => 'booker',
-            // 'gd' => 'CONCAT(`month`,`month_no`,`tag`)',
         ];
+
         foreach($likeCondition as $conditionName =>$colNmae){
             if($condition[$conditionName]){
                 $query[$colNmae] = [
@@ -121,16 +122,18 @@ class BkgController extends AuthController{
                 ];
             }
         }
+
         if($condition['dg']){
             $query['_string'] = "CONCAT(`month`,`month_no`,`tag`) LIKE '%$condition[dg]%'";
         }
+
         //是否被删除
         if($_REQUEST['state'] == 'delete'){
             $query['b.delete_at'] = [
                 'exp',
                 'IS NOT NULL'
             ];
-        }else{
+        } else {
             $query['b.delete_at'] = [
                 'exp', 'IS NULL'
             ];
@@ -146,7 +149,7 @@ class BkgController extends AuthController{
                         'or',
                     ];
                 }
-            }else{
+            } else {
                 if($_REQUEST['state'] == 'draft'){
                     $query[] = [
                         'step' => 'draft',
@@ -156,11 +159,11 @@ class BkgController extends AuthController{
                         ],
                         '_logic' => 'or',
                     ];
-                }elseif($_REQUEST['state'] == 'ready'){
+                } elseif($_REQUEST['state'] == 'ready') {
                     $query['step'] = 'ready';
-                }elseif($_REQUEST['state'] == 'complete'){
+                } elseif($_REQUEST['state'] == 'complete') {
                     $query['step'] = 'complete';
-                }else{
+                } else{
                     $query[] = [
                         [
                             'cy_cut' => ['GT', date('Y-m-d',strtotime('-2 day'))],
@@ -168,7 +171,6 @@ class BkgController extends AuthController{
                         ],
                         'step' => 'normal',
                         '_logic' => 'or',
-    
                     ];
                 }
             }
@@ -180,6 +182,23 @@ class BkgController extends AuthController{
         // $bkg->getList($query, $current, $size);die($bkg->getlastSql());
         $this->ajaxSuccess($bkg->getList($query, $size, $current));
     }
+
+    public function getCalendar(){
+        $start_date = $_REQUEST['start_date'];
+        $end_date = $_REQUEST['end_date'];
+        if($start_date && $end_date){
+            $list = (new BkgModel())->getCalendarData($start_date, $end_date);
+            foreach($list as &$bkg){
+                $bkg['lp'] = trim(explode('(',$bkg['lp'])[1], ')');
+                $bkg['dp'] = trim(explode('(',$bkg['dp'])[1], ')');
+                $bkg['calendar_status'] = $bkg['calendar_status'] ?? explode('|', $bkg['state'])[0];
+                $bkg['short_name'] = $bkg['short_name'] ?? mb_substr($bkg['booker'], 0, 1, 'utf-8');
+            }
+            $this->ajaxSuccess($list);
+        }
+        $this->ajaxError(parent::PARAMS_ERROR);
+    }
+
     public function deleteBkgOrder(){
         $id = $_REQUEST['id'];
         $isDelete = $_REQUEST['is_delete'];
@@ -199,6 +218,7 @@ class BkgController extends AuthController{
         $bkg->deleteOrder($id, $deleteInfo);
         $this->ajaxSuccess('');
     }
+
     public function changeOrderState(){
         $id = $_REQUEST['id'];
         $state = $_REQUEST['state'];
@@ -207,29 +227,42 @@ class BkgController extends AuthController{
                 (new ContainerModel())->changeOrderState($id, $state)
             );
         }else{
-            $this->ajaxError(3,'has no params');
+            $this->ajaxError(parent::PARAMS_ERROR, 'PARAMS_ERROR');
         }
     }
+    
     public function changeOrderStep(){
         $id = $_REQUEST['id'];
         $step = $_REQUEST['step'];
-        if($id && $step){
+        if ($id && $step) {
             $this->ajaxSuccess(
                 (new BkgModel())->changeOrderStep($id, $step)
             );
-        }else{
+        } else {
             $this->ajaxError(3,'has no params');
         }
     }
+
     public function changeOrderRequestStep(){
         $id = $_REQUEST['id'];
         $step = $_REQUEST['step'];
-        if($id && $step){
+        if ($id && $step) {
             $this->ajaxSuccess(
                 (new BkgModel())->changeOrderRequestStep($id, $step)
             );
-        }else{
+        } else {
             $this->ajaxError(3,'has no params');
+        }
+    }
+
+    public function setCalendarStatus(){
+        $id = $_REQUEST['id'];
+        $status = $_REQUEST['status'];
+        if($id){
+            (new BkgModel())->setCalendarStatus($id, $status);
+            $this->ajaxSuccess();
+        }else{
+            $this->ajaxError(parent::PARAMS_ERROR, 'PARAMS_ERROR');
         }
     }
 }

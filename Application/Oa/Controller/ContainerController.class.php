@@ -1,6 +1,7 @@
 <?php
 namespace Oa\Controller;
 
+use Oa\Model\ContainerModel;
 use Oa\Model\ContainerDetailModel;
 
 class ContainerController extends AuthController{
