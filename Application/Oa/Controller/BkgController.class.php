@@ -199,6 +199,22 @@ class BkgController extends AuthController{
         $this->ajaxError(parent::PARAMS_ERROR);
     }
 
+    public function getDetailCalendar(){
+        $start_date = $_REQUEST['start_date'];
+        $end_date = $_REQUEST['end_date'];
+        if($start_date && $end_date){
+            $list = (new BkgModel())->getDetailCalendarData($start_date, $end_date);
+            foreach($list as &$bkg){
+                $bkg['lp'] = trim(explode('(',$bkg['lp'])[1], ')');
+                $bkg['dp'] = trim(explode('(',$bkg['dp'])[1], ')');
+                $bkg['calendar_status'] = $bkg['calendar_status'] ?? explode('|', $bkg['state'])[0];
+                $bkg['short_name'] = $bkg['short_name'] ?? mb_substr($bkg['transprotation'], 0, 1, 'utf-8');
+            }
+            $this->ajaxSuccess($list);
+        }
+        $this->ajaxError(parent::PARAMS_ERROR);
+    }
+
     public function deleteBkgOrder(){
         $id = $_REQUEST['id'];
         $isDelete = $_REQUEST['is_delete'];

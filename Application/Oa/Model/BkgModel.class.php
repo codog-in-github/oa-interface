@@ -110,6 +110,44 @@ class BkgModel extends BkgCommonModel {
             ->select();
     }
 
+    public function getDetailCalendarData($startDate, $endDate){
+        $query  = [
+            'cd.free_pick_day' => [
+                ['EGT', $startDate],
+                ['ELT', $endDate]
+            ],
+            'b.delete_at' => [
+                ['EXP', 'IS NULL'],
+                '',
+                'or'
+            ],
+            'cd.delete_at' => [
+                ['EXP', 'IS NULL'],
+                '',
+                'or'
+            ]
+        ];
+    
+        return $this->_beforeQuery($query)
+            ->field([
+                'b.id',
+                'cd.id as detail_id',
+                'transprotation',
+                't.short_name',
+                'calendar_status',
+                'l.port AS lp',
+                'free_pick_day',
+                'd.port AS dp',
+                'sum(quantity) as quantity',
+                'bkg_no',
+                'state'
+            ])
+            ->join('container_type AS ct ON b.id = ct.bkg_id')
+            ->join('container_detail AS cd ON b.id = cd.bkg_id')
+            ->group('cd.id')
+            ->select();
+    }
+
     public function deleteOrder($bkgid,$deleteValue){
         $this->where([ 'id' => $bkgid, ])
             ->save([ 'delete_at' => $deleteValue, ]);
