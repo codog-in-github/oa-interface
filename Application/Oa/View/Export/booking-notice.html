@@ -91,7 +91,11 @@
                     </div>
                     <div class="row">
                         <div class="label">POD:</div>
-                        <div class="cell">{$pod}</div>
+                        <div class="cell">{$pod}
+                            <if condition="$ts">
+                                <strong>T/S</strong>{$ts}
+                            </if>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="label">ETD:</div>
