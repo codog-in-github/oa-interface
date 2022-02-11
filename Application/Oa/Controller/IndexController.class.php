@@ -3,6 +3,8 @@ namespace Oa\Controller ;
 
 use Oa\Controller\AuthController;
 use Oa\Model\UserModel;
+use Oa\Model\ConfigAuthModel;
+use Think\Verify;
 
 class IndexController extends AuthController
 {
@@ -28,8 +30,17 @@ class IndexController extends AuthController
             $this->ajaxError(parent::PASSWORD_ERROR, 'USERNAME/PASSWORD ERROR');
         }
     }
+    public function getMenu(){
+        $auth = new ConfigAuthModel($_SESSION['user_info']);
+        $menus = $auth->getMenu();
+        $group = [];
+        foreach($menus as $menu){
+            $group[$menu['id']][] = $menu;
+        }
+        $this->ajaxSuccess($group);
+    }
     public function verify(){
-        $Verify = new \Think\Verify([
+        $Verify = new Verify([
             'expire' => 60*2,
         ]);
         $Verify->fontSize = 30;
@@ -39,7 +50,7 @@ class IndexController extends AuthController
     }
     public function logout()
     {
-        unset($_SESSION['userInfo']);
+        unset($_SESSION['user_info']);
         $this->ajaxReturn([
             'error' => parent::WITHOUT_LOGIN,
             'message' => 'WITHOUT_LOGIN',

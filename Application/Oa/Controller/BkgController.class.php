@@ -223,9 +223,9 @@ class BkgController extends AuthController{
             die;
         }
         if($isDelete == 'true' ){
-            $deleteInfo = $_SESSION['userInfo']['id']
+            $deleteInfo = $_SESSION['user_info']['id']
                 . '|' 
-                . $_SESSION['userInfo']['name'] 
+                . $_SESSION['user_info']['name'] 
                 . '@'
                 . date('Y-m-d H:i:s');
         }else{

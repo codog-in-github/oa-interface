@@ -137,3 +137,11 @@ function imgToBase64($img_file) {
 function getRandomID(){
     return time() . rand(1000, 9999);
 }
+// 通过 特定键 将数组分组
+function array_group($key, $array){
+    $group = [];
+    foreach($array as $cell){
+        $group[$cell[$key]][] = $cell;
+    }
+    return $group;
+}
