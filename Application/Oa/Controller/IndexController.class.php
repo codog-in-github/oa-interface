@@ -8,13 +8,14 @@ use Think\Verify;
 
 class IndexController extends AuthController
 {
-    function index(){
+    function checkLoginStatus(){
         if($_SESSION['userInfo']){
             $this->ajaxSuccess($_SESSION['userInfo']);
         }else{
             $this->ajaxError(parent::WITHOUT_LOGIN,'WITHOUT_LOGIN');
         }
     }
+
     function needClear(){
         $this->ajaxSuccess(M('cash')->find(1)['value']);
     }
@@ -30,8 +31,9 @@ class IndexController extends AuthController
             $this->ajaxError(parent::PASSWORD_ERROR, 'USERNAME/PASSWORD ERROR');
         }
     }
+
     public function getMenu(){
-        $auth = new ConfigAuthModel($_SESSION['user_info']);
+        $auth = new ConfigAuthModel($_SESSION['userInfo']);
         $menus = $auth->getMenu();
         $group = [];
         foreach($menus as $menu){
@@ -50,7 +52,7 @@ class IndexController extends AuthController
     }
     public function logout()
     {
-        unset($_SESSION['user_info']);
+        unset($_SESSION['userInfo']);
         $this->ajaxReturn([
             'error' => parent::WITHOUT_LOGIN,
             'message' => 'WITHOUT_LOGIN',

@@ -11,7 +11,8 @@ class AuthController extends Controller
     const WITHOUT_LOGIN  = 1;        # 未登录
     const PASSWORD_ERROR = 2;        # 账号密码错误
     const AUTH_ERROR     = 3;        # 权限错误
-    const ILLEGAL_PARAMS = 20;       # 参数不合法
+    const ILLEGAL_PARAMS = 101;      # 参数不合法
+    const OTHER          = 998;      # 参数不合法
     const UNKNOW_ERROR   = 999;
 
     //不需要验证登录的方法
@@ -26,13 +27,14 @@ class AuthController extends Controller
     const NO_AUTH_METHOD = [
         'logout',
         'getMenu',
-    ];
+        'checkLoginStatus',
+    ] ;
 
     public function __construct(){
         parent::__construct();
         // 验证登录信息
         if( !(in_array(ACTION_NAME, self::NO_LOGIN_METHOD) 
-            || $_SESSION['user_info']) ){
+            || $_SESSION['userInfo']) ){
             $this->ajaxError(
                 self::WITHOUT_LOGIN,
                 'WITHOUT_LOGIN'
@@ -51,7 +53,7 @@ class AuthController extends Controller
 
     protected function _checkAuth(){
         if(!isset($_SESSION['auth_info'][CONTROLLER_NAME  . '-' . ACTION_NAME])){
-            $auth_model = new ConfigAuthModel($_SESSION['user_info']);
+            $auth_model = new ConfigAuthModel($_SESSION['userInfo']);
             $_SESSION['auth_info'][CONTROLLER_NAME  . '-' . ACTION_NAME] = boolval($auth_model->getMethodRole());
         }
         return $_SESSION['auth_info'][CONTROLLER_NAME  . '-' . ACTION_NAME];

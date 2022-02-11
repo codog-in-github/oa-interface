@@ -6,12 +6,12 @@ use Oa\Model\ConfigAuthModel as Auth;
 
 class SystemController extends AuthController{
     public function getRoleList(){
-        $role = new Role($_SESSION['user_info']);
+        $role = new Role($_SESSION['userInfo']);
         $this->ajaxSuccess($role->getRoleList());
     }
 
     public function getAuthList(){
-        $auth = new Auth($_SESSION['user_info']);
+        $auth = new Auth($_SESSION['userInfo']);
         $this->ajaxSuccess([
             'menu_list' => array_group('id', $auth->getAllMenu()),
             'method_list' => array_group('id', $auth->getAllMethod()),
@@ -34,9 +34,9 @@ class SystemController extends AuthController{
                 function ($type){
                     return $type === '1' || $type === '0';
                 },
-                ]
+            ]
             );
-        $auth = new Auth($_SESSION['user_info']);
+        $auth = new Auth($_SESSION['userInfo']);
         $this->ajaxSuccess($auth->getParentAuth($_GET['type']));
     }
 
@@ -67,7 +67,7 @@ class SystemController extends AuthController{
                 }
             ]
         );
-        $auth = new Auth($_SESSION['user_info']);
+        $auth = new Auth($_SESSION['userInfo']);
         $id = $auth->addMenu($_POST['type'], $_POST['parent'], $_POST['child']);
         $this->ajaxSuccess($id);
     }

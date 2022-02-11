@@ -7,9 +7,9 @@ class ConfigAuthModel extends Model {
     private $_user_info;
     private $_role;
     
-    public function __construct($user_info){
+    public function __construct($userInfo){
         parent::__construct();
-        $this->_user_info = $user_info;
+        $this->_user_info = $userInfo;
         $this->_role = new ConfigRoleModel($this->_user_info);
         $this->_roleAuth = new ConfigRoleAuthModel($this->_role);
     }

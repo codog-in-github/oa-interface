@@ -7,9 +7,9 @@ class ConfigRoleModel extends Model{
     private $_user_info;
     private $_role_data;
     
-    public function __construct($user_info){
+    public function __construct($userInfo){
         parent::__construct();
-        $this->_user_info = $user_info;
+        $this->_user_info = $userInfo;
     }
     public function getUserRole(){
         $this->_role_data = $this
