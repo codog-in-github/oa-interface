@@ -53,6 +53,7 @@ class IndexController extends AuthController
     public function logout()
     {
         unset($_SESSION['userInfo']);
+        unset($_SESSION['auth_info']);
         $this->ajaxReturn([
             'error' => parent::WITHOUT_LOGIN,
             'message' => 'WITHOUT_LOGIN',

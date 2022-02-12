@@ -6,14 +6,19 @@ use Oa\Model\ConfigAuthModel ;
 
 class AuthController extends Controller
 {
-    //错误码
-    const SUCCESS        = 0;        # 成功
-    const WITHOUT_LOGIN  = 1;        # 未登录
-    const PASSWORD_ERROR = 2;        # 账号密码错误
-    const AUTH_ERROR     = 3;        # 权限错误
-    const ILLEGAL_PARAMS = 101;      # 参数不合法
-    const OTHER          = 998;      # 参数不合法
-    const UNKNOW_ERROR   = 999;
+    /**
+     * 错误码
+     * 0         成功
+     * 1   ~ 99  系统级别错误
+     * 100 ~ 999 操作错误
+     */
+    const SUCCESS        = 0;    # 成功
+    const WITHOUT_LOGIN  = 1;    # 未登录
+    const AUTH_ERROR     = 2;    # 权限错误
+    const ILLEGAL_PARAMS = 3;    # 参数不合法
+    const PASSWORD_ERROR = 101;  # 账号密码错误
+    const OTHER          = 998;  # 其他
+    const UNKNOW_ERROR   = 999;  # 未知
 
     //不需要验证登录的方法
     const NO_LOGIN_METHOD = [

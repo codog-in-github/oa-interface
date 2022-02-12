@@ -20,11 +20,13 @@ class UserModel extends Model {
     public function getLoginUser($username, $password){
         return $this
             ->field([
-                'id',
-                'name',
+                'user.id',
+                'user.name',
                 'tag',
                 'role_id',
+                'index',
             ])
+            ->join('config_role ON role_id = config_role.id')
             ->where([
                 'username'=>$username,
                 'password'=>$password,

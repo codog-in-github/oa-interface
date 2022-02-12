@@ -18,6 +18,7 @@ class ConfigAuthModel extends Model {
         return $this
             ->alias('parent')
             ->join('config_auth AS child ON  parent.id = child.pid AND parent.type = child.type')
+            ->order('child.order, parent.order')
             ->where([
                 'parent.delete_at' => ['exp', 'IS NULL'],
                 'child.delete_at' => ['exp', 'IS NULL'],
