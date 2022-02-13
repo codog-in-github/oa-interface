@@ -55,6 +55,7 @@ class BkgController extends AuthController{
         }
         $this->ajaxSuccess();
     }
+
     public function getBkgOrder(){
         $bkg_id = $_GET['bkg_id'];
         if(!$bkg_id){
@@ -138,41 +139,28 @@ class BkgController extends AuthController{
                 'exp', 'IS NULL'
             ];
             //订单状态筛选
-            if(array_key_exists('req_state',$_REQUEST)){
-                if(in_array($_REQUEST['req_state'],['1','2'])){
-                    $query['request_step'] = $_REQUEST['req_state'];
-                }else{
-                    $query['request_step'] = [
-                        ['exp', 'IS NULL'],
-                        '0',
-                        '',
-                        'or',
-                    ];
-                }
-            } else {
-                if($_REQUEST['state'] == 'draft'){
-                    $query[] = [
-                        'step' => 'draft',
-                        [
-                            'cy_cut' => ['ELT', date('Y-m-d',strtotime('-2 day'))],
-                            'step' => ['exp', 'IS NULL'],
-                        ],
-                        '_logic' => 'or',
-                    ];
-                } elseif($_REQUEST['state'] == 'ready') {
-                    $query['step'] = 'ready';
-                } elseif($_REQUEST['state'] == 'complete') {
-                    $query['step'] = 'complete';
-                } else{
-                    $query[] = [
-                        [
-                            'cy_cut' => ['GT', date('Y-m-d',strtotime('-2 day'))],
-                            'step' => ['exp', 'IS NULL'],
-                        ],
-                        'step' => 'normal',
-                        '_logic' => 'or',
-                    ];
-                }
+            if($_REQUEST['state'] == 'draft'){
+                $query[] = [
+                    'step' => 'draft',
+                    [
+                        'cy_cut' => ['ELT', date('Y-m-d',strtotime('-2 day'))],
+                        'step' => ['exp', 'IS NULL'],
+                    ],
+                    '_logic' => 'or',
+                ];
+            } elseif($_REQUEST['state'] == 'ready') {
+                $query['step'] = 'ready';
+            } elseif($_REQUEST['state'] == 'complete') {
+                $query['step'] = 'complete';
+            } else{
+                $query[] = [
+                    [
+                        'cy_cut' => ['GT', date('Y-m-d',strtotime('-2 day'))],
+                        'step' => ['exp', 'IS NULL'],
+                    ],
+                    'step' => 'normal',
+                    '_logic' => 'or',
+                ];
             }
         }
         
@@ -181,6 +169,59 @@ class BkgController extends AuthController{
         $bkg = new BkgModel();
         // $bkg->getList($query, $current, $size);die($bkg->getlastSql());
         $this->ajaxSuccess($bkg->getList($query, $size, $current));
+    }
+    
+    public function getReqlist (){
+        $condition = $_REQUEST['condition'];
+        $query = [];
+        //模糊查询字段
+        $likeCondition = [
+            'bkg_no' => 'bkg_no',
+            'bl_no' => 'bl_no',
+            'pod' => 'd.`port`',
+            'pol' => 'l.`port`',
+            'booker' => 'booker',
+        ];
+
+        foreach($likeCondition as $conditionName =>$colNmae){
+            if($condition[$conditionName]){
+                $query[$colNmae] = [
+                    'LIKE',
+                    '%'.$condition[$conditionName].'%',
+                ];
+            }
+        }
+
+        if($condition['dg']){
+            $query['_string'] = "CONCAT(`month`,`month_no`,`tag`) LIKE '%$condition[dg]%'";
+        }
+
+        if(array_key_exists('req_state',$_REQUEST)){
+            if($_REQUEST['req_state'] == 3){
+                $query['request_step'] = 3;
+            } else {
+                $query['request_step'] = ['neq', 3];
+            }
+        } else {
+            
+        }
+        //是否被删除
+        if($_REQUEST['state'] == 'delete'){
+            $query['b.delete_at'] = [
+                'exp',
+                'IS NOT NULL'
+            ];
+        } else {
+            $query['b.delete_at'] = [
+                'exp', 'IS NULL'
+            ];
+        }
+        
+        $current = $_REQUEST['page']?:0;
+        $size = $_REQUEST['page_size']?:100;
+        $bkg = new BkgModel();
+        // $bkg->getList($query, $current, $size);die($bkg->getlastSql());
+        $this->ajaxSuccess($bkg->getReqList($query, $size, $current));
     }
 
     public function getCalendar(){
@@ -247,17 +288,55 @@ class BkgController extends AuthController{
             $this->ajaxError(parent::PARAMS_ERROR, 'PARAMS_ERROR');
         }
     }
+
+    public function changeRequestDetail(){
+        $this->_checkParams(['id']);
+        $id = $_REQUEST['id'];
+        $expend = $_REQUEST['expend'];
+        $income = $_REQUEST['income'];
+
+        if($expend){
+            $expend_detail = [];
+            $expend_total = 0;
+            foreach($expend as $e){
+                $expend_detail[] = $e['price'] . ',' . $e['date'];
+                $expend_total += $e['price'];
+            }
+            $expend_detail = implode('|', $expend_detail);
+        }else{
+            $expend_total = 0;
+            $expend_detail = '';
+        }
+
+        if($income){
+            $income_detail = [];
+            $income_total = 0;
+            foreach($income as $e){
+                $income_detail[] = $e['price'] . ',' . $e['date'];
+                $income_total += $e['price'];
+            }
+            $income_detail = implode('|', $income_detail);
+        }else{
+            $income_total = 0;
+            $income_detail = '';
+        }
+
+        $bkg = new BkgModel();
+        $bkg->changeReqInfo([
+            'expend_total' => $expend_total,
+            'expend_detail' => $expend_detail,
+            'income_total' => $income_total,
+            'income_detail' => $income_detail,
+            'id' => $id,
+        ]);
+        $this->ajaxSuccess();
+    }
     
     public function changeOrderStep(){
-        $id = $_REQUEST['id'];
-        $step = $_REQUEST['step'];
-        if ($id && $step) {
-            $this->ajaxSuccess(
-                (new BkgModel())->changeOrderStep($id, $step)
-            );
-        } else {
-            $this->ajaxError(3,'has no params');
-        }
+        $this->_checkParams(['step', 'id']);
+        $this->ajaxSuccess(
+            (new BkgModel())->changeOrderStep($id, $step)
+        );
     }
 
     public function changeOrderRequestStep(){

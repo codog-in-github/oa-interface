@@ -41,7 +41,7 @@ class BkgModel extends BkgCommonModel {
         }
     }
 
-    public function getList($query,$size=100,$current=0){
+    public function getList($query, $size=100, $current=0){
         $info['total'] = $this
             ->_beforeQuery($query)
             ->count();
@@ -61,6 +61,49 @@ class BkgModel extends BkgCommonModel {
                 'concat(month, month_no, tag) as company_no'
             ])
             ->join('container_type AS ct ON b.id = bkg_id')
+            ->where([
+                'ct.delete_at' => [
+                    ['exp', 'IS NULL'],
+                    ['eq', ''],
+                    'or'
+                ]
+            ])
+            ->group('b.id')
+            ->limit($current * $size, $size)
+            ->order('show_cy_cut')
+            ->select();
+        foreach($info['list'] as &$record){
+            $record['ld'] = exportToGetPort($record['lp']) . '-' . exportToGetPort($record['dp']);
+        }
+        // echo $this->getLastSql();die;
+        return $info;
+    }
+    
+    public function getReqList($query, $size=100, $current=0){
+        $info['total'] = $this
+            ->_beforeQuery($query)
+            ->join('LEFT JOIN requestbook AS rb ON b.id = rb.bkg_id')
+            ->count();
+        $info['list'] = $this
+            ->_beforeQuery($query)
+            ->field([
+                'b.id',
+                'CASE `doc_cut` WHEN "" THEN `cy_cut` ELSE `doc_cut` END AS show_cy_cut',
+                'bkg_date',
+                'booker',
+                'request_step as state',
+                'UPPER(l.`port`) as lp',
+                'UPPER(d.`port`) as dp',
+                'bkg_no',
+                'group_concat(quantity) as quantity',
+                'group_concat(container_type) as container_type',
+                'concat(month, month_no, tag) as company_no',
+                'rb.total',
+                'income_detail',
+                'expend_detail',
+            ])
+            ->join('container_type AS ct ON b.id = bkg_id')
+            ->join('LEFT JOIN requestbook AS rb ON b.id = rb.bkg_id')
             ->where([
                 'ct.delete_at' => [
                     ['exp', 'IS NULL'],
@@ -187,6 +230,10 @@ class BkgModel extends BkgCommonModel {
                 'or'
             ]
         ])->count();
+    }
+
+    public function changeReqInfo($info){
+        return $this->save($info);
     }
 
     protected function _beforeQuery($query){

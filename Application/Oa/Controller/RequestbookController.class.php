@@ -176,7 +176,7 @@ class RequestbookController extends AuthController{
         if($bkg_id){
             $this->ajaxSuccess($bkg_id);
         }else{
-            $this->ajaxError(999, 'CAN\'T FIND THIS ORDER');
+            $this->ajaxError(998, 'CAN\'T FIND THIS ORDER');
         }
     }
 
