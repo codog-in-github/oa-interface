@@ -13,7 +13,6 @@ use Oa\Model\ContainerDetailModel;
 use Oa\Model\HandlingModel;
 use Oa\Model\RequestbookModel;
 use Oa\Model\RequestbookDetailModel;
-// use Oa\Model\RequestExtraModel;
 
 class BkgController extends AuthController{
     public function saveData(){
@@ -334,6 +333,8 @@ class BkgController extends AuthController{
     
     public function changeOrderStep(){
         $this->_checkParams(['step', 'id']);
+        $id = $_REQUEST['id'];
+        $step = $_REQUEST['step'];
         $this->ajaxSuccess(
             (new BkgModel())->changeOrderStep($id, $step)
         );
@@ -347,7 +348,7 @@ class BkgController extends AuthController{
                 (new BkgModel())->changeOrderRequestStep($id, $step)
             );
         } else {
-            $this->ajaxError(3,'has no params');
+            $this->ajaxError(3, 'has no params');
         }
     }
 
