@@ -79,7 +79,7 @@ class BkgController extends AuthController{
         }
         $this->ajaxSuccess(clearEmptyDate($data));
     }
-    
+
     public function getBkgOrderID(){
         $bkg_no = $_GET['bkg_no'];
         if(!$bkg_no){
@@ -169,7 +169,7 @@ class BkgController extends AuthController{
         // $bkg->getList($query, $current, $size);die($bkg->getlastSql());
         $this->ajaxSuccess($bkg->getList($query, $size, $current));
     }
-    
+
     public function getReqlist (){
         $condition = $_REQUEST['condition'];
         $query = [];
@@ -199,10 +199,12 @@ class BkgController extends AuthController{
             if($_REQUEST['req_state'] == 3){
                 $query['request_step'] = 3;
             } else {
-                $query['request_step'] = ['neq', 3];
+                $query[] = [
+                    ['request_step' => ['neq', 3]],
+                    ['request_step' => ['exp', 'IS NULL']],
+                    '_logic' => 'or',
+                ];
             }
-        } else {
-            
         }
         //是否被删除
         if($_REQUEST['state'] == 'delete'){
@@ -219,7 +221,7 @@ class BkgController extends AuthController{
         $current = $_REQUEST['page']?:0;
         $size = $_REQUEST['page_size']?:100;
         $bkg = new BkgModel();
-        // $bkg->getList($query, $current, $size);die($bkg->getlastSql());
+        // $bkg->getReqList($query, $current, $size);die($bkg->getlastSql());
         $this->ajaxSuccess($bkg->getReqList($query, $size, $current));
     }
 
@@ -298,7 +300,7 @@ class BkgController extends AuthController{
             $expend_detail = [];
             $expend_total = 0;
             foreach($expend as $e){
-                $expend_detail[] = $e['price'] . ',' . $e['date'];
+                $expend_detail[] = $e['price'] . ',' . $e['date'] . ',' . $e['name'];
                 $expend_total += $e['price'];
             }
             $expend_detail = implode('|', $expend_detail);
@@ -330,7 +332,7 @@ class BkgController extends AuthController{
         ]);
         $this->ajaxSuccess();
     }
-    
+
     public function changeOrderStep(){
         $this->_checkParams(['step', 'id']);
         $id = $_REQUEST['id'];

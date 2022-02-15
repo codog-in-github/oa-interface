@@ -4,7 +4,7 @@ namespace Oa\Model;
 use Think\Model;
 
 class BkgModel extends BkgCommonModel {
-    protected $_fields =  [
+    protected $_fields = [
         'id',
         'bkg_date',
         'bkg_no',
@@ -101,9 +101,10 @@ class BkgModel extends BkgCommonModel {
                 'rb.total',
                 'income_detail',
                 'expend_detail',
+                't.short_name',
             ])
             ->join('container_type AS ct ON b.id = bkg_id')
-            ->join('LEFT JOIN requestbook AS rb ON b.id = rb.bkg_id')
+            ->join('RIGHT JOIN requestbook AS rb ON b.id = rb.bkg_id')
             ->where([
                 'ct.delete_at' => [
                     ['exp', 'IS NULL'],
