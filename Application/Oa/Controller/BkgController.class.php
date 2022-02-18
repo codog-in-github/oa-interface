@@ -313,7 +313,7 @@ class BkgController extends AuthController{
             $income_detail = [];
             $income_total = 0;
             foreach($income as $e){
-                $income_detail[] = $e['price'] . ',' . $e['date'];
+                $income_detail[] = $e['price'] . ',' . $e['date']. ',' . $e['name'];
                 $income_total += $e['price'];
             }
             $income_detail = implode('|', $income_detail);
@@ -345,7 +345,7 @@ class BkgController extends AuthController{
     public function changeOrderRequestStep(){
         $id = $_REQUEST['id'];
         $step = $_REQUEST['step'];
-        if ($id && $step) {
+        if ($id && ($step || $step === '0'|| $step === 0)) {
             $this->ajaxSuccess(
                 (new BkgModel())->changeOrderRequestStep($id, $step)
             );
