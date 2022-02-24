@@ -19,6 +19,11 @@ class IndexController extends AuthController
     function needClear(){
         $this->ajaxSuccess(M('cash')->find(1)['value']);
     }
+
+    function clearCache(){
+        M('cash')->save(['id' => 1, 'value' => time()]);
+        $this->ajaxSuccess();
+    }
     
     public function login(){
         $map['username'] = $_POST['username'];

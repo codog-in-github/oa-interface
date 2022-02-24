@@ -24,6 +24,7 @@ class AuthController extends Controller
     const NO_LOGIN_METHOD = [
         'login',
         'needClear',
+        'clearCache',
         'verify',
     ];
     //错误码
