@@ -145,3 +145,7 @@ function array_group($key, $array){
     }
     return $group;
 }
+
+function getDeleteUserInfo(){
+    return "{$_SESSION['userInfo']['id']}|{$_SESSION['userInfo']['name']}|".time();
+}
