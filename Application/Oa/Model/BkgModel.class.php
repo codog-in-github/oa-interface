@@ -123,7 +123,7 @@ class BkgModel extends BkgCommonModel {
         return $info;
     }
 
-    public function getCalendarData($startDate, $endDate){
+    public function getCalendarData($startDate, $endDate, $bkg_type = ''){
         $query  = [
             'l.cy_cut' => [
                 ['EGT', $startDate],
@@ -135,6 +135,10 @@ class BkgModel extends BkgCommonModel {
                 'or'
             ]
         ];
+
+        if($bkg_type !== ''){
+            $query['bkg_type'] = $bkg_type;
+        }
     
         return $this->_beforeQuery($query)
             ->field([
@@ -144,6 +148,7 @@ class BkgModel extends BkgCommonModel {
                 'calendar_status',
                 'l.port AS lp',
                 'cy_cut',
+                'doc_cut',
                 'd.port AS dp',
                 'sum(quantity) as quantity',
                 'bkg_no',

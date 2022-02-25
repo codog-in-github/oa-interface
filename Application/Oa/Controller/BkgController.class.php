@@ -228,11 +228,15 @@ class BkgController extends AuthController{
     public function getCalendar(){
         $start_date = $_REQUEST['start_date'];
         $end_date = $_REQUEST['end_date'];
+        $bkg_type = $_REQUEST['bkg_type'];
         if($start_date && $end_date){
-            $list = (new BkgModel())->getCalendarData($start_date, $end_date);
+            $list = (new BkgModel())->getCalendarData($start_date, $end_date, $bkg_type);
             foreach($list as &$bkg){
                 $bkg['lp'] = trim(explode('(',$bkg['lp'])[1], ')');
                 $bkg['dp'] = trim(explode('(',$bkg['dp'])[1], ')');
+                if($bkg['doc_cut']){
+                    $bkg['cy_cut'] = $bkg['doc_cut'];
+                }
                 $bkg['calendar_status'] = $bkg['calendar_status'] ?: explode('|', $bkg['state'])[0];
                 $bkg['short_name'] = $bkg['short_name'] ?: mb_substr($bkg['booker'], 0, 1, 'utf-8');
             }
