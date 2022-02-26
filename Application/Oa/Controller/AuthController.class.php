@@ -100,7 +100,7 @@ class AuthController extends Controller
         }
         
         for($i=0; $i<count($params); $i++){
-            if( gettype($check_function[$i]) === 'object' || gettype($check_function[$i]) === 'string' ){
+            if(gettype($check_function[$i]) === 'object' || gettype($check_function[$i]) === 'string'){
                 if(!$check_function[$i]($target[$params[$i]])){
                     $state = false;
                     break;

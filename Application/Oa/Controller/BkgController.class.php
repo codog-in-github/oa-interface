@@ -81,19 +81,33 @@ class BkgController extends AuthController{
     }
 
     public function getBkgOrderID(){
-        $bkg_no = $_GET['bkg_no'];
-        if(!$bkg_no){
-            exit;
+        $this->_checkParams(['no', 'type'], 'POST', [
+            function($no){
+                return $no !== '';
+            },
+            function($type){
+                return $type == 1 || $type == 2;
+            }
+        ]);
+        $where = [];
+        switch($_REQUEST['type']){
+            case 1:{
+                $where['bkg_no'] = $_REQUEST['no'];
+                break;
+            }
+            case 2:{
+                $where['CONCAT(`month`,`month_no`,`tag`)'] = $_REQUEST['no'];
+                break;
+            }
         }
+
+        $where['delete_at'] = [
+            ['exp', 'IS NULL'],
+            ['eq', ''],
+            'or'
+        ];
         $id = (new BkgModel())
-            ->where([
-                'bkg_no' => $bkg_no,
-                'delete_at' => [
-                    ['exp', 'IS NULL'],
-                    ['eq', ''],
-                    'or'
-                ]
-            ])
+            ->where($where)
             ->find()['id'];
         if($id){
             $this->ajaxSuccess($id);
