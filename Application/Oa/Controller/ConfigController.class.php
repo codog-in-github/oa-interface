@@ -68,4 +68,52 @@ class ConfigController extends AuthController
         return $this->ajaxSuccess($booker->deleteById($id));
     }
 
+    public function getCountryList () {
+        $pid = $_POST['pid'] ?: 0;
+        $query = $_POST['query'];
+
+        $isPort = boolval($pid);
+        $cm = new CountryModel();
+        if($query){
+            $this->ajaxSuccess($cm->searchPortList($query));
+        } elseif ($isPort) {
+            $this->ajaxSuccess($cm->getPortList($pid));
+        } else {
+            $this->ajaxSuccess($cm->getCountryList());
+        }
+
+    }
+
+    public function addCountry () {
+        $this->_checkParams(['code', 'label'], 'POST');
+        $pid = $_POST['pid'] ?: 0;
+        $isPort = boolval($pid);
+        $cm = new CountryModel();
+        if ($isPort) {
+            $this->ajaxSuccess($cm->addPort([
+                'pid' => $pid,
+                'label' => $_POST['label'],
+                'code' => $_POST['code'],
+            ]));
+        } else {
+            $this->ajaxSuccess($cm->addCountry([
+                'label' => $_POST['label'],
+                'code' => $_POST['code'],
+            ]));
+        }
+        
+    }
+
+    public function editCountry () {
+        $this->_checkParams(['id'], 'POST');
+        $id = $_POST['id'];
+        $cm = new CountryModel();
+        $this->ajaxSuccess($cm->editPort($_POST['id'], $_POST['info']));
+    }
+
+    public function deleteCountry () {
+        $this->_checkParams(['id'], 'POST');
+        $cm = new CountryModel();
+        $this->ajaxSuccess($cm->deletePort($_POST['id']));
+    }
 }
