@@ -1,3 +1,4 @@
 ThinkPHP
 Public/index
 vendor
+*.log

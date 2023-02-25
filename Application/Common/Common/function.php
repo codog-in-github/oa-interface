@@ -149,3 +149,21 @@ function array_group($key, $array){
 function getDeleteUserInfo(){
     return "{$_SESSION['userInfo']['id']}|{$_SESSION['userInfo']['name']}|".time();
 }
+
+function descriptionFormat($description) {
+    return trim($description);
+}
+
+function excelColumn($index) {
+    $index += 1;
+    $nums = [];
+    while ($index > 0) {
+        $nums[] = $index % 26;
+        $index = floor( $index / 26);
+    }
+    $col = '';
+    for($i = count($nums) - 1; $i >= 0; $i --) {
+        $col.= chr(64 + $nums[$i]);
+    }
+    return $col;
+}
