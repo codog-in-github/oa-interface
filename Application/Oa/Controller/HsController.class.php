@@ -49,11 +49,13 @@ class HsController extends AuthController {
             if($needUpdate) {
                 $model = M('hs');
                 if($updateData) {
-                    $model->save([
-                        'id' => $idMap[$description],
-                        'description' => $description,
-                        'hs' => $hs,
-                    ]);
+                    foreach ($updateData as $description => $hs) {
+                        $model->save([
+                            'id' => $idMap[$description],
+                            'description' => $description,
+                            'hs' => $hs,
+                        ]);
+                    }
                 }
                 if($addData) {
                     $data = [];
@@ -99,7 +101,7 @@ class HsController extends AuthController {
                     if($hs && (!$excelHs || !$emptyOnly)) {
                         $sheet->setCellValue($colName . ($i + 1), $hs);
                     }
-                    if($excelHs && $emptyOnly) {
+                    if($excelHs && $emptyOnly && $excelHs !== $hs) {
                         $update[$description] = $excelHs;
                     }
                 }
