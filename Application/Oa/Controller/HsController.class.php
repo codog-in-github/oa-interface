@@ -18,7 +18,7 @@ class HsController extends AuthController {
                 $IOFactoryType = 'Excel2007';
                 break;
             default:
-                die('文件类型错误'); // 报错信息
+                $this->ajaxError();
                 break;
         }
         $excel = PHPExcel_IOFactory::createReader($IOFactoryType)->load($file);
@@ -59,11 +59,13 @@ class HsController extends AuthController {
             $colName = excelColumn($hsIndex);
             for($i = 1; $i < count($sheetArray); $i++) {
                 if(
-                    $sheetArray[$i][$desIndex] && $map[$sheetArray[$i][$desIndex]] && (
+                    $sheetArray[$i][$desIndex]
+                    && ($hs = $map[descriptionFormat($sheetArray[$i][$desIndex])])
+                    && (
                         !$sheetArray[$i][$hsIndex] || !$emptyOnly
-                    )) {
-                        $sheet->setCellValue($colName . $i, $map[$sheetArray[$i][$desIndex]]);
-                    }
+                )) {
+                        $sheet->setCellValue($colName . ($i + 1), $hs);
+                }
             }
         }
     }
