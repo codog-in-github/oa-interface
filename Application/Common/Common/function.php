@@ -167,3 +167,9 @@ function excelColumn($index) {
     }
     return $col;
 }
+
+function getCustomEnv () {
+    $env = parse_ini_file(ENTRY_PATH . '/.env') or [];
+    $envLocal = parse_ini_file(ENTRY_PATH . '/.env.local') or [];
+    return array_merge($env, $envLocal);
+}
