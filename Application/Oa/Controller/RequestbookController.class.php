@@ -188,5 +188,12 @@ class RequestbookController extends AuthController{
             $this->ajaxError(998, 'PLEASE COPY BEFORE');
         }
     }
-    
+
+    public function saveRealTime () {
+        $id = $_REQUEST['id'];
+        $time = $_REQUEST['time'];
+        $model = new RequestbookModel();
+        $model->saveRealTime($id, $time);
+        $this->ajaxSuccess();
+    }
 }

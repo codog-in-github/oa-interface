@@ -10,16 +10,16 @@ class ContainerController extends AuthController{
         $query = [];
         //模糊查询字段
         $likeCondition = [
-            'bkg_no' => 'bkg_no',
-            'booker_place' => 'booker_place',
+            'bkg_no'         => 'bkg_no',
+            'booker_place'   => 'booker_place',
             'transprotation' => 'transprotation',
-            'booker' => 'booker',
+            'booker'         => 'booker',
         ];
         foreach($likeCondition as $conditionName =>$colNmae){
             if($condition[$conditionName]){
                 $query[$colNmae] = [
                     'LIKE',
-                    '%'.$condition[$conditionName].'%',
+                    '%' . $condition[$conditionName] . '%',
                 ];
             }
         }
@@ -27,17 +27,16 @@ class ContainerController extends AuthController{
             'cy_cut'=>'cy_cut',
             'vanning_date'=>'vanning_date',
         ];
-        foreach($timeCondition as $conditionName =>$colNmae){
+        foreach($timeCondition as $conditionName => $colNmae){
             if($condition[$conditionName][0] && $condition[$conditionName][1]){
                 $query[$colNmae] = [
                     'BETWEEN',
-                    [$condition[$conditionName][0],
-                    $condition[$conditionName][1],]
+                    $condition[$conditionName]
                 ];
             }
         }
-        $current = $_REQUEST['page']?:0;
-        $size = $_REQUEST['page_size']?:100;
+        $current = $_REQUEST['page'] ?: 0;
+        $size = $_REQUEST['page_size'] ?: 100;
         $this->ajaxSuccess((new ContainerDetailModel())->getList($query, $size, $current));
     }
 

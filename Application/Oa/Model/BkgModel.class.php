@@ -1,8 +1,6 @@
 <?php
 namespace Oa\Model;
 
-use Think\Model;
-
 class BkgModel extends BkgCommonModel {
     protected $_fields = [
         'id',
@@ -79,11 +77,16 @@ class BkgModel extends BkgCommonModel {
         return $info;
     }
     
-    public function getReqList($query, $size=100, $current=0){
-        $info['total'] = $this
-            ->_beforeQuery($query)
-            ->join('LEFT JOIN requestbook AS rb ON b.id = rb.bkg_id')
-            ->count();
+    public function getReqList($query, $having, $size=100, $current=0){
+        $info['total'] = count(
+            $this
+                ->_beforeQuery($query)
+                ->join('LEFT JOIN requestbook AS rb ON b.id = rb.bkg_id')
+                ->group('b.id')
+                ->field([ 'b.id' ])
+                ->having($having)
+                ->select()
+        );
         $info['list'] = $this
             ->_beforeQuery($query)
             ->field([
@@ -98,13 +101,14 @@ class BkgModel extends BkgCommonModel {
                 'group_concat(quantity) as quantity',
                 'group_concat(container_type) as container_type',
                 'concat(month, month_no, tag) as company_no',
-                'rb.total',
-                'income_detail',
-                'expend_detail',
+                'SUM(rb.total) as income_total',
+                'SUM(be.total) as expend_total',
                 't.short_name',
             ])
             ->join('container_type AS ct ON b.id = bkg_id')
             ->join('RIGHT JOIN requestbook AS rb ON b.id = rb.bkg_id')
+            ->join('LEFT JOIN bkg_expend AS be ON b.id = be.bkg_id')
+            ->having($having)
             ->where([
                 'ct.delete_at' => [
                     ['exp', 'IS NULL'],
@@ -122,6 +126,7 @@ class BkgModel extends BkgCommonModel {
         // echo $this->getLastSql();die;
         return $info;
     }
+
 
     public function getCalendarData($startDate, $endDate, $bkg_type = ''){
         $query  = [
@@ -250,5 +255,12 @@ class BkgModel extends BkgCommonModel {
             ->join('trader AS t ON b.id = t.id')
             ->join('container AS c ON b.id = c.id')
             ->where($query);
+    }
+
+    public function mvRequestStep($id, $step) {
+        $this->save([
+            'id' => $id,
+            'request_step' => $step
+        ]);
     }
 }

@@ -12,7 +12,7 @@ class AssetsController extends Controller {
         $fileFullName = AssetsController::$basePath . $fileName;
         if(preg_match('/^\d+\.xlsx?$/', $fileName) && file_exists($fileFullName)){
             $ext = explode('.', $fileName);
-            $ext = $ext[count($ext) -1];
+            $ext = $ext[count($ext) - 1];
             if($ext === 'xls'){
                 header('Content-Type: application/vnd.ms-excel'); //告诉浏览器将要输出excel03文件
             }else{

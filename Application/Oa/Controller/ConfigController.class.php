@@ -1,12 +1,13 @@
 <?php
 namespace Oa\Controller;
 
+use Oa\Model\BankModel;
 use Oa\Controller\AuthController;
 use Oa\Model\TableConfigModel;
-use Oa\Model\TableConfigDetailModel;
 use Oa\Model\SelectModel;
 use Oa\Model\CountryModel;
 use Oa\Model\BookerModel;
+use Oa\Model\DepartmentModel;
 
 class ConfigController extends AuthController
 {
@@ -32,12 +33,8 @@ class ConfigController extends AuthController
 
     public function bookerList(){
         $likeField = [
-            'booker',
-            'tel',
-            'place',
-            'staff',
-            'staff_tel',
-            'short_name',
+            'booker', 'tel', 'place', 'staff',
+            'staff_tel', 'short_name',
         ];
         $query = [];
         foreach($likeField as $field){
@@ -96,12 +93,13 @@ class ConfigController extends AuthController
                 'code' => $_POST['code'],
             ]));
         } else {
-            $this->ajaxSuccess($cm->addCountry([
-                'label' => $_POST['label'],
-                'code' => $_POST['code'],
-            ]));
+            $this->ajaxSuccess(
+                $cm->addCountry([
+                    'label' => $_POST['label'],
+                    'code' => $_POST['code'],
+                ])
+            );
         }
-        
     }
 
     public function editCountry () {
@@ -115,5 +113,19 @@ class ConfigController extends AuthController
         $this->_checkParams(['id'], 'POST');
         $cm = new CountryModel();
         $this->ajaxSuccess($cm->deletePort($_POST['id']));
+    }
+
+    public function bankList () {
+        $bank = new BankModel();
+        return $this->ajaxSuccess(
+            $bank->listAll()
+        );
+    }
+
+    public function departmentList () {
+        $de = new DepartmentModel();
+        return $this->ajaxSuccess(
+            $de->listAll()
+        );
     }
 }

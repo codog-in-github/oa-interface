@@ -46,15 +46,6 @@ class AuthController extends Controller
                 'WITHOUT_LOGIN'
             );
         }
-        // 权限验证
-        if( !in_array(ACTION_NAME, self::NO_LOGIN_METHOD) 
-            && !in_array(ACTION_NAME, self::NO_AUTH_METHOD) 
-            && !$this->_checkAuth() ){
-            $this->ajaxError(
-                self::AUTH_ERROR,
-                'AUTH_ERROR'
-            );
-        }
     }
 
     protected function _checkAuth(){
@@ -83,7 +74,7 @@ class AuthController extends Controller
 
     protected function _checkParams($params, $method = 'REQUEST', $check_function = []){
         $state = true;
-        $target;
+        $target = null;
         switch($method){
             case 'REQUEST':{
                 $target = $_REQUEST;

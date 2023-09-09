@@ -7,7 +7,6 @@ use Oa\Model\ShipperModel;
 use Oa\Model\PortOfLoadingModel;
 use Oa\Model\PortOfDeloveryModel;
 use Oa\Model\ContainerModel;
-use Oa\Model\BookerModel;
 use Oa\Model\ContainerTypeModel;
 use Oa\Model\ContainerDetailModel;
 use Oa\Model\BookingNoticeModel;

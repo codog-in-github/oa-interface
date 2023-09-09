@@ -1,6 +1,7 @@
 <?php
 namespace Oa\Controller;
 
+use Oa\Model\BkgExpendModel;
 use Oa\Model\BkgModel;
 use Oa\Model\TraderModel;
 use Oa\Model\ShipperModel;
@@ -29,17 +30,17 @@ class BkgController extends AuthController{
         $bkg->saveData($_POST['header'],$bkgid);
         //检查bkgno 是否重复
         $trander = new TraderModel();
-        $trander->saveData($_POST['upper'],$bkgid);
+        $trander->saveData($_POST['upper'], $bkgid);
         $loading = new PortOfLoadingModel();
-        $loading->saveData($_POST['lower']['port_of_loading'],$bkgid);
+        $loading->saveData($_POST['lower']['port_of_loading'], $bkgid);
         $delovery = new PortOfDeloveryModel();
-        $delovery->saveData($_POST['lower']['port_of_delivery'],$bkgid);
+        $delovery->saveData($_POST['lower']['port_of_delivery'], $bkgid);
         $shipper = new ShipperModel();
         unset($_POST['lower']['port_of_loading']);
         unset($_POST['lower']['port_of_delivery']);
-        $shipper->saveData($_POST['lower'],$bkgid);
+        $shipper->saveData($_POST['lower'], $bkgid);
         $container = new ContainerModel();
-        $container->saveData($_POST['center'],$bkgid);
+        $container->saveData($_POST['center'], $bkgid);
         $containerDetail = new ContainerDetailModel();
         if($_POST['detail']){
             foreach($_POST['detail'] as $singleDetail){
@@ -50,7 +51,6 @@ class BkgController extends AuthController{
             (new HandlingModel())->copy($_POST['copy_id'], $bkgid);
             $reqID = (new RequestbookModel())->copy($_POST['copy_id'], $bkgid);
             (new RequestbookDetailModel())->copy($_POST['copy_id'], $bkgid, $reqID);
-            // (new RequestExtraModel())->copy($_POST['copy_id'], $bkgid);
         }
         $this->ajaxSuccess();
     }
@@ -61,14 +61,14 @@ class BkgController extends AuthController{
             exit;
         }
         $models = [
-            'bkg' => new BkgModel(),
-            'trader' => new TraderModel(),
-            'shipper' => new ShipperModel(),
-            'loading' => new PortOfLoadingModel(),
-            'delivery' => new PortOfDeloveryModel(),
+            'bkg'       => new BkgModel(),
+            'trader'    => new TraderModel(),
+            'shipper'   => new ShipperModel(),
+            'loading'   => new PortOfLoadingModel(),
+            'delivery'  => new PortOfDeloveryModel(),
             'container' => new ContainerModel(),
-            'type' => new ContainerTypeModel(),
-            'detail' => new ContainerDetailModel(),
+            'type'      => new ContainerTypeModel(),
+            'detail'    => new ContainerDetailModel(),
         ];
         $data = [];
         foreach($models as $k => $model){
@@ -122,9 +122,9 @@ class BkgController extends AuthController{
         //模糊查询字段
         $likeCondition = [
             'bkg_no' => 'bkg_no',
-            'bl_no' => 'bl_no',
-            'pod' => 'd.`port`',
-            'pol' => 'l.`port`',
+            'bl_no'  => 'bl_no',
+            'pod'    => 'd.`port`',
+            'pol'    => 'l.`port`',
             'booker' => 'booker',
         ];
 
@@ -132,7 +132,7 @@ class BkgController extends AuthController{
             if($condition[$conditionName]){
                 $query[$colNmae] = [
                     'LIKE',
-                    '%'.$condition[$conditionName].'%',
+                    '%' . $condition[$conditionName].'%',
                 ];
             }
         }
@@ -169,16 +169,16 @@ class BkgController extends AuthController{
                 $query[] = [
                     [
                         'cy_cut' => ['GT', date('Y-m-d',strtotime('-2 day'))],
-                        'step' => ['exp', 'IS NULL'],
+                        'step'   => ['exp', 'IS NULL'],
                     ],
-                    'step' => 'normal',
+                    'step'   => 'normal',
                     '_logic' => 'or',
                 ];
             }
         }
         
-        $current = $_REQUEST['page']?:0;
-        $size = $_REQUEST['page_size']?:100;
+        $current = $_REQUEST['page'] ?: 0;
+        $size = $_REQUEST['page_size'] ?: 100;
         $bkg = new BkgModel();
         // $bkg->getList($query, $current, $size);die($bkg->getlastSql());
         $this->ajaxSuccess($bkg->getList($query, $size, $current));
@@ -190,9 +190,9 @@ class BkgController extends AuthController{
         //模糊查询字段
         $likeCondition = [
             'bkg_no' => 'bkg_no',
-            'bl_no' => 'bl_no',
-            'pod' => 'd.`port`',
-            'pol' => 'l.`port`',
+            'bl_no'  => 'bl_no',
+            'pod'    => 'd.`port`',
+            'pol'    => 'l.`port`',
             'booker' => 'booker',
         ];
 
@@ -209,34 +209,29 @@ class BkgController extends AuthController{
             $query['_string'] = "CONCAT(`month`,`month_no`,`tag`) LIKE '%$condition[dg]%'";
         }
 
-        if(array_key_exists('req_state',$_REQUEST)){
-            if($_REQUEST['req_state'] == 3){
-                $query['request_step'] = 3;
-            } else {
-                $query[] = [
-                    ['request_step' => ['neq', 3]],
-                    ['request_step' => ['exp', 'IS NULL']],
-                    '_logic' => 'or',
-                ];
-            }
-        }
+        $query['request_step'] = [
+            'eq',
+            $_REQUEST['req_state'] ?: 0
+        ];
         //是否被删除
-        if($_REQUEST['state'] == 'delete'){
-            $query['b.delete_at'] = [
-                'exp',
-                'IS NOT NULL'
-            ];
-        } else {
-            $query['b.delete_at'] = [
-                'exp', 'IS NULL'
-            ];
+        $query['b.delete_at'] = [
+            'exp', 'IS NULL'
+        ];
+        $having = [];
+        if($condition['income_real_time']) {
+            $having[] = "( MAX( rb.income_real_time ) BETWEEN {$condition['income_real_time'][0]} AND {$condition['income_real_time'][1]} OR MIN( rb.income_real_time ) BETWEEN '{$condition['income_real_time'][0]}' AND '{$condition['income_real_time'][1]}' )";
+        }
+        if($condition['request_date']) {
+            $having[] = "( MAX( rb.date ) BETWEEN '{$condition['request_date'][0]}' AND '{$condition['request_date'][1]}' OR MIN( rb.date ) BETWEEN '{$condition['request_date'][0]}' AND '{$condition['request_date'][1]}' ) ";
         }
         
-        $current = $_REQUEST['page']?:0;
-        $size = $_REQUEST['page_size']?:100;
+        $current = $_REQUEST['page'] ?: 0;
+        $size = $_REQUEST['page_size'] ?: 100;
         $bkg = new BkgModel();
         // $bkg->getReqList($query, $current, $size);die($bkg->getlastSql());
-        $this->ajaxSuccess($bkg->getReqList($query, $size, $current));
+        $this->ajaxSuccess(
+            $bkg->getReqList($query, join(' AND ', $having), $size, $current)
+        );
     }
 
     public function getCalendar(){
@@ -256,7 +251,7 @@ class BkgController extends AuthController{
             }
             $this->ajaxSuccess($list);
         }
-        $this->ajaxError(parent::PARAMS_ERROR);
+        $this->ajaxError(self::ILLEGAL_PARAMS, 'ILLEGAL_PARAMS');
     }
 
     public function getDetailCalendar(){
@@ -273,7 +268,7 @@ class BkgController extends AuthController{
             }
             $this->ajaxSuccess($list);
         }
-        $this->ajaxError(parent::PARAMS_ERROR);
+        $this->ajaxError(self::ILLEGAL_PARAMS);
     }
 
     public function deleteBkgOrder(){
@@ -304,7 +299,7 @@ class BkgController extends AuthController{
                 (new ContainerModel())->changeOrderState($id, $state)
             );
         }else{
-            $this->ajaxError(parent::PARAMS_ERROR, 'PARAMS_ERROR');
+            $this->ajaxError(self::ILLEGAL_PARAMS, 'ILLEGAL_PARAMS');
         }
     }
 
@@ -379,7 +374,30 @@ class BkgController extends AuthController{
             (new BkgModel())->setCalendarStatus($id, $status);
             $this->ajaxSuccess();
         }else{
-            $this->ajaxError(parent::PARAMS_ERROR, 'PARAMS_ERROR');
+            $this->ajaxError(self::ILLEGAL_PARAMS, 'ILLEGAL_PARAMS');
         }
+    }
+
+    public function incomeList () {
+        $bkgId = $_REQUEST['bkgId'];
+        $model = new RequestbookModel();
+        $list = $model->getList($bkgId);
+        $this->ajaxSuccess($list);
+    }
+
+    public function expendList () {
+        $bkgId = $_REQUEST['bkgId'];
+        $model = new BkgExpendModel();
+        $this->ajaxSuccess(
+            $model->getList($bkgId)
+        );
+    }
+
+    public function mvRequestStep() {
+        $id = $_REQUEST['id'];
+        $step = $_REQUEST['step'];
+        $model = new BkgModel();
+        $model->mvRequestStep($id, $step);
+        $this->ajaxSuccess();
     }
 }
