@@ -184,17 +184,16 @@ class ExportController extends AuthController
         if($condition['dg']){
             $query['_string'] = "CONCAT(`month`,`month_no`,`tag`) LIKE '%$condition[dg]%'";
         }
-
-        $query['request_step'] = [ 'eq', 1 ];
+        $query['request_step'] = [ 'eq', $condition['request_step']];
         $query['b.delete_at'] = [ 'exp', 'IS NULL' ];
         if($condition['income_real_time']) {
             $query['income_real_time'] = [
-                'BETWEEN', $query['income_real_time']
+                'BETWEEN', $condition['income_real_time']
             ];
         }
         if($condition['request_date']) {
-            $having['rb.date'] =  [
-                'BETWEEN', $query['request_date']
+            $query['rb.date'] =  [
+                'BETWEEN', $condition['request_date']
             ];
         }
         
@@ -273,7 +272,7 @@ class ExportController extends AuthController
                     $result[] = [
                         1000, // '//識別フラグ',
                         0, // '伝番',
-                        $row['date'], // '日付',
+                        str_replace('-', '', $row['date']), // '日付',
                         152, // '借方科目',
                         '売掛金', // '借方科目名称',
                         '売掛金', // '借方科目正式名称',
@@ -316,7 +315,7 @@ class ExportController extends AuthController
                 $result[] = [
                     1000, // '//識別フラグ',
                     0, // '伝番',
-                    $row['date'], // '日付',
+                    str_replace('-', '', $row['date']), // '日付',
                     152, // '借方科目',
                     '売掛金', // '借方科目名称',
                     '売掛金', // '借方科目正式名称',
@@ -358,7 +357,7 @@ class ExportController extends AuthController
                 $result[] = [
                     1000, // '//識別フラグ',
                     0, // '伝番',
-                    $row['date'], // '日付',
+                    str_replace('-', '', $row['date']), // '日付',
                     152, // '借方科目',
                     '売掛金', // '借方科目名称',
                     '売掛金', // '借方科目正式名称',
@@ -389,19 +388,21 @@ class ExportController extends AuthController
                 ];
             }
         }
-        // print_r($result);
+
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename=tmp.csv');
         header('Cache-Control: max-age=0');
         $f = fopen('php://output', 'a');
         fputcsv(
             $f,
-            $title
+            $title,
+            // mb_convert_encoding($title,  "Windows-1252", "utf-8")
         );
         foreach($result as $row) {
             fputcsv(
                 $f,
-                $row
+                $row,
+                // mb_convert_encoding($row,  "Windows-1252", "utf-8"),
             );
         }
         fclose($f);
