@@ -396,13 +396,13 @@ class ExportController extends AuthController
         fputcsv(
             $f,
             // $title,
-            mb_convert_encoding($title,  "Shift_JIS", "utf-8")
+            mb_convert_encoding($title,  "SJIS-win", "utf-8")
         );
         foreach($result as $row) {
             fputcsv(
                 $f,
                 // $row,
-                mb_convert_encoding($row,  "Shift_JIS", "utf-8"),
+                mb_convert_encoding($row,  "SJIS-win", "utf-8"),
             );
         }
         fclose($f);
