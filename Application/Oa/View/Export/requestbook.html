@@ -48,7 +48,7 @@
         .bg-sign{
             background-image: url({$signImg});
             background-repeat: no-repeat;
-            background-position: right 130px;
+            background-position: right 150px;
             background-size: 30%;
         }
         .bg{
@@ -66,7 +66,7 @@
         <div class="bg">
     </if>
         <h1>請 求 書</h1>
-        <table class="full header-tb">
+        <table class="full header-tb" style="margin-bottom: 20px;">
             <tr>
                 <if condition="$tel !== '&nbsp;'">
                     <td class="head-left ">〒{$tel}</td>
@@ -85,6 +85,7 @@
                 <else />
                     <td class="head-left"></td>
                 </if>
+                <td class="head-right">適格請求書発行事業者登録番号  T5140001112049</td>
             </tr>
         </table>
         <hr>
@@ -151,8 +152,8 @@
                 <td style="text-align: right;">¥ {$subtotal|number_format}</td>
             </tr>
             <tr>
-                <td>消費税</td>
-                <td style="text-align: right;">¥ {$tak_total|default='0'|number_format}</td>
+                <td>10%対象金額&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ¥ {$in_tak|default='0'|number_format}</td>
+                <td style="text-align: right;">消費税&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;¥ {$tak_total|default='0'|number_format}</td>
             </tr>
             <tr>
                 <td style="font-size: 16px;font-weight: bold;">御請求金額</td>
