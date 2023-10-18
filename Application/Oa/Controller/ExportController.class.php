@@ -239,13 +239,12 @@ class ExportController extends AuthController
         foreach($data as $group) {
             $type = [];
             foreach($group as $row) {
-                if(strpos($row['booker_name'], '立替')) {
+                if(mb_strstr($row['item_name'], '立替')) {
                     $type['立替'][] = $row;
                 } else {
                     $type[$row['tax']][] = $row;
                 }
             }
-            $types[] = $type;
             $calTotal = function ($rows) {
                 $total = 0;
                 foreach($rows as $row) {
@@ -345,14 +344,14 @@ class ExportController extends AuthController
                     $depMap[$row['address']], // '貸方部門名称',
                 ];
             }
-            if($type['课']) {
-                $row = $type['课'][0];
-                $total = $calTotal($type['课']);
+            if($type['課']) {
+                $row = $type['課'][0];
+                $total = $calTotal($type['課']);
                 $itemName = join(
                     ',',
                     array_map(function ($item) {
                         return $item['item_name'];
-                    }, $type['课'])
+                    }, $type['課'])
                 );
                 $result[] = [
                     1000, // '//識別フラグ',
@@ -369,7 +368,7 @@ class ExportController extends AuthController
                     $total, // '借方金額',
                     0, // '借方消費税',
                     613, // '貸方科目',
-                    '輸出课税', // '貸方科目名称',
+                    '輸出課税', // '貸方科目名称',
                     '輸出入業受取収入', // '貸方科目正式名称',
                     null, // '貸方補助',
                     null, // '貸方補助名称',
@@ -388,7 +387,6 @@ class ExportController extends AuthController
                 ];
             }
         }
-
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename=tmp.csv');
         header('Cache-Control: max-age=0');
