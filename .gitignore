@@ -3,3 +3,4 @@ Public/index
 vendor
 *.log
 .env.local
+.vscode

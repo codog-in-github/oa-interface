@@ -13,16 +13,27 @@ class RequestbookModel extends Model {
     }
 
     public function getList($bkgId){
-        return $this
-        ->alias('r')
-        ->field(['r.id', 'r.income_real_time', 'r.create_time', 'r.date', 'b.name as bank', 'd.name as address', 'total'])
-        ->where([
-            'bkg_id' => $bkgId,
-            'r.delete_at' => ['exp','IS NULL'],
-        ])
-        ->join('bank AS b ON b.id = bank')
-        ->join('department AS d ON d.id = address')
-        ->select();
+        $getMap = function ($name) {
+            $data = M($name)->select();
+            $map = [];
+            foreach($data as $item) {
+                $map[$item['id']] = $item['name'];
+            }
+            return $map;
+        };
+        $address = $getMap('department');
+        $bank = $getMap('bank');
+        $result = $this
+            ->where([
+                'bkg_id' => $bkgId,
+                'delete_at' => ['exp','IS NULL'],
+            ])
+            ->select();
+        foreach($result as &$row) {
+            $row['address'] = $address[$row['address']];
+            $row['bank'] = $bank[$row['bank']];
+        }
+        return $result;
     }
 
     public function saveRealTime ($id, $time = null) {
