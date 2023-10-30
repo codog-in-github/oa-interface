@@ -11,6 +11,7 @@ class BkgModel extends BkgCommonModel {
         'incoterms',
         'bkg_staff',
         'in_sales',
+        'step',
         'CONCAT(`month`,`month_no`,`tag`)' =>'dg'
     ];
 
