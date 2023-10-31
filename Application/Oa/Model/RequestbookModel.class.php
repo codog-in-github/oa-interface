@@ -72,12 +72,13 @@ class RequestbookModel extends Model {
             $this->add($data);
         }
     }
-    public function copy($copyID, $newID){
+    public function copy($copyID, $newID, $lastDg){
         $copyData = $this->where(['bkg_id'=>$copyID])->find();
         if($copyData){
             $id =  getRandomID();
             $copyData['id'] = $id;
             $copyData['bkg_id'] = $newID;
+            $copyData['no'] = $lastDg;
             $this->add($copyData);
             return $id;
         }

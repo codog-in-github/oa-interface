@@ -49,7 +49,7 @@ class BkgController extends AuthController{
         }
         if($_POST['copy_id']){
             (new HandlingModel())->copy($_POST['copy_id'], $bkgid);
-            $reqID = (new RequestbookModel())->copy($_POST['copy_id'], $bkgid);
+            $reqID = (new RequestbookModel())->copy($_POST['copy_id'], $bkgid, $bkg->getLastDg());
             (new RequestbookDetailModel())->copy($_POST['copy_id'], $bkgid, $reqID);
         }
         $this->ajaxSuccess();

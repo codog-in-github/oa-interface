@@ -2,6 +2,7 @@
 namespace Oa\Model;
 
 class BkgModel extends BkgCommonModel {
+    private $lastDg = '';
     protected $_fields = [
         'id',
         'bkg_date',
@@ -34,10 +35,15 @@ class BkgModel extends BkgCommonModel {
             $bkg['month'] = $month;
             $bkg['month_no'] = $current;
             $bkg['tag'] = $_SESSION['userInfo']['tag'];
+            $this->lastDg = $month . $current . $_SESSION['userInfo']['tag'];
             $this->add($bkg);
         }else{
             $this->save($bkg);
         }
+    }
+
+    public function getLastDg () {
+        return $this->lastDg;
     }
 
     public function getList($query, $size=100, $current=0){
