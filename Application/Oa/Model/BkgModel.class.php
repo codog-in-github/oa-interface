@@ -13,10 +13,11 @@ class BkgModel extends BkgCommonModel {
         'bkg_staff',
         'in_sales',
         'step',
-        'CONCAT(`month`,`month_no`,`tag`)' =>'dg'
+        'request_step',
+        'CONCAT(`month`,`month_no`,`tag`)' => 'dg'
     ];
 
-    public function saveData($bkg,$bkgid){
+    public function saveData($bkg, $bkgid){
         $this->where([
             'id'=>$bkgid,
         ]);
