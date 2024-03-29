@@ -183,6 +183,39 @@ class BkgController extends AuthController{
         // $bkg->getList($query, $current, $size);die($bkg->getlastSql());
         $this->ajaxSuccess($bkg->getList($query, $size, $current));
     }
+    public function getlist2 (){
+        $condition = $_REQUEST['condition'];
+        $query = [];
+        //模糊查询字段
+        $likeCondition = [
+            'bkg_no' => 'bkg_no',
+            'bl_no'  => 'bl_no',
+            'pod'    => 'd.`port`',
+            'pol'    => 'l.`port`',
+            'booker' => 'booker',
+        ];
+
+        foreach($likeCondition as $conditionName =>$colNmae){
+            if($condition[$conditionName]){
+                $query[$colNmae] = [
+                    'LIKE',
+                    '%' . $condition[$conditionName].'%',
+                ];
+            }
+        }
+
+        if($condition['dg']){
+            $query['_string'] = "CONCAT(`month`,`month_no`,`tag`) LIKE '%$condition[dg]%'";
+        }
+        $query['b.delete_at'] = [
+            'exp', 'IS NULL'
+        ];
+        
+        $current = $_REQUEST['page'] ?: 0;
+        $size = $_REQUEST['page_size'] ?: 100;
+        $bkg = new BkgModel();
+        $this->ajaxSuccess($bkg->getlist2($_REQUEST['status'], $query, $size, $current));
+    }
 
     public function getReqlist (){
         $condition = $_REQUEST['condition'];

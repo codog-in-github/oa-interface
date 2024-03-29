@@ -84,6 +84,57 @@ class BkgModel extends BkgCommonModel {
         // echo $this->getLastSql();die;
         return $info;
     }
+
+    public function getList2($status, $query, $size=100, $current=0){
+        $total = $this
+            ->_beforeQuery($query)
+            ->field([
+                'b.id'
+            ])
+            ->join('requestbook AS rb ON b.id = rb.bkg_id', 'left')
+            ->group('b.id')
+            ->having('count(rb.id)' . ($status ? '> 0' : '= 0'))
+            ->select();
+        $info['total'] = count($total);
+        $info['list'] = $this
+            ->_beforeQuery($query)
+            ->field([
+                'b.id',
+                'CASE `doc_cut` WHEN "" THEN `cy_cut` ELSE `doc_cut` END AS show_cy_cut',
+                'bkg_date',
+                'booker',
+                'UPPER(l.`port`) as lp',
+                'UPPER(d.`port`) as dp',
+                'bkg_no',
+                'group_concat(quantity) as quantity',
+                'group_concat(container_type) as container_type',
+                'state',
+                'concat(month, month_no, tag) as company_no'
+            ])
+            ->join('container_type AS ct ON b.id = ct.bkg_id')
+            ->join('requestbook AS rb ON b.id = rb.bkg_id', 'left')
+            ->where([
+                'ct.delete_at' => [
+                    ['exp', 'IS NULL'],
+                    ['eq', ''],
+                    'or'
+                ],
+                'rb.delete_at' => [
+                    ['exp', 'IS NULL'],
+                    ['eq', ''],
+                    'or'
+                ]
+            ])
+            ->group('b.id')
+            ->limit($current * $size, $size)
+            ->order('show_cy_cut desc')
+            ->having('count(rb.id)' . ($status ? '> 0' : '= 0'))
+            ->select();
+        foreach($info['list'] as &$record){
+            $record['ld'] = exportToGetPort($record['lp']) . '-' . exportToGetPort($record['dp']);
+        }
+        return $info;
+    }
     
     public function getReqList($query, $having, $size=100, $current=0){
         $info['total'] = count(
