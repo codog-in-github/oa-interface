@@ -81,7 +81,7 @@ class BkgModel extends BkgCommonModel {
         foreach($info['list'] as &$record){
             $record['ld'] = exportToGetPort($record['lp']) . '-' . exportToGetPort($record['dp']);
         }
-        // echo $this->getLastSql();die;
+//         echo $this->getLastSql();die;
         return $info;
     }
 

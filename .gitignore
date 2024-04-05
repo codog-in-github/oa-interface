@@ -4,3 +4,4 @@ vendor
 *.log
 .env.local
 .vscode
+.idea

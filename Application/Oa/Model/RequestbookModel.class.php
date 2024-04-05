@@ -63,11 +63,12 @@ class RequestbookModel extends Model {
     }
 
     public function updateBook($id, $bkg_id, $data){
-        $isEdited = boolval($this->find($id));
-        // dump($data);die;
-        if($isEdited){
+        $last = $this->find($id);
+        if($last){
+            $data['export_times'] = 1;
             $this->save($data);
         }else{
+            $data['export_times'] = $last['export_times'] + 1;
             $data['create_time'] = date('Y-m-d H:i:s');
             $this->add($data);
         }
@@ -79,6 +80,7 @@ class RequestbookModel extends Model {
             $copyData['id'] = $id;
             $copyData['bkg_id'] = $newID;
             $copyData['no'] = $lastDg;
+            $copyData['export_times'] = 0;
             $this->add($copyData);
             return $id;
         }

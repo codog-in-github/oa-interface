@@ -18,7 +18,7 @@ class ExportController extends AuthController
 
     public function bookingNotice()
     {
-        $base64 = imgToBase64(__DIR__.'/../../../Public/chz.png');
+        $base64 = imgToBase64(__DIR__. '/../../../Public/chz.png');
         $this->assign('img',$base64);
 
         $department = new DepartmentModel();
@@ -400,6 +400,106 @@ class ExportController extends AuthController
             fputcsv(
                 $f,
                 // $row,
+                mb_convert_encoding($row,  "SJIS-win", "utf-8"),
+            );
+        }
+        fclose($f);
+    }
+    public function accountingIncomeSimple () {
+        $condition = $_REQUEST;
+        $query = [];
+        $likeCondition = [
+            'bkg_no' => 'bkg_no',
+            'bl_no'  => 'bl_no',
+            'pod'    => 'd.`port`',
+            'pol'    => 'l.`port`',
+            'booker' => 'booker',
+        ];
+
+        foreach($likeCondition as $conditionName =>$colNmae){
+            if($condition[$conditionName]){
+                $query[$colNmae] = [
+                    'LIKE',
+                    '%'.$condition[$conditionName].'%',
+                ];
+            }
+        }
+
+        if($condition['dg']){
+            $query['_string'] = "CONCAT(`month`,`month_no`,`tag`) LIKE '%$condition[dg]%'";
+        }
+        $query['request_step'] = [ 'eq', $condition['request_step']];
+        $query['b.delete_at'] = [ 'exp', 'IS NULL' ];
+        if($condition['income_real_time']) {
+            $query['income_real_time'] = [
+                'BETWEEN', $condition['income_real_time']
+            ];
+        }
+        if($condition['request_date']) {
+            $query['rb.date'] =  [
+                'BETWEEN', $condition['request_date']
+            ];
+        }
+
+        $as = new AccountingSubjectModel();
+        $dep = new DepartmentModel();
+        $depMap = $dep->mapAcc();
+        $asMap = $as->map();
+        $title = [
+            '日付',
+            '借方補助',
+            '借方補助名称',
+            '借方金額',
+            '摘要',
+        ];
+        $rb = new RequestbookModel();
+        $data = $rb->export($query);
+        $result = [];
+        foreach($data as $group) {
+            $items = [];
+            $total = 0;
+            foreach($group as $row) {
+                $items[] = $row['item_name'];
+                if($row['tax'] === '課') {
+                    $total += $row['total'] * 1.1;
+                } else {
+                    $total += $row['total'];
+                }
+            }
+            $getNo = function ($row) {
+                if($row['bkg_no']) {
+                    return $row['bkg_no'];
+                }
+                if($row['bl_no']) {
+                    return $row['bl_no'];
+                }
+                for($i = 0; $i < 10; $i++) {
+                    if($row['label_' . $i] === '許可書') {
+                        return $row['value_' . $i];
+                    }
+                }
+                return $row['request_no'];
+            };
+            $row = $group[0];
+            $result[] = [
+                str_replace('-', '', $row['date']), // 日付
+                $asMap[$row['booker_name']]['id'] ?: 99, // 借方補助
+                $asMap[$row['booker_name']]['name'] ?: $row['booker_name'], // 借方補助名称
+                $total, // 借方金額
+                $row['booker_name']. ' '. implode(', ', $items). ' '.  $getNo($row) //'摘要',
+            ];
+        }
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename=tmp.csv');
+        header('Cache-Control: max-age=0');
+        $f = fopen('php://output', 'a');
+        fputcsv(
+            $f,
+            mb_convert_encoding($title,  "SJIS-win", "utf-8")
+        );
+        foreach($result as $row) {
+            fputcsv(
+                $f,
                 mb_convert_encoding($row,  "SJIS-win", "utf-8"),
             );
         }
