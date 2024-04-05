@@ -85,18 +85,24 @@ class BkgModel extends BkgCommonModel {
         return $info;
     }
 
-    public function getList2($status, $query, $size=100, $current=0){
-        $total = $this
+    public function getList2($status, $query, $sort, $size=100, $current=0){
+        $query = $status ? function ($builder) {
+            $builder->where('(rb.date IS NOT NULL AND rb.date >= LEFT(b.bkg_date, 10))');
+            return $builder;
+        } : function ($builder) {
+            $builder->where('(rb.date IS NULL OR rb.date < LEFT(b.bkg_date, 10))');
+            return $builder;
+        };
+        $total = $query($this)
             ->_beforeQuery($query)
             ->field([
                 'b.id'
             ])
             ->join('requestbook AS rb ON b.id = rb.bkg_id', 'left')
             ->group('b.id')
-            ->having('count(rb.id)' . ($status ? '> 0' : '= 0'))
             ->select();
         $info['total'] = count($total);
-        $info['list'] = $this
+        $builder = $query($this)
             ->_beforeQuery($query)
             ->field([
                 'b.id',
@@ -126,10 +132,11 @@ class BkgModel extends BkgCommonModel {
                 ]
             ])
             ->group('b.id')
-            ->limit($current * $size, $size)
-            ->order('show_cy_cut desc')
-            ->having('count(rb.id)' . ($status ? '> 0' : '= 0'))
-            ->select();
+            ->limit($current * $size, $size);
+        if($sort) {
+            $builder->order($sort['prop'] . ' ' . ($sort['order'] === 'ascending' ? 'asc' : 'desc'));
+        }
+        $info['list'] = $builder->select();
         foreach($info['list'] as &$record){
             $record['ld'] = exportToGetPort($record['lp']) . '-' . exportToGetPort($record['dp']);
         }

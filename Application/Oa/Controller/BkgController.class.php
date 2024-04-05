@@ -214,7 +214,7 @@ class BkgController extends AuthController{
         $current = $_REQUEST['page'] ?: 0;
         $size = $_REQUEST['page_size'] ?: 100;
         $bkg = new BkgModel();
-        $this->ajaxSuccess($bkg->getlist2($_REQUEST['status'], $query, $size, $current));
+        $this->ajaxSuccess($bkg->getlist2($_REQUEST['status'], $query, $_REQUEST['sort'], $size, $current));
     }
 
     public function getReqlist (){
