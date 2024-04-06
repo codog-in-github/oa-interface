@@ -442,8 +442,6 @@ class ExportController extends AuthController
         }
 
         $as = new AccountingSubjectModel();
-        $dep = new DepartmentModel();
-        $depMap = $dep->mapAcc();
         $asMap = $as->map();
         $title = [
             '日付',
@@ -456,10 +454,8 @@ class ExportController extends AuthController
         $data = $rb->export($query);
         $result = [];
         foreach($data as $group) {
-            $items = [];
             $total = 0;
             foreach($group as $row) {
-                $items[] = $row['item_name'];
                 if($row['tax'] === '課') {
                     $total += $row['total'] * 1.1;
                 } else {
@@ -486,7 +482,7 @@ class ExportController extends AuthController
                 $asMap[$row['booker_name']]['id'] ?: 99, // 借方補助
                 $asMap[$row['booker_name']]['name'] ?: $row['booker_name'], // 借方補助名称
                 $total, // 借方金額
-                $row['booker_name']. ' '. implode(', ', $items). ' '.  $getNo($row) //'摘要',
+                $row['booker_name']. ' '.  $getNo($row) //'摘要',
             ];
         }
         header('Content-Type: application/vnd.ms-excel');
