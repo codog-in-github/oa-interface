@@ -86,14 +86,14 @@ class BkgModel extends BkgCommonModel {
     }
 
     public function getList2($status, $query, $sort, $size=100, $current=0){
-        $query = $status ? function ($builder) {
-            $builder->where('(rb.date IS NOT NULL AND rb.date >= LEFT(b.bkg_date, 10))');
+        $addCondition = $status ? function ($builder) {
+            $builder->having('SUM(export_times) > 0');
             return $builder;
         } : function ($builder) {
-            $builder->where('(rb.date IS NULL OR rb.date < LEFT(b.bkg_date, 10))');
+            $builder->having('SUM(export_times) = 0');
             return $builder;
         };
-        $total = $query($this)
+        $total = $addCondition($this)
             ->_beforeQuery($query)
             ->field([
                 'b.id'
@@ -102,7 +102,7 @@ class BkgModel extends BkgCommonModel {
             ->group('b.id')
             ->select();
         $info['total'] = count($total);
-        $builder = $query($this)
+        $builder = $addCondition($this)
             ->_beforeQuery($query)
             ->field([
                 'b.id',

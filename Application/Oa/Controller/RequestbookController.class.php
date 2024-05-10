@@ -196,4 +196,23 @@ class RequestbookController extends AuthController{
         $model->saveRealTime($id, $time);
         $this->ajaxSuccess();
     }
+
+
+    public function save()
+    {
+        $id = $_POST['id'];
+        $bkg_id = $_POST['bkg_id'];
+        $_POST['detail'] = json_decode($_POST['detail'], true);
+        $_POST['extra'] = json_decode($_POST['extra'], true);
+        $models = [
+            new RequestbookModel(),
+            new RequestbookDetailModel(),
+            new RequestbookExtraModel(),
+        ];
+        foreach($models as $model){
+            $model -> updateBook($id, $bkg_id, $_POST);
+        }
+        $this->ajaxSuccess();
+    }
+
 }
